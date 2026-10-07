@@ -27,3 +27,32 @@ Homework for the DevOps course. Every topic has its own folder with a `README.md
 - Linux tasks: `ubuntu:24.04` container
 - Kubernetes: local 2-node cluster created with [kind](https://kind.sigs.k8s.io/) (`08_Kubernetes_Fundamentals/kind-cluster.yaml`)
 - Class repository used for the labs: <https://github.com/Nency-Ravaliya/devops-heros>
+
+## Expanded lab collection
+
+The existing Section A submission folders above are preserved. These additional folders contain the adapted source lab collection, including storage, troubleshooting, Helm, CI/CD, DevSecOps, Terraform, monitoring, GitOps and TicketHub. See [SOURCE.md](SOURCE.md) for provenance and [VALIDATION.md](VALIDATION.md) for execution scope.
+
+| Lab | Walkthrough |
+| --- | --- |
+| Docker Fundamentals | [README](Docker%20Fundamentals/README.md) |
+| Docker Networks | [README](Docker%20Networks/README.md) |
+| DockerFiles and Images | [README](DockerFiles%20and%20Images/README.md) |
+| Git and Github | [README](Git%20and%20Github/README.md) |
+| Linux Fundamentals | [README](Linux%20Fundamentals/README.md) |
+| Mini Project | [README](Mini%20Project/README.md) |
+| Networking Fundamentals | [README](Networking%20Fundamentals/README.md) |
+| Shell Scripting | [README](Shell%20Scripting/README.md) |
+| final-devops-project | [README](final-devops-project/README.md) |
+| session-11-kubernetes-services | [README](session-11-kubernetes-services/README.md) |
+| session-12-ingress-configmaps-secrets | [README](session-12-ingress-configmaps-secrets/README.md) |
+| session-13-storage-hpa-probes | [README](session-13-storage-hpa-probes/README.md) |
+| session-15-helm | [README](session-15-helm/README.md) |
+| session-16-cicd | [README](session-16-cicd/README.md) |
+| session-17-devsecops | [README](session-17-devsecops/README.md) |
+| session-18-terraform | [README](session-18-terraform/README.md) |
+| session-19-terraform-project | [README](session-19-terraform-project/README.md) |
+| session-20-monitoring-gitops | [README](session-20-monitoring-gitops/README.md) |
+| session10-k8s-core-objects | [README](session10-k8s-core-objects/README.md) |
+| session9-k8s | [README](session9-k8s/README.md) |
+
+[Run the validation workflow](https://github.com/mayank-0789/Devops-Assignment-1/actions/workflows/validate-labs.yml). Download the evidence artifacts after a run; they contain fresh screenshots, command logs and commit/run metadata.

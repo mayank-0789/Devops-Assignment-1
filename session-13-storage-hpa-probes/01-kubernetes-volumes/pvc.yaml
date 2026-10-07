@@ -1,0 +1,12 @@
+# A claim that matches mayank-pv (same class, size that fits, same access mode)
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mayank-pvc
+  labels: {owner: mayank}
+spec:
+  storageClassName: manual
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 500Mi

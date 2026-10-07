@@ -1,0 +1,53 @@
+name: Validate Mayank DevOps labs
+on:
+  push:
+    branches: [main, codex/import-devops-labs]
+    paths-ignore: ['**/screenshots/**', 'VALIDATION.md']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    name: ${{ matrix.suite }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [basics, apps, kubernetes, terraform, capstone]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: hashicorp/setup-terraform@v3
+        if: matrix.suite == 'terraform'
+        with:
+          terraform_wrapper: false
+      - uses: azure/setup-helm@v4.3.0
+        if: matrix.suite == 'kubernetes' || matrix.suite == 'capstone'
+        with:
+          version: 'v3.17.3'
+      - uses: helm/kind-action@v1.12.0
+        if: matrix.suite == 'kubernetes'
+        with:
+          cluster_name: mayank-labs
+          wait: 120s
+      - name: Run actual lab checks
+        run: bash "scripts/check-${{ matrix.suite }}.sh"
+      - name: Capture fresh evidence
+        if: always()
+        run: |
+          pip -q install playwright
+          python -m playwright install --with-deps chromium
+          python scripts/render-evidence.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mayank-evidence-${{ matrix.suite }}
+          path: evidence/
+          retention-days: 30

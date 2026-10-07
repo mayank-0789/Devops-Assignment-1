@@ -1,0 +1,43 @@
+# Hybrid routing (host + path) with TLS termination using the mayank-tls-cert secret
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mayank-ingress-tls
+  labels:
+    app: mayankapp
+    owner: mayank
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - portal.mayank.local
+        - api.mayank.local
+      secretName: mayank-tls-cert
+  rules:
+    - host: portal.mayank.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mayankapp-frontend
+                port:
+                  number: 80
+    - host: api.mayank.local
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: mayankapp-backend
+                port:
+                  number: 8080
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mayankapp-backend
+                port:
+                  number: 8080
