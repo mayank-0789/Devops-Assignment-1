@@ -1,0 +1,727 @@
+Mayank Gupta | 24BCS10220 | mayank-0789/Devops-Assignment-1
+Scope: final-devops-project
+Commit: 166f9c70f4ee3339c99531ebfc0c3118fd8bbeaf
+UTC: 2026-10-07T18:35:46Z
+Run: https://github.com/mayank-0789/Devops-Assignment-1/actions/runs/37668016962
++ capstone_lab
++ cd /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend
++ python -m venv /tmp/mayank-capstone
++ timeout 180 /tmp/mayank-capstone/bin/pip install -r requirements-dev.txt
+Collecting fastapi<1,>=0.115 (from -r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 1))
+  Downloading fastapi-0.142.2-py3-none-any.whl.metadata (27 kB)
+Collecting uvicorn<1,>=0.30 (from uvicorn[standard]<1,>=0.30->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 2))
+  Downloading uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+Collecting sqlalchemy<3,>=2.0 (from -r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 3))
+  Downloading sqlalchemy-2.1.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.7 kB)
+Collecting psycopg<4,>=3.2 (from psycopg[binary]<4,>=3.2->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 4))
+  Downloading psycopg-3.3.6-py3-none-any.whl.metadata (4.4 kB)
+Collecting alembic<2,>=1.13 (from -r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 5))
+  Downloading alembic-1.20.0-py3-none-any.whl.metadata (7.3 kB)
+Collecting pydantic<3,>=2.7 (from -r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 6))
+  Downloading pydantic-2.13.5-py3-none-any.whl.metadata (110 kB)
+Collecting pydantic-settings<3,>=2.3 (from -r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 7))
+  Downloading pydantic_settings-2.15.0-py3-none-any.whl.metadata (3.9 kB)
+Collecting prometheus-fastapi-instrumentator<9,>=8.1 (from -r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 8))
+  Downloading prometheus_fastapi_instrumentator-8.1.0-py3-none-any.whl.metadata (13 kB)
+Collecting pytest<9,>=8.3 (from -r requirements-dev.txt (line 2))
+  Downloading pytest-8.4.2-py3-none-any.whl.metadata (7.7 kB)
+Collecting pytest-cov<8,>=6 (from -r requirements-dev.txt (line 3))
+  Downloading pytest_cov-7.1.0-py3-none-any.whl.metadata (32 kB)
+Collecting httpx<1,>=0.27 (from -r requirements-dev.txt (line 4))
+  Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting starlette>=0.46.0 (from fastapi<1,>=0.115->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 1))
+  Downloading starlette-1.7.0-py3-none-any.whl.metadata (6.6 kB)
+Collecting typing-extensions>=4.8.0 (from fastapi<1,>=0.115->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 1))
+  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting typing-inspection>=0.4.2 (from fastapi<1,>=0.115->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 1))
+  Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+Collecting annotated-doc>=0.0.2 (from fastapi<1,>=0.115->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 1))
+  Downloading annotated_doc-0.0.5-py3-none-any.whl.metadata (6.5 kB)
+Collecting opentelemetry-api>=1.44.0 (from fastapi<1,>=0.115->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 1))
+  Downloading opentelemetry_api-1.45.1-py3-none-any.whl.metadata (1.4 kB)
+Collecting click>=7.0 (from uvicorn<1,>=0.30->uvicorn[standard]<1,>=0.30->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 2))
+  Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting h11>=0.8 (from uvicorn<1,>=0.30->uvicorn[standard]<1,>=0.30->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 2))
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting Mako (from alembic<2,>=1.13->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 5))
+  Downloading mako-1.4.3-py3-none-any.whl.metadata (2.9 kB)
+Collecting annotated-types>=0.6.0 (from pydantic<3,>=2.7->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 6))
+  Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.46.5 (from pydantic<3,>=2.7->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 6))
+  Downloading pydantic_core-2.46.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+Collecting python-dotenv>=0.21.0 (from pydantic-settings<3,>=2.3->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 7))
+  Downloading python_dotenv-1.2.4-py3-none-any.whl.metadata (29 kB)
+Collecting prometheus-client<1.0.0,>=0.8.0 (from prometheus-fastapi-instrumentator<9,>=8.1->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 8))
+  Downloading prometheus_client-0.26.0-py3-none-any.whl.metadata (2.1 kB)
+Collecting iniconfig>=1 (from pytest<9,>=8.3->-r requirements-dev.txt (line 2))
+  Downloading iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+Collecting packaging>=20 (from pytest<9,>=8.3->-r requirements-dev.txt (line 2))
+  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting pluggy<2,>=1.5 (from pytest<9,>=8.3->-r requirements-dev.txt (line 2))
+  Downloading pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+Collecting pygments>=2.7.2 (from pytest<9,>=8.3->-r requirements-dev.txt (line 2))
+  Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting coverage>=7.10.6 (from coverage[toml]>=7.10.6->pytest-cov<8,>=6->-r requirements-dev.txt (line 3))
+  Downloading coverage-7.16.2-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (8.2 kB)
+Collecting anyio (from httpx<1,>=0.27->-r requirements-dev.txt (line 4))
+  Downloading anyio-4.15.1-py3-none-any.whl.metadata (4.7 kB)
+Collecting certifi (from httpx<1,>=0.27->-r requirements-dev.txt (line 4))
+  Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+Collecting httpcore==1.* (from httpx<1,>=0.27->-r requirements-dev.txt (line 4))
+  Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting idna (from httpx<1,>=0.27->-r requirements-dev.txt (line 4))
+  Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+Collecting psycopg-binary==3.3.6 (from psycopg[binary]<4,>=3.2->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 4))
+  Downloading psycopg_binary-3.3.6-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.7 kB)
+Collecting httptools>=0.8.0 (from uvicorn[standard]<1,>=0.30->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 2))
+  Downloading httptools-0.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (3.5 kB)
+Collecting pyyaml>=5.1 (from uvicorn[standard]<1,>=0.30->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 2))
+  Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+Collecting uvloop>=0.15.1 (from uvicorn[standard]<1,>=0.30->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 2))
+  Downloading uvloop-0.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (5.1 kB)
+Collecting watchfiles>=0.20 (from uvicorn[standard]<1,>=0.30->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 2))
+  Downloading watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+Collecting websockets>=13.0 (from uvicorn[standard]<1,>=0.30->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 2))
+  Downloading websockets-17.2-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.3 kB)
+Collecting MarkupSafe>=2.0 (from Mako->alembic<2,>=1.13->-r /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend/requirements.txt (line 5))
+  Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+Downloading fastapi-0.142.2-py3-none-any.whl (144 kB)
+Downloading uvicorn-0.54.0-py3-none-any.whl (87 kB)
+Downloading sqlalchemy-2.1.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (4.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.7/4.7 MB 109.1 MB/s eta 0:00:00
+Downloading psycopg-3.3.6-py3-none-any.whl (215 kB)
+Downloading alembic-1.20.0-py3-none-any.whl (268 kB)
+Downloading pydantic-2.13.5-py3-none-any.whl (472 kB)
+Downloading pydantic_core-2.46.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 129.5 MB/s eta 0:00:00
+Downloading pydantic_settings-2.15.0-py3-none-any.whl (69 kB)
+Downloading prometheus_fastapi_instrumentator-8.1.0-py3-none-any.whl (19 kB)
+Downloading pytest-8.4.2-py3-none-any.whl (365 kB)
+Downloading pytest_cov-7.1.0-py3-none-any.whl (22 kB)
+Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+Downloading psycopg_binary-3.3.6-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (5.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.2/5.2 MB 116.8 MB/s eta 0:00:00
+Downloading annotated_doc-0.0.5-py3-none-any.whl (5.3 kB)
+Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+Downloading click-8.5.0-py3-none-any.whl (125 kB)
+Downloading coverage-7.16.2-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (258 kB)
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading httptools-0.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (523 kB)
+Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+Downloading opentelemetry_api-1.45.1-py3-none-any.whl (60 kB)
+Downloading packaging-26.3-py3-none-any.whl (129 kB)
+Downloading pluggy-1.6.0-py3-none-any.whl (20 kB)
+Downloading prometheus_client-0.26.0-py3-none-any.whl (64 kB)
+Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 115.4 MB/s eta 0:00:00
+Downloading python_dotenv-1.2.4-py3-none-any.whl (23 kB)
+Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.9/807.9 kB 84.9 MB/s eta 0:00:00
+Downloading starlette-1.7.0-py3-none-any.whl (78 kB)
+Downloading anyio-4.15.1-py3-none-any.whl (132 kB)
+Downloading idna-3.20-py3-none-any.whl (69 kB)
+Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+Downloading uvloop-0.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (4.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.5/4.5 MB 121.9 MB/s eta 0:00:00
+Downloading watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (458 kB)
+Downloading websockets-17.2-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (225 kB)
+Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+Downloading mako-1.4.3-py3-none-any.whl (80 kB)
+Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+Installing collected packages: websockets, uvloop, typing-extensions, pyyaml, python-dotenv, pygments, psycopg-binary, prometheus-client, pluggy, packaging, MarkupSafe, iniconfig, idna, httptools, h11, coverage, click, certifi, annotated-types, annotated-doc, uvicorn, typing-inspection, sqlalchemy, pytest, pydantic-core, psycopg, opentelemetry-api, Mako, httpcore, anyio, watchfiles, starlette, pytest-cov, pydantic, httpx, alembic, pydantic-settings, prometheus-fastapi-instrumentator, fastapi
+Successfully installed Mako-1.4.3 MarkupSafe-3.0.4 alembic-1.20.0 annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.15.1 certifi-2026.7.22 click-8.5.0 coverage-7.16.2 fastapi-0.142.2 h11-0.16.0 httpcore-1.0.9 httptools-0.8.0 httpx-0.28.1 idna-3.20 iniconfig-2.3.1 opentelemetry-api-1.45.1 packaging-26.3 pluggy-1.6.0 prometheus-client-0.26.0 prometheus-fastapi-instrumentator-8.1.0 psycopg-3.3.6 psycopg-binary-3.3.6 pydantic-2.13.5 pydantic-core-2.46.5 pydantic-settings-2.15.0 pygments-2.21.0 pytest-8.4.2 pytest-cov-7.1.0 python-dotenv-1.2.4 pyyaml-6.0.3 sqlalchemy-2.1.4 starlette-1.7.0 typing-extensions-4.16.0 typing-inspection-0.4.4 uvicorn-0.54.0 uvloop-0.23.0 watchfiles-1.3.0 websockets-17.2
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: python -m pip install --upgrade pip
++ timeout 120 /tmp/mayank-capstone/bin/python -m pytest -v -o faulthandler_timeout=30
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-8.4.2, pluggy-1.6.0
+rootdir: /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/backend
+configfile: pytest.ini
+testpaths: tests
+plugins: cov-7.1.0, anyio-4.15.1
+collected 10 items
+
+tests/test_api.py ..........                                             [100%]
+
+=============================== warnings summary ===============================
+../../../../../../../../tmp/mayank-capstone/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /tmp/mayank-capstone/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 10 passed, 1 warning in 0.62s =========================
++ cd /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/final-devops-project/application/frontend
++ timeout 180 npm ci --no-audit --no-fund
+
+added 66 packages in 2s
++ timeout 120 npm run build
+
+> tickethub-frontend@1.0.0 build
+> vite build
+
+[36mvite v7.3.7 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32m✓[39m 28 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                 [39m[1m[2m  0.47 kB[22m[1m[22m[2m │ gzip:  0.30 kB[22m
+[2mdist/[22m[2massets/[22m[35mindex-DXfaZQP9.css  [39m[1m[2m  4.89 kB[22m[1m[22m[2m │ gzip:  1.63 kB[22m
+[2mdist/[22m[2massets/[22m[36mindex-DPrXGoXg.js   [39m[1m[2m150.14 kB[22m[1m[22m[2m │ gzip: 48.39 kB[22m
+[32m✓ built in 6.25s[39m
++ cd /home/runner/work/Devops-Assignment-1/Devops-Assignment-1
++ timeout 600 docker compose -f final-devops-project/docker/docker-compose.yml up -d --build --wait --wait-timeout 240
+ postgres Pulling 
+ e2de96513ba9 Already exists 
+ 1b7f9cd581ee Pulling fs layer 
+ 210b280f9556 Pulling fs layer 
+ 81717818649a Pulling fs layer 
+ 3ae6141cfd99 Pulling fs layer 
+ 25b77f59fd95 Pulling fs layer 
+ 6c25da34e03f Pulling fs layer 
+ a88782f92806 Pulling fs layer 
+ d8d21be4bf02 Pulling fs layer 
+ 6117bd39f23f Pulling fs layer 
+ 509688edf37b Pulling fs layer 
+ d8d21be4bf02 Waiting 
+ 3ae6141cfd99 Waiting 
+ 25b77f59fd95 Waiting 
+ 6117bd39f23f Waiting 
+ 6c25da34e03f Waiting 
+ a88782f92806 Waiting 
+ 509688edf37b Waiting 
+ 1b7f9cd581ee Download complete 
+ 1b7f9cd581ee Extracting [==================================================>]     969B/969B
+ 210b280f9556 Downloading [>                                                  ]  15.74kB/901.4kB
+ 1b7f9cd581ee Extracting [==================================================>]     969B/969B
+ 210b280f9556 Verifying Checksum 
+ 210b280f9556 Download complete 
+ 81717818649a Downloading [==================================================>]     172B/172B
+ 81717818649a Verifying Checksum 
+ 81717818649a Download complete 
+ 3ae6141cfd99 Downloading [==================================================>]     116B/116B
+ 3ae6141cfd99 Verifying Checksum 
+ 3ae6141cfd99 Download complete 
+ 6c25da34e03f Downloading [==================>                                ]    3.5kB/9.669kB
+ a88782f92806 Downloading [==================================================>]     128B/128B
+ a88782f92806 Download complete 
+ 6c25da34e03f Downloading [==================================================>]  9.669kB/9.669kB
+ 6c25da34e03f Verifying Checksum 
+ 6c25da34e03f Download complete 
+ 25b77f59fd95 Downloading [>                                                  ]  529.8kB/111.3MB
+ 6117bd39f23f Downloading [============================>                      ]  3.501kB/6.111kB
+ 6117bd39f23f Downloading [==================================================>]  6.111kB/6.111kB
+ 6117bd39f23f Verifying Checksum 
+ 6117bd39f23f Download complete 
+ d8d21be4bf02 Downloading [==================================================>]     169B/169B
+ d8d21be4bf02 Verifying Checksum 
+ d8d21be4bf02 Download complete 
+ 509688edf37b Downloading [==================================================>]     185B/185B
+ 509688edf37b Verifying Checksum 
+ 509688edf37b Download complete 
+ 25b77f59fd95 Downloading [==>                                                ]  6.322MB/111.3MB
+ 25b77f59fd95 Downloading [========>                                          ]     18MB/111.3MB
+ 25b77f59fd95 Downloading [==========================>                        ]  59.62MB/111.3MB
+ 25b77f59fd95 Downloading [===============================================>   ]    105MB/111.3MB
+ 25b77f59fd95 Verifying Checksum 
+ 25b77f59fd95 Download complete 
+ 1b7f9cd581ee Pull complete 
+ 210b280f9556 Extracting [=>                                                 ]  32.77kB/901.4kB
+ 210b280f9556 Extracting [==================================================>]  901.4kB/901.4kB
+ 210b280f9556 Extracting [==================================================>]  901.4kB/901.4kB
+ 210b280f9556 Pull complete 
+ 81717818649a Extracting [==================================================>]     172B/172B
+ 81717818649a Extracting [==================================================>]     172B/172B
+ 81717818649a Pull complete 
+ 3ae6141cfd99 Extracting [==================================================>]     116B/116B
+ 3ae6141cfd99 Extracting [==================================================>]     116B/116B
+ 3ae6141cfd99 Pull complete 
+ 25b77f59fd95 Extracting [>                                                  ]  557.1kB/111.3MB
+ 25b77f59fd95 Extracting [===>                                               ]  7.799MB/111.3MB
+ 25b77f59fd95 Extracting [========>                                          ]  18.38MB/111.3MB
+ 25b77f59fd95 Extracting [=============>                                     ]  28.97MB/111.3MB
+ 25b77f59fd95 Extracting [=================>                                 ]  39.55MB/111.3MB
+ 25b77f59fd95 Extracting [======================>                            ]  50.69MB/111.3MB
+ 25b77f59fd95 Extracting [==========================>                        ]  57.93MB/111.3MB
+ 25b77f59fd95 Extracting [==============================>                    ]   67.4MB/111.3MB
+ 25b77f59fd95 Extracting [===================================>               ]  77.99MB/111.3MB
+ 25b77f59fd95 Extracting [====================================>              ]  81.33MB/111.3MB
+ 25b77f59fd95 Extracting [=====================================>             ]  83.56MB/111.3MB
+ 25b77f59fd95 Extracting [=======================================>           ]  88.01MB/111.3MB
+ 25b77f59fd95 Extracting [==========================================>        ]  93.59MB/111.3MB
+ 25b77f59fd95 Extracting [============================================>      ]  98.04MB/111.3MB
+ 25b77f59fd95 Extracting [=================================================> ]  110.3MB/111.3MB
+ 25b77f59fd95 Extracting [==================================================>]  111.3MB/111.3MB
+ 25b77f59fd95 Pull complete 
+ 6c25da34e03f Extracting [==================================================>]  9.669kB/9.669kB
+ 6c25da34e03f Extracting [==================================================>]  9.669kB/9.669kB
+ 6c25da34e03f Pull complete 
+ a88782f92806 Extracting [==================================================>]     128B/128B
+ a88782f92806 Extracting [==================================================>]     128B/128B
+ a88782f92806 Pull complete 
+ d8d21be4bf02 Extracting [==================================================>]     169B/169B
+ d8d21be4bf02 Extracting [==================================================>]     169B/169B
+ d8d21be4bf02 Pull complete 
+ 6117bd39f23f Extracting [==================================================>]  6.111kB/6.111kB
+ 6117bd39f23f Extracting [==================================================>]  6.111kB/6.111kB
+ 6117bd39f23f Pull complete 
+ 509688edf37b Extracting [==================================================>]     185B/185B
+ 509688edf37b Extracting [==================================================>]     185B/185B
+ 509688edf37b Pull complete 
+ postgres Pulled 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.34kB done
+#1 DONE 0.0s
+
+#2 [frontend internal] load build definition from Dockerfile
+#2 transferring dockerfile: 557B done
+#2 DONE 0.0s
+
+#3 [backend internal] load build definition from Dockerfile
+#3 transferring dockerfile: 487B done
+#3 DONE 0.0s
+
+#4 [auth] library/node:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#5 [auth] library/python:pull token for registry-1.docker.io
+#5 DONE 0.0s
+
+#6 [auth] nginxinc/nginx-unprivileged:pull token for registry-1.docker.io
+#6 DONE 0.0s
+
+#7 [backend internal] load metadata for docker.io/library/python:3.12-slim
+#7 DONE 0.3s
+
+#8 [backend internal] load .dockerignore
+#8 transferring context: 117B done
+#8 DONE 0.0s
+
+#9 [frontend internal] load metadata for docker.io/library/node:22-alpine
+#9 DONE 0.3s
+
+#10 [frontend internal] load metadata for docker.io/nginxinc/nginx-unprivileged:1.30-alpine
+#10 DONE 0.3s
+
+#11 [frontend internal] load .dockerignore
+#11 transferring context: 80B done
+#11 DONE 0.0s
+
+#12 [backend internal] load build context
+#12 transferring context: 30.49kB done
+#12 DONE 0.0s
+
+#13 [frontend internal] load build context
+#13 transferring context: 78.57kB done
+#13 DONE 0.0s
+
+#14 [migrate 1/8] FROM docker.io/library/python:3.12-slim@sha256:05cda9777409a9c3ffddd94a4c476b79f0769a0b4857f0c7ed9226b6800b0d6f
+#14 resolve docker.io/library/python:3.12-slim@sha256:05cda9777409a9c3ffddd94a4c476b79f0769a0b4857f0c7ed9226b6800b0d6f done
+#14 sha256:05cda9777409a9c3ffddd94a4c476b79f0769a0b4857f0c7ed9226b6800b0d6f 10.37kB / 10.37kB done
+#14 sha256:2b4f19dae3a777dfc3b76730bda1e82e1f66ab2a2686fa93ca78edbfb4f04ffe 1.75kB / 1.75kB done
+#14 sha256:df18428df8a0f9189c84e7424d214b4c50092af1f9dca5842a00c41c39bda316 5.66kB / 5.66kB done
+#14 sha256:ecc510c1e359bdc007b39802570bb7e4dec7d6ebccf357c3201a74299113e05e 26.21MB / 29.84MB 0.1s
+#14 sha256:75b6a36c64a1cf3520fc4b4aae4739d5caa8a6a05c27835a920a61784c9c32f8 1.29MB / 1.29MB 0.1s done
+#14 sha256:6912e23eb44595b44dc6d9882b34f305ad6f6e9667cec70b13e5dbc4f8cd97f4 12.12MB / 12.12MB 0.1s
+#14 sha256:bbc5a12237474ec0b23b5051260d56d6436a24d70d9cad961adebe7a037ed813 249B / 249B 0.1s done
+#14 sha256:05cda9777409a9c3ffddd94a4c476b79f0769a0b4857f0c7ed9226b6800b0d6f 10.37kB / 10.37kB done
+#14 sha256:2b4f19dae3a777dfc3b76730bda1e82e1f66ab2a2686fa93ca78edbfb4f04ffe 1.75kB / 1.75kB done
+#14 sha256:df18428df8a0f9189c84e7424d214b4c50092af1f9dca5842a00c41c39bda316 5.66kB / 5.66kB done
+#14 sha256:ecc510c1e359bdc007b39802570bb7e4dec7d6ebccf357c3201a74299113e05e 29.84MB / 29.84MB 0.2s
+#14 sha256:75b6a36c64a1cf3520fc4b4aae4739d5caa8a6a05c27835a920a61784c9c32f8 1.29MB / 1.29MB 0.1s done
+#14 sha256:bbc5a12237474ec0b23b5051260d56d6436a24d70d9cad961adebe7a037ed813 249B / 249B 0.1s done
+#14 sha256:ecc510c1e359bdc007b39802570bb7e4dec7d6ebccf357c3201a74299113e05e 29.84MB / 29.84MB 0.3s done
+#14 sha256:6912e23eb44595b44dc6d9882b34f305ad6f6e9667cec70b13e5dbc4f8cd97f4 12.12MB / 12.12MB 0.3s done
+#14 extracting sha256:ecc510c1e359bdc007b39802570bb7e4dec7d6ebccf357c3201a74299113e05e 0.1s
+#14 extracting sha256:ecc510c1e359bdc007b39802570bb7e4dec7d6ebccf357c3201a74299113e05e 1.2s done
+#14 extracting sha256:75b6a36c64a1cf3520fc4b4aae4739d5caa8a6a05c27835a920a61784c9c32f8
+#14 extracting sha256:75b6a36c64a1cf3520fc4b4aae4739d5caa8a6a05c27835a920a61784c9c32f8 0.4s done
+#14 extracting sha256:6912e23eb44595b44dc6d9882b34f305ad6f6e9667cec70b13e5dbc4f8cd97f4
+#14 ...
+
+#15 [frontend build 1/8] FROM docker.io/library/node:22-alpine@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402
+#15 resolve docker.io/library/node:22-alpine@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402 done
+#15 sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402 6.41kB / 6.41kB done
+#15 sha256:2c752226d477b4a886378baa95b9af252be59301b725fdb0b7e15208131505a8 1.72kB / 1.72kB done
+#15 sha256:7c3b093add7c43400ee83b815ab2cda98794a10045bcf76ce9bb2f89b97cbc5c 6.48kB / 6.48kB done
+#15 sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937 55.59MB / 55.59MB 0.6s done
+#15 sha256:e554276b05e6306c5ad33cd85bfa7f0693083e21f6114db5abf60a20fb413039 1.26MB / 1.26MB 0.6s done
+#15 sha256:d39db1cf9caa4f49c5a2e67111fbe6e0d5eea8ede550cb82f3dc2b79712688d6 447B / 447B 0.4s done
+#15 extracting sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937 1.9s done
+#15 extracting sha256:e554276b05e6306c5ad33cd85bfa7f0693083e21f6114db5abf60a20fb413039 0.1s done
+#15 extracting sha256:d39db1cf9caa4f49c5a2e67111fbe6e0d5eea8ede550cb82f3dc2b79712688d6 done
+#15 DONE 2.9s
+
+#16 [frontend build 2/8] WORKDIR /app
+#16 DONE 0.0s
+
+#14 [migrate 1/8] FROM docker.io/library/python:3.12-slim@sha256:05cda9777409a9c3ffddd94a4c476b79f0769a0b4857f0c7ed9226b6800b0d6f
+#14 ...
+
+#17 [frontend build 3/8] COPY package.json package-lock.json ./
+#17 DONE 0.2s
+
+#14 [migrate 1/8] FROM docker.io/library/python:3.12-slim@sha256:05cda9777409a9c3ffddd94a4c476b79f0769a0b4857f0c7ed9226b6800b0d6f
+#14 extracting sha256:6912e23eb44595b44dc6d9882b34f305ad6f6e9667cec70b13e5dbc4f8cd97f4 0.8s done
+#14 extracting sha256:bbc5a12237474ec0b23b5051260d56d6436a24d70d9cad961adebe7a037ed813
+#14 extracting sha256:bbc5a12237474ec0b23b5051260d56d6436a24d70d9cad961adebe7a037ed813 done
+#14 DONE 3.8s
+
+#18 [frontend stage-1 1/3] FROM docker.io/nginxinc/nginx-unprivileged:1.30-alpine@sha256:15c994d10d6d78658721c3bcafff14cb281fba2a4bdf9d5ba92c416a472516e3
+#18 resolve docker.io/nginxinc/nginx-unprivileged:1.30-alpine@sha256:15c994d10d6d78658721c3bcafff14cb281fba2a4bdf9d5ba92c416a472516e3 done
+#18 sha256:15c994d10d6d78658721c3bcafff14cb281fba2a4bdf9d5ba92c416a472516e3 6.79kB / 6.79kB done
+#18 sha256:4483b2e4c12fe77211e051cd0546ee79770d5174535c961b04ac918ebb75b469 2.61kB / 2.61kB done
+#18 sha256:1c5c57be5370eee774a18efd5e40bcbba4a6317a9796d985af84d56252014464 14.02kB / 14.02kB done
+#18 sha256:6f7aa381299ab5f130ca129a4f57d105dc72a2aed5d2e1c1a2c42aa19cd5ae1c 629B / 629B 0.9s done
+#18 sha256:d37f5699de52e349bc0f8744ac13fe8b5d900b41109679a701b8b6c4db1c2a76 4.36MB / 4.36MB 0.9s done
+#18 sha256:a9d91d9450f793af27b287548fd30c510a99e55bf095c42dc1f87267005b768e 2.79kB / 2.79kB 0.9s done
+#18 extracting sha256:d37f5699de52e349bc0f8744ac13fe8b5d900b41109679a701b8b6c4db1c2a76 0.2s done
+#18 sha256:70c74ecba780e11dd2a613cc974b2bec98f26f9ec8a0b2b5f57388e834a531b8 403B / 403B 0.9s done
+#18 sha256:8816d14ad2c9db4baf87009874807399c639450c1ea100abaf2506b6ec91f58a 1.20kB / 1.20kB 0.9s done
+#18 sha256:fe62b9ebffae2066cabc22e3b5387825c99c20c606b5c9a3770a8aa1bc9f2795 1.40kB / 1.40kB 0.9s done
+#18 sha256:f813b516e403aefd53b7814813bb2603b7384b8d3b815da12959c55b3f2a78f3 17.33MB / 17.33MB 1.0s done
+#18 sha256:8d47ab7f089b5f0486eceb0704583c655d9baeec3bdfc51fca9f4a2ca91d0a44 965B / 965B 0.9s done
+#18 extracting sha256:a9d91d9450f793af27b287548fd30c510a99e55bf095c42dc1f87267005b768e done
+#18 extracting sha256:6f7aa381299ab5f130ca129a4f57d105dc72a2aed5d2e1c1a2c42aa19cd5ae1c done
+#18 extracting sha256:8d47ab7f089b5f0486eceb0704583c655d9baeec3bdfc51fca9f4a2ca91d0a44 done
+#18 extracting sha256:70c74ecba780e11dd2a613cc974b2bec98f26f9ec8a0b2b5f57388e834a531b8 done
+#18 extracting sha256:8816d14ad2c9db4baf87009874807399c639450c1ea100abaf2506b6ec91f58a done
+#18 extracting sha256:fe62b9ebffae2066cabc22e3b5387825c99c20c606b5c9a3770a8aa1bc9f2795 done
+#18 extracting sha256:f813b516e403aefd53b7814813bb2603b7384b8d3b815da12959c55b3f2a78f3 0.4s done
+#18 DONE 3.7s
+
+#19 [migrate 2/8] WORKDIR /srv
+#19 DONE 0.0s
+
+#20 [backend 3/8] COPY requirements.txt .
+#20 DONE 0.0s
+
+#21 [backend 4/8] RUN pip install --no-cache-dir -r requirements.txt
+#21 1.437 Collecting fastapi<1,>=0.115 (from -r requirements.txt (line 1))
+#21 1.457   Downloading fastapi-0.142.2-py3-none-any.whl.metadata (27 kB)
+#21 1.492 Collecting uvicorn<1,>=0.30 (from uvicorn[standard]<1,>=0.30->-r requirements.txt (line 2))
+#21 1.495   Downloading uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+#21 1.742 Collecting sqlalchemy<3,>=2.0 (from -r requirements.txt (line 3))
+#21 ...
+
+#22 [frontend build 4/8] RUN npm ci
+#22 1.899 
+#22 1.899 added 65 packages, and audited 66 packages in 2s
+#22 1.899 
+#22 1.899 9 packages are looking for funding
+#22 1.900   run `npm fund` for details
+#22 1.900 
+#22 1.900 found 0 vulnerabilities
+#22 1.908 npm notice
+#22 1.908 npm notice New major version of npm available! 10.9.9 -> 12.2.0
+#22 1.908 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+#22 1.908 npm notice To update run: npm install -g npm@12.2.0
+#22 1.908 npm notice
+#22 DONE 2.5s
+
+#21 [backend 4/8] RUN pip install --no-cache-dir -r requirements.txt
+#21 1.746   Downloading sqlalchemy-2.1.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.7 kB)
+#21 1.769 Collecting psycopg<4,>=3.2 (from psycopg[binary]<4,>=3.2->-r requirements.txt (line 4))
+#21 1.772   Downloading psycopg-3.3.6-py3-none-any.whl.metadata (4.4 kB)
+#21 1.797 Collecting alembic<2,>=1.13 (from -r requirements.txt (line 5))
+#21 1.800   Downloading alembic-1.20.0-py3-none-any.whl.metadata (7.3 kB)
+#21 ...
+
+#23 [frontend build 5/8] COPY index.html vite.config.js ./
+#23 DONE 0.0s
+
+#24 [frontend build 6/8] COPY public ./public
+#24 DONE 0.0s
+
+#25 [frontend build 7/8] COPY src ./src
+#25 DONE 0.0s
+
+#21 [backend 4/8] RUN pip install --no-cache-dir -r requirements.txt
+#21 1.886 Collecting pydantic<3,>=2.7 (from -r requirements.txt (line 6))
+#21 1.890   Downloading pydantic-2.13.5-py3-none-any.whl.metadata (110 kB)
+#21 1.918 Collecting pydantic-settings<3,>=2.3 (from -r requirements.txt (line 7))
+#21 1.922   Downloading pydantic_settings-2.15.0-py3-none-any.whl.metadata (3.9 kB)
+#21 1.940 Collecting prometheus-fastapi-instrumentator<9,>=8.1 (from -r requirements.txt (line 8))
+#21 1.944   Downloading prometheus_fastapi_instrumentator-8.1.0-py3-none-any.whl.metadata (13 kB)
+#21 1.970 Collecting starlette>=0.46.0 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+#21 1.973   Downloading starlette-1.7.0-py3-none-any.whl.metadata (6.6 kB)
+#21 2.002 Collecting typing-extensions>=4.8.0 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+#21 2.007   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#21 2.019 Collecting typing-inspection>=0.4.2 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+#21 2.023   Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+#21 2.034 Collecting annotated-doc>=0.0.2 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+#21 2.038   Downloading annotated_doc-0.0.5-py3-none-any.whl.metadata (6.5 kB)
+#21 2.061 Collecting opentelemetry-api>=1.44.0 (from fastapi<1,>=0.115->-r requirements.txt (line 1))
+#21 2.064   Downloading opentelemetry_api-1.45.1-py3-none-any.whl.metadata (1.4 kB)
+#21 2.083 Collecting click>=7.0 (from uvicorn<1,>=0.30->uvicorn[standard]<1,>=0.30->-r requirements.txt (line 2))
+#21 2.087   Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+#21 2.100 Collecting h11>=0.8 (from uvicorn<1,>=0.30->uvicorn[standard]<1,>=0.30->-r requirements.txt (line 2))
+#21 2.104   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+#21 2.128 Collecting Mako (from alembic<2,>=1.13->-r requirements.txt (line 5))
+#21 2.131   Downloading mako-1.4.3-py3-none-any.whl.metadata (2.9 kB)
+#21 2.151 Collecting annotated-types>=0.6.0 (from pydantic<3,>=2.7->-r requirements.txt (line 6))
+#21 2.155   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+#21 2.648 Collecting pydantic-core==2.46.5 (from pydantic<3,>=2.7->-r requirements.txt (line 6))
+#21 2.651   Downloading pydantic_core-2.46.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+#21 2.672 Collecting python-dotenv>=0.21.0 (from pydantic-settings<3,>=2.3->-r requirements.txt (line 7))
+#21 2.676   Downloading python_dotenv-1.2.4-py3-none-any.whl.metadata (29 kB)
+#21 2.698 Collecting prometheus-client<1.0.0,>=0.8.0 (from prometheus-fastapi-instrumentator<9,>=8.1->-r requirements.txt (line 8))
+#21 2.702   Downloading prometheus_client-0.26.0-py3-none-any.whl.metadata (2.1 kB)
+#21 2.858 Collecting psycopg-binary==3.3.6 (from psycopg[binary]<4,>=3.2->-r requirements.txt (line 4))
+#21 2.862   Downloading psycopg_binary-3.3.6-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.7 kB)
+#21 2.890 Collecting httptools>=0.8.0 (from uvicorn[standard]<1,>=0.30->-r requirements.txt (line 2))
+#21 2.894   Downloading httptools-0.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (3.5 kB)
+#21 2.930 Collecting pyyaml>=5.1 (from uvicorn[standard]<1,>=0.30->-r requirements.txt (line 2))
+#21 2.936   Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+#21 2.978 Collecting uvloop>=0.15.1 (from uvicorn[standard]<1,>=0.30->-r requirements.txt (line 2))
+#21 2.982   Downloading uvloop-0.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (5.1 kB)
+#21 3.097 Collecting watchfiles>=0.20 (from uvicorn[standard]<1,>=0.30->-r requirements.txt (line 2))
+#21 3.102   Downloading watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+#21 3.213 Collecting websockets>=13.0 (from uvicorn[standard]<1,>=0.30->-r requirements.txt (line 2))
+#21 3.217   Downloading websockets-17.2-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.3 kB)
+#21 3.251 Collecting anyio<5,>=4.0.0 (from starlette>=0.46.0->fastapi<1,>=0.115->-r requirements.txt (line 1))
+#21 3.257   Downloading anyio-4.15.1-py3-none-any.whl.metadata (4.7 kB)
+#21 3.329 Collecting MarkupSafe>=2.0 (from Mako->alembic<2,>=1.13->-r requirements.txt (line 5))
+#21 3.333   Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+#21 3.352 Collecting idna>=2.8 (from anyio<5,>=4.0.0->starlette>=0.46.0->fastapi<1,>=0.115->-r requirements.txt (line 1))
+#21 3.356   Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+#21 3.369 Downloading fastapi-0.142.2-py3-none-any.whl (144 kB)
+#21 3.375 Downloading uvicorn-0.54.0-py3-none-any.whl (87 kB)
+#21 3.383 Downloading sqlalchemy-2.1.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (4.7 MB)
+#21 3.407    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.7/4.7 MB 211.3 MB/s eta 0:00:00
+#21 3.412 Downloading psycopg-3.3.6-py3-none-any.whl (215 kB)
+#21 3.416 Downloading alembic-1.20.0-py3-none-any.whl (268 kB)
+#21 3.423 Downloading pydantic-2.13.5-py3-none-any.whl (472 kB)
+#21 3.427 Downloading pydantic_core-2.46.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+#21 3.433    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 421.9 MB/s eta 0:00:00
+#21 3.438 Downloading pydantic_settings-2.15.0-py3-none-any.whl (69 kB)
+#21 3.442 Downloading prometheus_fastapi_instrumentator-8.1.0-py3-none-any.whl (19 kB)
+#21 3.447 Downloading psycopg_binary-3.3.6-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (5.2 MB)
+#21 3.458    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.2/5.2 MB 558.5 MB/s eta 0:00:00
+#21 3.463 Downloading annotated_doc-0.0.5-py3-none-any.whl (5.3 kB)
+#21 3.467 Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+#21 3.471 Downloading click-8.5.0-py3-none-any.whl (125 kB)
+#21 3.474 Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+#21 3.478 Downloading httptools-0.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (523 kB)
+#21 3.481 Downloading opentelemetry_api-1.45.1-py3-none-any.whl (60 kB)
+#21 3.487 Downloading prometheus_client-0.26.0-py3-none-any.whl (64 kB)
+#21 3.491 Downloading python_dotenv-1.2.4-py3-none-any.whl (23 kB)
+#21 3.495 Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+#21 3.498    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.9/807.9 kB 1.0 GB/s eta 0:00:00
+#21 3.504 Downloading starlette-1.7.0-py3-none-any.whl (78 kB)
+#21 3.509 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#21 3.513 Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+#21 3.519 Downloading uvloop-0.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (4.5 MB)
+#21 3.532    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.5/4.5 MB 408.5 MB/s eta 0:00:00
+#21 3.537 Downloading watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (458 kB)
+#21 3.542 Downloading websockets-17.2-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (225 kB)
+#21 3.546 Downloading mako-1.4.3-py3-none-any.whl (80 kB)
+#21 3.550 Downloading anyio-4.15.1-py3-none-any.whl (132 kB)
+#21 3.556 Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+#21 3.563 Downloading idna-3.20-py3-none-any.whl (69 kB)
+#21 3.634 Installing collected packages: websockets, uvloop, typing-extensions, pyyaml, python-dotenv, psycopg-binary, prometheus-client, MarkupSafe, idna, httptools, h11, click, annotated-types, annotated-doc, uvicorn, typing-inspection, sqlalchemy, pydantic-core, psycopg, opentelemetry-api, Mako, anyio, watchfiles, starlette, pydantic, alembic, pydantic-settings, prometheus-fastapi-instrumentator, fastapi
+#21 6.132 Successfully installed Mako-1.4.3 MarkupSafe-3.0.4 alembic-1.20.0 annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.15.1 click-8.5.0 fastapi-0.142.2 h11-0.16.0 httptools-0.8.0 idna-3.20 opentelemetry-api-1.45.1 prometheus-client-0.26.0 prometheus-fastapi-instrumentator-8.1.0 psycopg-3.3.6 psycopg-binary-3.3.6 pydantic-2.13.5 pydantic-core-2.46.5 pydantic-settings-2.15.0 python-dotenv-1.2.4 pyyaml-6.0.3 sqlalchemy-2.1.4 starlette-1.7.0 typing-extensions-4.16.0 typing-inspection-0.4.4 uvicorn-0.54.0 uvloop-0.23.0 watchfiles-1.3.0 websockets-17.2
+#21 6.132 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#21 6.199 
+#21 6.199 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#21 6.199 [notice] To update, run: pip install --upgrade pip
+#21 DONE 6.9s
+
+#26 [backend 5/8] COPY alembic.ini .
+#26 DONE 0.2s
+
+#27 [backend 6/8] COPY alembic ./alembic
+#27 DONE 0.0s
+
+#28 [migrate 7/8] COPY app ./app
+#28 DONE 0.0s
+
+#29 [migrate 8/8] RUN useradd --uid 10001 --no-create-home api
+#29 DONE 0.2s
+
+#30 [backend] exporting to image
+#30 exporting layers
+#30 exporting layers 1.3s done
+#30 writing image sha256:7ea69840a07a94fcabdb4c438bdbeffde88e577a2b5f6d7a06c4dd583a2b3475 done
+#30 naming to docker.io/library/tickethub-backend done
+#30 DONE 1.3s
+
+#31 [migrate] exporting to image
+#31 exporting layers 1.3s done
+#31 writing image sha256:7ea69840a07a94fcabdb4c438bdbeffde88e577a2b5f6d7a06c4dd583a2b3475 done
+#31 naming to docker.io/library/tickethub-migrate done
+#31 DONE 1.3s
+
+#32 [migrate] resolving provenance for metadata file
+#32 DONE 0.0s
+
+#33 [backend] resolving provenance for metadata file
+#33 DONE 0.0s
+
+#34 [frontend build 8/8] RUN npm run build
+#34 0.692 
+#34 0.692 > tickethub-frontend@1.0.0 build
+#34 0.692 > vite build
+#34 0.692 
+#34 0.950 vite v7.3.7 building client environment for production...
+#34 1.006 transforming...
+#34 8.667 ✓ 28 modules transformed.
+#34 8.741 rendering chunks...
+#34 8.745 computing gzip size...
+#34 8.751 dist/index.html                   0.47 kB │ gzip:  0.30 kB
+#34 8.751 dist/assets/index-DXfaZQP9.css    4.89 kB │ gzip:  1.63 kB
+#34 8.751 dist/assets/index-DPrXGoXg.js   150.14 kB │ gzip: 48.39 kB
+#34 8.751 ✓ built in 7.78s
+#34 DONE 8.8s
+
+#35 [frontend stage-1 2/3] COPY --from=build /app/dist /usr/share/nginx/html
+#35 DONE 0.0s
+
+#36 [frontend stage-1 3/3] COPY nginx.conf.template /etc/nginx/templates/default.conf.template
+#36 DONE 0.0s
+
+#37 [frontend] exporting to image
+#37 exporting layers 0.8s done
+#37 writing image sha256:05fcd1511972fa2e8baa637ad519a288e5ceac43ae8ebaae85ee835680cb5c1c done
+#37 naming to docker.io/library/tickethub-frontend done
+#37 DONE 0.8s
+
+#38 [frontend] resolving provenance for metadata file
+#38 DONE 0.0s
+ migrate  Built
+ backend  Built
+ frontend  Built
+ Network tickethub_default  Creating
+ Network tickethub_default  Created
+ Volume "tickethub_pgdata"  Creating
+ Volume "tickethub_pgdata"  Created
+ Container tickethub-postgres-1  Creating
+ Container tickethub-postgres-1  Created
+ Container tickethub-migrate-1  Creating
+ Container tickethub-migrate-1  Created
+ Container tickethub-backend-1  Creating
+ Container tickethub-backend-1  Created
+ Container tickethub-frontend-1  Creating
+ Container tickethub-frontend-1  Created
+ Container tickethub-postgres-1  Starting
+ Container tickethub-postgres-1  Started
+ Container tickethub-postgres-1  Waiting
+ Container tickethub-postgres-1  Healthy
+ Container tickethub-migrate-1  Starting
+ Container tickethub-migrate-1  Started
+ Container tickethub-migrate-1  Waiting
+ Container tickethub-migrate-1  Exited
+ Container tickethub-backend-1  Starting
+ Container tickethub-backend-1  Started
+ Container tickethub-backend-1  Waiting
+ Container tickethub-backend-1  Healthy
+ Container tickethub-frontend-1  Starting
+ Container tickethub-frontend-1  Started
+ Container tickethub-migrate-1  Waiting
+ Container tickethub-backend-1  Waiting
+ Container tickethub-frontend-1  Waiting
+ Container tickethub-postgres-1  Waiting
+ Container tickethub-frontend-1  Healthy
+ Container tickethub-backend-1  Healthy
+ Container tickethub-migrate-1  Exited
+ Container tickethub-postgres-1  Healthy
++ curl --fail --connect-timeout 5 --max-time 30 http://localhost:8000/health
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    20  100    20    0     0  10587      0 --:--:-- --:--:-- --:--:-- 20000
+{"status":"healthy"}+ curl --fail --connect-timeout 5 --max-time 30 http://localhost:8000/ready
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    34  100    34    0     0  16634      0 --:--:-- --:--:-- --:--:-- 17000
+{"status":"ready","database":"ok"}+ CURL_OPTS='--fail --connect-timeout 5 --max-time 30'
++ bash final-devops-project/scripts/seed.sh
+created 201
+created 201
+created 201
+created 201
+created 201
+{"total":5,"by_status":{"open":3,"in_progress":1,"resolved":1,"closed":0},"by_priority":{"low":1,"medium":2,"high":1,"urgent":1},"open_urgent":1,"unassigned":2}
++ curl --fail --connect-timeout 5 --max-time 30 http://localhost:8000/api/tickets/stats
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   160  100   160    0     0  48914      0 --:--:-- --:--:-- --:--:-- 53333
+{"total":5,"by_status":{"open":3,"in_progress":1,"resolved":1,"closed":0},"by_priority":{"low":1,"medium":2,"high":1,"urgent":1},"open_urgent":1,"unassigned":2}+ curl --fail --connect-timeout 5 --max-time 30 http://localhost:3000
++ head -15
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   469  100   469    0     0   558k      0 --:--:-- --:--:-- --:--:--  458k
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>TicketHub by Mayank</title>
+    <script type="module" crossorigin src="/assets/index-DPrXGoXg.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DXfaZQP9.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
++ curl --fail --connect-timeout 5 --max-time 30 http://localhost:8000/metrics
++ head -20
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  7651  100  7651    0     0  3153k    # HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 410.0
+python_gc_objects_collected_total{generation="1"} 26.0
+python_gc_objects_collected_total{generation="2"} 0.0
+# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
+# TYPE python_gc_objects_uncollectable_total counter
+python_gc_objects_uncollectable_total{generation="0"} 0.0
+python_gc_objects_uncollectable_total{generation="1"} 0.0
+python_gc_objects_uncollectable_total{generation="2"} 0.0
+# HELP python_gc_collections_total Number of times this generation was collected
+# TYPE python_gc_collections_total counter
+python_gc_collections_total{generation="0"} 212.0
+python_gc_collections_total{generation="1"} 19.0
+python_gc_collections_total{generation="2"} 1.0
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="12",patchlevel="15",version="3.12.15"} 1.0
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+  0 --:--:-- --:--:-- --:--:-- 3735k
+curl: Failed writing body
++ test 23 = 23
++ docker compose -f final-devops-project/docker/docker-compose.yml ps
+NAME                   IMAGE                COMMAND                  SERVICE    CREATED          STATUS                    PORTS
+tickethub-backend-1    tickethub-backend    "uvicorn app.main:ap…"   backend    18 seconds ago   Up 11 seconds (healthy)   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+tickethub-frontend-1   tickethub-frontend   "/docker-entrypoint.…"   frontend   18 seconds ago   Up Less than a second     0.0.0.0:3000->8080/tcp, [::]:3000->8080/tcp
+tickethub-postgres-1   postgres:16-alpine   "docker-entrypoint.s…"   postgres   18 seconds ago   Up 18 seconds (healthy)   5432/tcp
++ pip -q install playwright
++ google-chrome --version
+Google Chrome 154.0.8037.57 
++ python scripts/capture-app.py capstone http://localhost:3000
++ docker compose -f final-devops-project/docker/docker-compose.yml down -v
+ Container tickethub-frontend-1  Stopping
+ Container tickethub-frontend-1  Stopped
+ Container tickethub-frontend-1  Removing
+ Container tickethub-frontend-1  Removed
+ Container tickethub-backend-1  Stopping
+ Container tickethub-backend-1  Stopped
+ Container tickethub-backend-1  Removing
+ Container tickethub-backend-1  Removed
+ Container tickethub-migrate-1  Stopping
+ Container tickethub-migrate-1  Stopped
+ Container tickethub-migrate-1  Removing
+ Container tickethub-migrate-1  Removed
+ Container tickethub-postgres-1  Stopping
+ Container tickethub-postgres-1  Stopped
+ Container tickethub-postgres-1  Removing
+ Container tickethub-postgres-1  Removed
+ Network tickethub_default  Removing
+ Volume tickethub_pgdata  Removing
+ Network tickethub_default  Removed
+ Volume tickethub_pgdata  Removed
++ echo 'PASS: backend tests, frontend production build, Compose PostgreSQL/migrations/API/frontend stack and ticket seed. EKS/Argo CD/HPA deployment remains a separate exercise.'
+PASS: backend tests, frontend production build, Compose PostgreSQL/migrations/API/frontend stack and ticket seed. EKS/Argo CD/HPA deployment remains a separate exercise.

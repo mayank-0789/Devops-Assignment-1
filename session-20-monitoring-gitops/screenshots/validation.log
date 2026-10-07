@@ -1,0 +1,448 @@
+Mayank Gupta | 24BCS10220 | mayank-0789/Devops-Assignment-1
+Scope: session-20-monitoring-gitops
+Commit: 166f9c70f4ee3339c99531ebfc0c3118fd8bbeaf
+UTC: 2026-10-07T18:37:11Z
+Run: https://github.com/mayank-0789/Devops-Assignment-1/actions/runs/37668016962
++ monitoring_lab
++ cd /home/runner/work/Devops-Assignment-1/Devops-Assignment-1
++ timeout 360 docker compose -f session-20-monitoring-gitops/01-monitoring/docker-compose.yml up -d --build
+ node-exporter Pulling 
+ prometheus Pulling 
+ grafana Pulling 
+ 9fa9226be034 Pulling fs layer 
+ 1617e25568b2 Pulling fs layer 
+ c6e37428e3b3 Pulling fs layer 
+ 9fa9226be034 Downloading [=>                                                 ]  15.75kB/783kB
+ 1617e25568b2 Downloading [=>                                                 ]  15.75kB/480.9kB
+ c6e37428e3b3 Downloading [>                                                  ]    130kB/11.69MB
+ 1617e25568b2 Downloading [==================================================>]  480.9kB/480.9kB
+ 1617e25568b2 Download complete 
+ 9fa9226be034 Download complete 
+ 9fa9226be034 Extracting [==>                                                ]  32.77kB/783kB
+ 9fa9226be034 Extracting [==================================================>]    783kB/783kB
+ 9fa9226be034 Extracting [==================================================>]    783kB/783kB
+ c6e37428e3b3 Verifying Checksum 
+ c6e37428e3b3 Download complete 
+ 9fa9226be034 Pull complete 
+ 1617e25568b2 Extracting [===>                                               ]  32.77kB/480.9kB
+ 9fa9226be034 Already exists 
+ 1617e25568b2 Pulling fs layer 
+ 097a69c6efe6 Pulling fs layer 
+ 2ee6cb77bebd Pulling fs layer 
+ a4e782810d03 Pulling fs layer 
+ 76619c1908eb Pulling fs layer 
+ 2dfc70ad9941 Pulling fs layer 
+ fd1d3a5a5f79 Pulling fs layer 
+ 5e4c02bc6754 Pulling fs layer 
+ 208063e2dcbb Pulling fs layer 
+ 1617e25568b2 Extracting [===>                                               ]  32.77kB/480.9kB
+ 2dfc70ad9941 Waiting 
+ fd1d3a5a5f79 Waiting 
+ 5e4c02bc6754 Waiting 
+ 208063e2dcbb Waiting 
+ 76619c1908eb Waiting 
+ 9824c27679d3 Pulling fs layer 
+ b5f55c75514d Pulling fs layer 
+ d394204a1bdc Pulling fs layer 
+ cc8d890506a2 Pulling fs layer 
+ d4acc02fae7c Pulling fs layer 
+ 8c90a7c3d0e1 Pulling fs layer 
+ 85954acfa484 Pulling fs layer 
+ 164de8f14b64 Pulling fs layer 
+ be3398fa2dbf Pulling fs layer 
+ 8711a47cb968 Pulling fs layer 
+ 9824c27679d3 Waiting 
+ b5f55c75514d Waiting 
+ d394204a1bdc Waiting 
+ cc8d890506a2 Waiting 
+ d4acc02fae7c Waiting 
+ 8c90a7c3d0e1 Waiting 
+ 85954acfa484 Waiting 
+ 164de8f14b64 Waiting 
+ be3398fa2dbf Waiting 
+ 8711a47cb968 Waiting 
+ a4e782810d03 Downloading [==================================================>]     638B/638B
+ a4e782810d03 Verifying Checksum 
+ a4e782810d03 Download complete 
+ 2ee6cb77bebd Downloading [>                                                  ]    540kB/58.42MB
+ 097a69c6efe6 Downloading [>                                                  ]    540kB/64.04MB
+ 76619c1908eb Downloading [===========================================>       ]  3.502kB/4.023kB
+ 76619c1908eb Downloading [==================================================>]  4.023kB/4.023kB
+ 76619c1908eb Verifying Checksum 
+ 76619c1908eb Download complete 
+ 2dfc70ad9941 Downloading [==================================================>]   1.44kB/1.44kB
+ 2dfc70ad9941 Verifying Checksum 
+ 2dfc70ad9941 Download complete 
+ fd1d3a5a5f79 Downloading [==>                                                ]  3.501kB/60.68kB
+ fd1d3a5a5f79 Downloading [==================================================>]  60.68kB/60.68kB
+ fd1d3a5a5f79 Verifying Checksum 
+ fd1d3a5a5f79 Download complete 
+ 1617e25568b2 Extracting [===============================================>   ]  458.8kB/480.9kB
+ 1617e25568b2 Extracting [===============================================>   ]  458.8kB/480.9kB
+ 2ee6cb77bebd Downloading [==========================>                        ]  31.36MB/58.42MB
+ 097a69c6efe6 Downloading [========================>                          ]  31.36MB/64.04MB
+ 5e4c02bc6754 Downloading [==================================================>]     100B/100B
+ 5e4c02bc6754 Verifying Checksum 
+ 5e4c02bc6754 Download complete 
+ 1617e25568b2 Extracting [==================================================>]  480.9kB/480.9kB
+ 1617e25568b2 Extracting [==================================================>]  480.9kB/480.9kB
+ 208063e2dcbb Downloading [==================================================>]     693B/693B
+ 208063e2dcbb Verifying Checksum 
+ 208063e2dcbb Download complete 
+ 1617e25568b2 Extracting [==================================================>]  480.9kB/480.9kB
+ 1617e25568b2 Extracting [==================================================>]  480.9kB/480.9kB
+ 2ee6cb77bebd Verifying Checksum 
+ 2ee6cb77bebd Download complete 
+ 9824c27679d3 Downloading [>                                                  ]  48.51kB/3.8MB
+ 9824c27679d3 Verifying Checksum 
+ 9824c27679d3 Download complete 
+ 9824c27679d3 Extracting [>                                                  ]  65.54kB/3.8MB
+ b5f55c75514d Downloading [==================================================>]     139B/139B
+ b5f55c75514d Verifying Checksum 
+ b5f55c75514d Download complete 
+ 097a69c6efe6 Downloading [=============================================>     ]  58.39MB/64.04MB
+ 097a69c6efe6 Verifying Checksum 
+ 097a69c6efe6 Download complete 
+ cc8d890506a2 Downloading [>                                                  ]   98.3kB/8.735MB
+ d394204a1bdc Downloading [>                                                  ]  49.15kB/3.626MB
+ d4acc02fae7c Downloading [=============>                                     ]  16.38kB/59.03kB
+ d4acc02fae7c Downloading [==================================================>]  59.03kB/59.03kB
+ d4acc02fae7c Verifying Checksum 
+ d4acc02fae7c Download complete 
+ d394204a1bdc Verifying Checksum 
+ d394204a1bdc Download complete 
+ cc8d890506a2 Verifying Checksum 
+ cc8d890506a2 Download complete 
+ 8c90a7c3d0e1 Downloading [============================>                      ]  16.38kB/28.36kB
+ 8c90a7c3d0e1 Downloading [==================================================>]  28.36kB/28.36kB
+ 8c90a7c3d0e1 Download complete 
+ 9824c27679d3 Extracting [===============================================>   ]  3.604MB/3.8MB
+ 9824c27679d3 Extracting [==================================================>]    3.8MB/3.8MB
+ 85954acfa484 Downloading [>                                                  ]    538kB/109.8MB
+ 9824c27679d3 Extracting [==================================================>]    3.8MB/3.8MB
+ be3398fa2dbf Downloading [==============>                                    ]  3.501kB/11.92kB
+ be3398fa2dbf Downloading [==================================================>]  11.92kB/11.92kB
+ be3398fa2dbf Verifying Checksum 
+ be3398fa2dbf Download complete 
+ 164de8f14b64 Downloading [>                                                  ]  539.6kB/75.5MB
+ 8711a47cb968 Downloading [==================================================>]  1.325kB/1.325kB
+ 8711a47cb968 Verifying Checksum 
+ 8711a47cb968 Download complete 
+ 85954acfa484 Downloading [==================>                                ]  40.44MB/109.8MB
+ 164de8f14b64 Downloading [=======================>                           ]  36.21MB/75.5MB
+ 85954acfa484 Downloading [======================================>            ]  84.47MB/109.8MB
+ 164de8f14b64 Downloading [=========================================>         ]  62.29MB/75.5MB
+ 164de8f14b64 Verifying Checksum 
+ 164de8f14b64 Download complete 
+ 85954acfa484 Verifying Checksum 
+ 85954acfa484 Download complete 
+ 9824c27679d3 Pull complete 
+ b5f55c75514d Extracting [==================================================>]     139B/139B
+ b5f55c75514d Extracting [==================================================>]     139B/139B
+ b5f55c75514d Pull complete 
+ d394204a1bdc Extracting [>                                                  ]  65.54kB/3.626MB
+ 1617e25568b2 Pull complete 
+ 1617e25568b2 Pull complete 
+ c6e37428e3b3 Extracting [>                                                  ]  131.1kB/11.69MB
+ 097a69c6efe6 Extracting [>                                                  ]  557.1kB/64.04MB
+ d394204a1bdc Extracting [==========>                                        ]  786.4kB/3.626MB
+ c6e37428e3b3 Extracting [========================================>          ]  9.568MB/11.69MB
+ c6e37428e3b3 Extracting [==================================================>]  11.69MB/11.69MB
+ 097a69c6efe6 Extracting [=====>                                             ]  6.685MB/64.04MB
+ 097a69c6efe6 Extracting [=======>                                           ]   9.47MB/64.04MB
+ d394204a1bdc Extracting [=================================================> ]  3.604MB/3.626MB
+ d394204a1bdc Extracting [==================================================>]  3.626MB/3.626MB
+ 097a69c6efe6 Extracting [===========>                                       ]  15.04MB/64.04MB
+ c6e37428e3b3 Pull complete 
+ node-exporter Pulled 
+ 097a69c6efe6 Extracting [===================>                               ]  24.51MB/64.04MB
+ 097a69c6efe6 Extracting [==========================>                        ]  33.98MB/64.04MB
+ 097a69c6efe6 Extracting [=================================================> ]   63.5MB/64.04MB
+ 097a69c6efe6 Extracting [==================================================>]  64.04MB/64.04MB
+ 097a69c6efe6 Extracting [==================================================>]  64.04MB/64.04MB
+ d394204a1bdc Pull complete 
+ 097a69c6efe6 Pull complete 
+ cc8d890506a2 Extracting [>                                                  ]   98.3kB/8.735MB
+ 2ee6cb77bebd Extracting [>                                                  ]  557.1kB/58.42MB
+ cc8d890506a2 Extracting [=========================================>         ]  7.176MB/8.735MB
+ 2ee6cb77bebd Extracting [=======>                                           ]  8.356MB/58.42MB
+ cc8d890506a2 Extracting [==================================================>]  8.735MB/8.735MB
+ 2ee6cb77bebd Extracting [=============>                                     ]  16.15MB/58.42MB
+ 2ee6cb77bebd Extracting [====================>                              ]   23.4MB/58.42MB
+ 2ee6cb77bebd Extracting [==============================>                    ]  36.21MB/58.42MB
+ 2ee6cb77bebd Extracting [==================================================>]  58.42MB/58.42MB
+ cc8d890506a2 Pull complete 
+ 2ee6cb77bebd Pull complete 
+ d4acc02fae7c Extracting [===========================>                       ]  32.77kB/59.03kB
+ d4acc02fae7c Extracting [==================================================>]  59.03kB/59.03kB
+ a4e782810d03 Extracting [==================================================>]     638B/638B
+ a4e782810d03 Extracting [==================================================>]     638B/638B
+ a4e782810d03 Pull complete 
+ 76619c1908eb Extracting [==================================================>]  4.023kB/4.023kB
+ 76619c1908eb Extracting [==================================================>]  4.023kB/4.023kB
+ d4acc02fae7c Pull complete 
+ 8c90a7c3d0e1 Extracting [==================================================>]  28.36kB/28.36kB
+ 76619c1908eb Pull complete 
+ 8c90a7c3d0e1 Extracting [==================================================>]  28.36kB/28.36kB
+ 2dfc70ad9941 Extracting [==================================================>]   1.44kB/1.44kB
+ 2dfc70ad9941 Extracting [==================================================>]   1.44kB/1.44kB
+ 2dfc70ad9941 Pull complete 
+ fd1d3a5a5f79 Extracting [===========================>                       ]  32.77kB/60.68kB
+ fd1d3a5a5f79 Extracting [==================================================>]  60.68kB/60.68kB
+ 8c90a7c3d0e1 Pull complete 
+ fd1d3a5a5f79 Pull complete 
+ 5e4c02bc6754 Extracting [==================================================>]     100B/100B
+ 5e4c02bc6754 Extracting [==================================================>]     100B/100B
+ 5e4c02bc6754 Pull complete 
+ 85954acfa484 Extracting [>                                                  ]  557.1kB/109.8MB
+ 208063e2dcbb Extracting [==================================================>]     693B/693B
+ 208063e2dcbb Extracting [==================================================>]     693B/693B
+ 208063e2dcbb Pull complete 
+ prometheus Pulled 
+ 85954acfa484 Extracting [====>                                              ]   9.47MB/109.8MB
+ 85954acfa484 Extracting [=======>                                           ]  16.71MB/109.8MB
+ 85954acfa484 Extracting [==========>                                        ]   23.4MB/109.8MB
+ 85954acfa484 Extracting [================>                                  ]  35.65MB/109.8MB
+ 85954acfa484 Extracting [====================>                              ]  45.68MB/109.8MB
+ 85954acfa484 Extracting [=========================>                         ]  55.71MB/109.8MB
+ 85954acfa484 Extracting [=============================>                     ]  65.18MB/109.8MB
+ 85954acfa484 Extracting [=================================>                 ]  74.65MB/109.8MB
+ 85954acfa484 Extracting [=====================================>             ]  82.44MB/109.8MB
+ 85954acfa484 Extracting [==========================================>        ]  93.59MB/109.8MB
+ 85954acfa484 Extracting [===============================================>   ]  105.3MB/109.8MB
+ 85954acfa484 Extracting [=================================================> ]  108.6MB/109.8MB
+ 85954acfa484 Extracting [==================================================>]  109.8MB/109.8MB
+ 85954acfa484 Pull complete 
+ 164de8f14b64 Extracting [>                                                  ]  557.1kB/75.5MB
+ 164de8f14b64 Extracting [>                                                  ]  1.114MB/75.5MB
+ 164de8f14b64 Extracting [=>                                                 ]  1.671MB/75.5MB
+ 164de8f14b64 Extracting [=>                                                 ]  2.228MB/75.5MB
+ 164de8f14b64 Extracting [=>                                                 ]  2.785MB/75.5MB
+ 164de8f14b64 Extracting [==>                                                ]  4.456MB/75.5MB
+ 164de8f14b64 Extracting [===>                                               ]  5.014MB/75.5MB
+ 164de8f14b64 Extracting [=====>                                             ]  8.356MB/75.5MB
+ 164de8f14b64 Extracting [=======>                                           ]  10.58MB/75.5MB
+ 164de8f14b64 Extracting [=========>                                         ]  13.93MB/75.5MB
+ 164de8f14b64 Extracting [============>                                      ]  18.38MB/75.5MB
+ 164de8f14b64 Extracting [==============>                                    ]  21.73MB/75.5MB
+ 164de8f14b64 Extracting [===================>                               ]  28.97MB/75.5MB
+ 164de8f14b64 Extracting [=======================>                           ]  35.09MB/75.5MB
+ 164de8f14b64 Extracting [============================>                      ]  42.34MB/75.5MB
+ 164de8f14b64 Extracting [================================>                  ]  49.02MB/75.5MB
+ 164de8f14b64 Extracting [====================================>              ]  54.59MB/75.5MB
+ 164de8f14b64 Extracting [=======================================>           ]   59.6MB/75.5MB
+ 164de8f14b64 Extracting [=======================================>           ]  60.16MB/75.5MB
+ 164de8f14b64 Extracting [===========================================>       ]  66.29MB/75.5MB
+ 164de8f14b64 Extracting [==============================================>    ]  70.19MB/75.5MB
+ 164de8f14b64 Extracting [==================================================>]   75.5MB/75.5MB
+ 164de8f14b64 Pull complete 
+ be3398fa2dbf Extracting [==================================================>]  11.92kB/11.92kB
+ be3398fa2dbf Extracting [==================================================>]  11.92kB/11.92kB
+ be3398fa2dbf Pull complete 
+ 8711a47cb968 Extracting [==================================================>]  1.325kB/1.325kB
+ 8711a47cb968 Extracting [==================================================>]  1.325kB/1.325kB
+ 8711a47cb968 Pull complete 
+ grafana Pulled 
+#1 [internal] load local bake definitions
+#1 reading from stdin 508B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 447B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [1/6] FROM docker.io/library/python:3.12-slim@sha256:05cda9777409a9c3ffddd94a4c476b79f0769a0b4857f0c7ed9226b6800b0d6f
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 2.44kB done
+#6 DONE 0.0s
+
+#7 [2/6] WORKDIR /srv
+#7 CACHED
+
+#8 [3/6] COPY requirements.txt .
+#8 DONE 0.0s
+
+#9 [4/6] RUN pip install --no-cache-dir -r requirements.txt
+#9 1.184 Collecting Flask==3.1.3 (from -r requirements.txt (line 1))
+#9 1.233   Downloading flask-3.1.3-py3-none-any.whl.metadata (3.2 kB)
+#9 1.246 Collecting gunicorn==23.0.0 (from -r requirements.txt (line 2))
+#9 1.256   Downloading gunicorn-23.0.0-py3-none-any.whl.metadata (4.4 kB)
+#9 1.267 Collecting prometheus-client==0.23.1 (from -r requirements.txt (line 3))
+#9 1.276   Downloading prometheus_client-0.23.1-py3-none-any.whl.metadata (1.9 kB)
+#9 1.283 Collecting blinker>=1.9.0 (from Flask==3.1.3->-r requirements.txt (line 1))
+#9 1.292   Downloading blinker-1.9.0-py3-none-any.whl.metadata (1.6 kB)
+#9 1.303 Collecting click>=8.1.3 (from Flask==3.1.3->-r requirements.txt (line 1))
+#9 1.312   Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+#9 1.318 Collecting itsdangerous>=2.2.0 (from Flask==3.1.3->-r requirements.txt (line 1))
+#9 1.327   Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+#9 1.336 Collecting jinja2>=3.1.2 (from Flask==3.1.3->-r requirements.txt (line 1))
+#9 1.345   Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+#9 1.381 Collecting markupsafe>=2.1.1 (from Flask==3.1.3->-r requirements.txt (line 1))
+#9 1.390   Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+#9 1.403 Collecting werkzeug>=3.1.0 (from Flask==3.1.3->-r requirements.txt (line 1))
+#9 1.412   Downloading werkzeug-3.1.9-py3-none-any.whl.metadata (4.1 kB)
+#9 1.423 Collecting packaging (from gunicorn==23.0.0->-r requirements.txt (line 2))
+#9 1.432   Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+#9 1.446 Downloading flask-3.1.3-py3-none-any.whl (103 kB)
+#9 1.466 Downloading gunicorn-23.0.0-py3-none-any.whl (85 kB)
+#9 1.476 Downloading prometheus_client-0.23.1-py3-none-any.whl (61 kB)
+#9 1.486 Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+#9 1.495 Downloading click-8.5.0-py3-none-any.whl (125 kB)
+#9 1.505 Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+#9 1.515 Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+#9 1.525 Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+#9 1.534 Downloading werkzeug-3.1.9-py3-none-any.whl (228 kB)
+#9 1.545 Downloading packaging-26.3-py3-none-any.whl (129 kB)
+#9 1.563 Installing collected packages: prometheus-client, packaging, markupsafe, itsdangerous, click, blinker, werkzeug, jinja2, gunicorn, Flask
+#9 2.179 Successfully installed Flask-3.1.3 blinker-1.9.0 click-8.5.0 gunicorn-23.0.0 itsdangerous-2.2.0 jinja2-3.1.6 markupsafe-3.0.4 packaging-26.3 prometheus-client-0.23.1 werkzeug-3.1.9
+#9 2.179 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#9 2.245 
+#9 2.245 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#9 2.245 [notice] To update, run: pip install --upgrade pip
+#9 DONE 2.4s
+
+#10 [5/6] COPY app.py .
+#10 DONE 0.0s
+
+#11 [6/6] RUN useradd --uid 10001 --no-create-home demo
+#11 DONE 0.2s
+
+#12 exporting to image
+#12 exporting layers
+#12 exporting layers 0.6s done
+#12 writing image sha256:00b763c9bea2fccbbccc78e4e63b85af0fe7066e9081dd370274f851ad1a8dcd done
+#12 naming to docker.io/library/01-monitoring-app done
+#12 DONE 0.6s
+
+#13 resolving provenance for metadata file
+#13 DONE 0.0s
+ app  Built
+ Network 01-monitoring_default  Creating
+ Network 01-monitoring_default  Created
+ Volume "01-monitoring_prometheus-data"  Creating
+ Volume "01-monitoring_prometheus-data"  Created
+ Container s20-node-exporter  Creating
+ Container s20-prometheus  Creating
+ Container s20-app  Creating
+ Container s20-node-exporter  Created
+ Container s20-app  Created
+ Container s20-prometheus  Created
+ Container s20-grafana  Creating
+ Container s20-grafana  Created
+ Container s20-app  Starting
+ Container s20-node-exporter  Starting
+ Container s20-prometheus  Starting
+ Container s20-node-exporter  Started
+ Container s20-prometheus  Started
+ Container s20-grafana  Starting
+ Container s20-app  Started
+ Container s20-grafana  Started
+++ seq 1 60
++ for _ in $(seq 1 60)
++ curl -fsS --connect-timeout 5 --max-time 15 http://localhost:8000/health
+UP+ curl -fsS --connect-timeout 5 --max-time 15 http://localhost:9090/-/ready
+Prometheus Server is Ready.
++ curl -fsS --connect-timeout 5 --max-time 15 http://localhost:3000/api/health
+curl: (56) Recv failure: Connection reset by peer
++ sleep 3
++ for _ in $(seq 1 60)
++ curl -fsS --connect-timeout 5 --max-time 15 http://localhost:8000/health
+UP+ curl -fsS --connect-timeout 5 --max-time 15 http://localhost:9090/-/ready
+Prometheus Server is Ready.
++ curl -fsS --connect-timeout 5 --max-time 15 http://localhost:3000/api/health
+curl: (56) Recv failure: Connection reset by peer
++ sleep 3
++ for _ in $(seq 1 60)
++ curl -fsS --connect-timeout 5 --max-time 15 http://localhost:8000/health
+UP+ curl -fsS --connect-timeout 5 --max-time 15 http://localhost:9090/-/ready
+Prometheus Server is Ready.
++ curl -fsS --connect-timeout 5 --max-time 15 http://localhost:3000/api/health
+{
+  "database": "ok",
+  "version": "12.1.1",
+  "commit": "df5de8219b41d1e639e003bf5f3a85913761d167"
+}+ break
++ curl --fail --connect-timeout 5 --max-time 30 http://localhost:8000/
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    78  100    78    0     0  60747      0 --:--:-- --:--:-- --:--:-- 78000
+{"message":"Hello from Mayank's monitored app","owner":"Mayank","session":20}
++ curl --fail --connect-timeout 5 --max-time 30 http://localhost:8000/metrics
++ head -20
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  4509  100 # HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 601.0
+python_gc_objects_collected_total{generation="1"} 196.0
+python_gc_objects_collected_total{generation="2"} 0.0
+# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
+# TYPE python_gc_objects_uncollectable_total counter
+python_gc_objects_uncollectable_total{generation="0"} 0.0
+python_gc_objects_uncollectable_total{generation="1"} 0.0
+python_gc_objects_uncollectable_total{generation="2"} 0.0
+# HELP python_gc_collections_total Number of times this generation was collected
+# TYPE python_gc_collections_total counter
+python_gc_collections_total{generation="0"} 75.0
+python_gc_collections_total{generation="1"} 6.0
+python_gc_collections_total{generation="2"} 0.0
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="12",patchlevel="15",version="3.12.15"} 1.0
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+ 4509    0     0  3240k      0 --:--:-- --:--:-- --:--:-- 4403k
+curl: Failed writing body
++ test 23 = 23
++ sleep 20
++ curl --fail --connect-timeout 5 --max-time 30 'http://localhost:9090/api/v1/query?query=up'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   362  100   362    0     0   335k      0 --:--:-- --:--:-- --:--:--  353k
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"__name__":"up","instance":"app:8000","job":"app"},"value":[1791398273.720,"1"]},{"metric":{"__name__":"up","instance":"localhost:9090","job":"prometheus"},"value":[1791398273.720,"1"]},{"metric":{"__name__":"up","instance":"node-exporter:9100","job":"node"},"value":[1791398273.720,"1"]}]}}+ curl --fail --connect-timeout 5 --max-time 30 http://localhost:3000/api/health
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   101  100   101    0     0   112k      0 --:--:-- --:--:-- --:--:--   98k
+{
+  "database": "ok",
+  "version": "12.1.1",
+  "commit": "df5de8219b41d1e639e003bf5f3a85913761d167"
+}+ docker compose -f session-20-monitoring-gitops/01-monitoring/docker-compose.yml ps
+NAME                IMAGE                       COMMAND                  SERVICE         CREATED          STATUS          PORTS
+s20-app             01-monitoring-app           "gunicorn --bind 0.0…"   app             26 seconds ago   Up 26 seconds   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+s20-grafana         grafana/grafana:12.1.1      "/run.sh"                grafana         26 seconds ago   Up 26 seconds   0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+s20-node-exporter   prom/node-exporter:v1.9.1   "/bin/node_exporter"     node-exporter   26 seconds ago   Up 26 seconds   9100/tcp
+s20-prometheus      prom/prometheus:v3.5.0      "/bin/prometheus --c…"   prometheus      26 seconds ago   Up 26 seconds   0.0.0.0:9090->9090/tcp, [::]:9090->9090/tcp
++ python scripts/capture-app.py monitoring http://localhost:3000/d/mayank-s20
++ docker compose -f session-20-monitoring-gitops/01-monitoring/docker-compose.yml down -v
+ Container s20-node-exporter  Stopping
+ Container s20-grafana  Stopping
+ Container s20-app  Stopping
+ Container s20-node-exporter  Stopped
+ Container s20-node-exporter  Removing
+ Container s20-node-exporter  Removed
+ Container s20-grafana  Stopped
+ Container s20-grafana  Removing
+ Container s20-grafana  Removed
+ Container s20-prometheus  Stopping
+ Container s20-prometheus  Stopped
+ Container s20-prometheus  Removing
+ Container s20-app  Stopped
+ Container s20-app  Removing
+ Container s20-prometheus  Removed
+ Container s20-app  Removed
+ Volume 01-monitoring_prometheus-data  Removing
+ Network 01-monitoring_default  Removing
+ Volume 01-monitoring_prometheus-data  Removed
+ Network 01-monitoring_default  Removed
++ echo 'PASS: app, Prometheus and Grafana live stack. GitOps manifest targets this repository; Argo CD synchronization not exercised.'
+PASS: app, Prometheus and Grafana live stack. GitOps manifest targets this repository; Argo CD synchronization not exercised.
