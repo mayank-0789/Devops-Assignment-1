@@ -142,9 +142,9 @@ Terminal view: my six images, all six containers running, and `curl` against eve
 
 Each browser screenshot below shows the app running in my container with my personalised greeting.
 
-- Node.js: 
-- Python: 
-- Java: 
-- Apache: 
-- React: 
+- Node.js:
+- Python:
+- Java:
+- Apache:
+- React:
 - Nginx:
