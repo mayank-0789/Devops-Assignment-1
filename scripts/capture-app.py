@@ -8,6 +8,12 @@ with sync_playwright() as p:
  page=browser.new_page(viewport={'width':1440,'height':1100})
  page.goto(sys.argv[2],wait_until='networkidle')
  page.wait_for_timeout(3000)
- assert 'nishant' not in page.inner_text('body').lower()
+ text=page.inner_text('body')
+ assert 'nishant' not in text.lower()
+ if sys.argv[1] == 'capstone':
+  assert 'Mayank Gupta' in text and '24BCS10220' in text
+  assert 'Delivery pipeline' not in text
+ else:
+  assert 'Mayank Session 20 Application Monitoring' in text
  page.screenshot(path=str(out/'application.png'), full_page=True)
  browser.close()

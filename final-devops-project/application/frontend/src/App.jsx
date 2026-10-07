@@ -64,16 +64,17 @@ export default function App() {
   return (
     <div className="layout">
       <aside className="sidebar">
-        <div className="brand"><span className="logo">TH</span><div><strong>TicketHub</strong><small>Mayank's helpdesk</small></div></div>
+        <div className="brand"><span className="logo">TH</span><div><strong>TicketHub</strong><small>Mayank Gupta's helpdesk</small></div></div>
         <nav>
           <a className="active" href="#">Dashboard</a>
           <a href="#tickets">Tickets</a>
           <a href="/docs" target="_blank" rel="noreferrer">API docs</a>
           <a href="/metrics" target="_blank" rel="noreferrer">Metrics</a>
         </nav>
-        <div className="pipeline">
-          <small>Delivery pipeline</small>
-          {["tests", "scan", "build", "push", "deploy"].map((s) => <span key={s} className="step">{s}</span>)}
+        <div className="student">
+          <small>Student workspace</small>
+          <strong>Mayank Gupta</strong>
+          <span>24BCS10220</span>
         </div>
         <footer>DevOps capstone, SST</footer>
       </aside>
