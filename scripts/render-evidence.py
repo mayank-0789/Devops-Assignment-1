@@ -4,7 +4,7 @@ import html, json, os, re
 from playwright.sync_api import sync_playwright
 root=Path('evidence')
 with sync_playwright() as p:
- browser=p.chromium.launch()
+ browser=p.chromium.launch(channel="chrome")
  page=browser.new_page(viewport={'width':1440,'height':1000}, device_scale_factor=1)
  for log in sorted(root.glob('*/validation.log')):
   text=log.read_text()

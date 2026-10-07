@@ -58,7 +58,7 @@ jobs:
         if: always()
         run: |
           pip -q install playwright
-          python -m playwright install --with-deps chromium
+          google-chrome --version
           python scripts/render-evidence.py
       - uses: actions/upload-artifact@v4
         if: always()

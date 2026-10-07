@@ -17,7 +17,7 @@ capstone_lab() {
  curl --fail --connect-timeout 5 --max-time 30 http://localhost:8000/metrics | head -20 || test "${PIPESTATUS[0]}" = 23
  docker compose -f final-devops-project/docker/docker-compose.yml ps
  pip -q install playwright
- timeout 240 python -m playwright install --with-deps chromium
+ google-chrome --version
  python scripts/capture-app.py capstone http://localhost:3000
  docker compose -f final-devops-project/docker/docker-compose.yml down -v
  echo 'PASS: backend tests, frontend production build, Compose PostgreSQL/migrations/API/frontend stack and ticket seed. EKS/Argo CD/HPA deployment remains a separate exercise.'
