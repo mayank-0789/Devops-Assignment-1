@@ -1,0 +1,156 @@
+Mayank Gupta | 24BCS10220 | mayank-0789/Devops-Assignment-1
+Scope: Docker Fundamentals
+Commit: cbf69afbfdddfd0a61fd3f672098c2bd5bd2421e
+UTC: 2026-10-07T18:08:29Z
+Run: https://github.com/mayank-0789/Devops-Assignment-1/actions/runs/37664487255
++ docker_apps
++ local dir tag port body
++ port=8100
++ for dir in nodejs-app python-app java-app Apache-app React-app nginx-app
++ tag=mayank-lab-nodejs-app
++ docker build -q -t mayank-lab-nodejs-app 'Docker Fundamentals/nodejs-app'
+sha256:74641c99ba810cf3839b8ddb820f2183bb22b541e47a6e0afe4a541e4fb74fbf
++ case "$dir" in
++ target=3000
++ docker run -d --name mayank-lab-nodejs-app -p 8100:3000 mayank-lab-nodejs-app
+f3b3c4a966d708001cf0a7cd5623fe0ec55f23bec98cf43a9d60393b25ff6593
+++ seq 1 30
++ for _ in $(seq 1 30)
++ curl -fsS http://localhost:8100
+curl: (56) Recv failure: Connection reset by peer
++ sleep 2
++ for _ in $(seq 1 30)
++ curl -fsS http://localhost:8100
++ break
++ cat /tmp/app-response
+<h1>Hello World from Mayank's Node.js app!</h1>+ grep -qi mayank /tmp/app-response
++ docker rm -f mayank-lab-nodejs-app
+mayank-lab-nodejs-app
++ port=8101
++ for dir in nodejs-app python-app java-app Apache-app React-app nginx-app
++ tag=mayank-lab-python-app
++ docker build -q -t mayank-lab-python-app 'Docker Fundamentals/python-app'
+sha256:7e018e083d0830f057466eaad5721f662d7a5fbd0d881c1faae7d31e70d8be6e
++ case "$dir" in
++ target=5000
++ docker run -d --name mayank-lab-python-app -p 8101:5000 mayank-lab-python-app
+f379d4a1564b22ca916cf0113cf1811b28b87a94b0a9a795d229c9703dbad7a8
+++ seq 1 30
++ for _ in $(seq 1 30)
++ curl -fsS http://localhost:8101
+curl: (56) Recv failure: Connection reset by peer
++ sleep 2
++ for _ in $(seq 1 30)
++ curl -fsS http://localhost:8101
++ break
++ cat /tmp/app-response
+<h1>Hello World from Mayank's Python (Flask) app!</h1>+ grep -qi mayank /tmp/app-response
++ docker rm -f mayank-lab-python-app
+mayank-lab-python-app
++ port=8102
++ for dir in nodejs-app python-app java-app Apache-app React-app nginx-app
++ tag=mayank-lab-java-app
++ docker build -q -t mayank-lab-java-app 'Docker Fundamentals/java-app'
+sha256:3a7ce8a2ab52515ee20df45707f254521671820abdaf07643965a29c415a909f
++ case "$dir" in
++ target=8080
++ docker run -d --name mayank-lab-java-app -p 8102:8080 mayank-lab-java-app
+8be35d09037b3248843ac9eff3853022a999159d1b4b789bb569729807dc8da7
+++ seq 1 30
++ for _ in $(seq 1 30)
++ curl -fsS http://localhost:8102
+curl: (56) Recv failure: Connection reset by peer
++ sleep 2
++ for _ in $(seq 1 30)
++ curl -fsS http://localhost:8102
++ break
++ cat /tmp/app-response
+<h1>Hello World from Mayank's Java app!</h1>+ grep -qi mayank /tmp/app-response
++ docker rm -f mayank-lab-java-app
+mayank-lab-java-app
++ port=8103
++ for dir in nodejs-app python-app java-app Apache-app React-app nginx-app
++ tag=mayank-lab-apache-app
++ docker build -q -t mayank-lab-apache-app 'Docker Fundamentals/Apache-app'
+sha256:f7a58a677435c8940bb62b978349167ccf945b6d2b3e99b4e7cea56499daa84a
++ case "$dir" in
++ target=80
++ docker run -d --name mayank-lab-apache-app -p 8103:80 mayank-lab-apache-app
+e321d2cbddf5e4fcb81d4ef7f0c21ef49f93c52a3fcfab299a1ca7ab9434132e
+++ seq 1 30
++ for _ in $(seq 1 30)
++ curl -fsS http://localhost:8103
++ break
++ cat /tmp/app-response
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mayank's Apache Hello World</title>
+</head>
+<body>
+  <h1>Hello World from Mayank's Apache HTTP Server!</h1>
+</body>
+</html>
++ grep -qi mayank /tmp/app-response
++ docker rm -f mayank-lab-apache-app
+mayank-lab-apache-app
++ port=8104
++ for dir in nodejs-app python-app java-app Apache-app React-app nginx-app
++ tag=mayank-lab-react-app
++ docker build -q -t mayank-lab-react-app 'Docker Fundamentals/React-app'
+sha256:9f356413e128891a2e72869c79d3defff8ce191f4b1d0971c3cab7209aa3ede1
++ case "$dir" in
++ target=80
++ docker run -d --name mayank-lab-react-app -p 8104:80 mayank-lab-react-app
+9afbdc43803a5cb00916777fbddfa1bd65498e1eb2eb56c7a63f32986e176129
+++ seq 1 30
++ for _ in $(seq 1 30)
++ curl -fsS http://localhost:8104
+curl: (56) Recv failure: Connection reset by peer
++ sleep 2
++ for _ in $(seq 1 30)
++ curl -fsS http://localhost:8104
++ break
++ cat /tmp/app-response
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Mayank's React Hello World</title><script defer="defer" src="/static/js/main.e7969bdb.js"></script></head><body><div id="root"></div></body></html>+ grep -qi mayank /tmp/app-response
++ docker rm -f mayank-lab-react-app
+mayank-lab-react-app
++ port=8105
++ for dir in nodejs-app python-app java-app Apache-app React-app nginx-app
++ tag=mayank-lab-nginx-app
++ docker build -q -t mayank-lab-nginx-app 'Docker Fundamentals/nginx-app'
+sha256:2dace953beece138cac04e9334bb77a683b829c0b9112e2a997be389f54289c5
++ case "$dir" in
++ target=80
++ docker run -d --name mayank-lab-nginx-app -p 8105:80 mayank-lab-nginx-app
+132f7d9f6455897802d4e1b484a280f0b3e9ef5c823146c03df66d35c80b19dd
+++ seq 1 30
++ for _ in $(seq 1 30)
++ curl -fsS http://localhost:8105
+curl: (56) Recv failure: Connection reset by peer
++ sleep 2
++ for _ in $(seq 1 30)
++ curl -fsS http://localhost:8105
++ break
++ cat /tmp/app-response
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mayank's Nginx Hello World</title>
+</head>
+<body>
+  <h1>Hello World from Mayank's Nginx server!</h1>
+</body>
+</html>
++ grep -qi mayank /tmp/app-response
++ docker rm -f mayank-lab-nginx-app
+mayank-lab-nginx-app
++ port=8106
++ docker images --filter 'reference=mayank-lab-*'
+REPOSITORY              TAG       IMAGE ID       CREATED              SIZE
+mayank-lab-nginx-app    latest    2dace953beec   3 seconds ago        62.9MB
+mayank-lab-react-app    latest    9f356413e128   6 seconds ago        63.4MB
+mayank-lab-apache-app   latest    f7a58a677435   About a minute ago   117MB
+mayank-lab-java-app     latest    3a7ce8a2ab52   About a minute ago   484MB
+mayank-lab-python-app   latest    7e018e083d08   About a minute ago   132MB
+mayank-lab-nodejs-app   latest    74641c99ba81   2 minutes ago        136MB

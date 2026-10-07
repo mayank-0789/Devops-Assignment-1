@@ -1,0 +1,20 @@
+Mayank Gupta | 24BCS10220 | mayank-0789/Devops-Assignment-1
+Scope: DockerFiles and Images
+Commit: cbf69afbfdddfd0a61fd3f672098c2bd5bd2421e
+UTC: 2026-10-07T18:10:39Z
+Run: https://github.com/mayank-0789/Devops-Assignment-1/actions/runs/37664487255
++ multi_stage
++ docker build -q -t mayank-multistage 'DockerFiles and Images'
+sha256:d27d7bc1eb28d9ee5e10fd6d0959ab0a4a579eab29a1533faddddc18db7f08dd
++ docker run -d --name mayank-multistage -p 8180:8080 mayank-multistage
+aafb8a466693ffb01cf49e8ec89d2786091928c7aae85b7801fd01f9773cc319
++ sleep 2
++ curl --fail http://localhost:8180
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    42  100    42    0     0  48837      0 --:--:-- --:--:-- --:--:-- 42000
+Hello World from Docker multi-stage build
++ docker image inspect mayank-multistage --format 'Final image size bytes: {{.Size}}'
+Final image size bytes: 15262630
++ docker rm -f mayank-multistage
+mayank-multistage

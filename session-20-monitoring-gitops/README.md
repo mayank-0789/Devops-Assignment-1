@@ -1,39 +1,38 @@
-# Session 20: Monitoring, Observability and GitOps
-
-> Adapted lab walkthrough for Mayank Gupta (24BCS10220). Commands and output blocks below are reference examples from the source material, not a claim that this machine ran them. Imported screenshots were omitted. See [source provenance](../SOURCE.md).
-
+# Monitoring, observability and GitOps
 
 **Name:** Mayank Gupta
 **Roll No:** 24BCS10220
-**Course:** SST DevOps & Cloud [SWE]
-**Session:** 20
+**Repository:** [mayank-0789/Devops-Assignment-1](https://github.com/mayank-0789/Devops-Assignment-1)
 
-| Task | Folder | What it holds |
-| --- | --- | --- |
-| 1. Monitoring | [01-monitoring](01-monitoring/README.md) | A working Prometheus + Grafana stack around a small Flask app: metrics, logs, five alert rules, CPU and memory, app health, and what each looks like healthy, overloaded and down. 17 screenshots. |
-| 2. Observability | [02-observability](02-observability/README.md) | Metrics, logs and traces; monitoring versus observability; tools; observability in Kubernetes. |
-| 3. GitOps | [03-gitops](03-gitops/README.md) | What GitOps is, plus an Argo CD application for this repository with sync, self-heal and Git rollback. |
+## What this lab contains
 
-## Quick start
+Live Flask metrics, Prometheus query and Grafana health/dashboard via Docker Compose. GitOps manifests point to this repository; Argo CD synchronization is a separate exercise.
+
+Top-level resources: `01-monitoring`, `02-observability`, `03-gitops`.
+
+[Detailed adapted walkthrough](REFERENCE.md) · [Source provenance](../SOURCE.md) · [Validation scope](../VALIDATION.md)
+
+The walkthrough retains source example commands and outputs for study. Its historical screenshots were omitted. Workflow names and completion claims in that reference describe the source design; the active workflow in this repository is `.github/workflows/validate-labs.yml`.
+
+## Run the lab
+
+Run these commands from this folder. Use a disposable lab environment. Linux commands need a Linux host; Docker commands need a running Docker engine; Kubernetes/Helm commands need a reachable cluster.
 
 ```bash
-# Task 1
-cd session-20-monitoring-gitops/01-monitoring
-docker compose up -d --build
-./load.sh normal 60
-# Prometheus http://localhost:9090   Grafana http://localhost:3000 (admin / admin)
-docker compose down -v
-
-# Task 3 (after the folder is on GitHub)
-kubectl config use-context kind-session20
-kubectl apply -f session-20-monitoring-gitops/03-gitops/argocd-application.yaml
-kubectl get applications -n argocd -w
+docker compose -f 01-monitoring/docker-compose.yml up -d --build
+# App http://localhost:8000; Prometheus :9090; Grafana :3000
+# Grafana demo login: admin / admin
+docker compose -f 01-monitoring/docker-compose.yml down -v
 ```
 
-## Fresh validation evidence
+## Fresh execution evidence
 
-The following screenshot displays actual CI command output for this adapted lab. It validates only the checks shown, not every reference example above. The raw log and run metadata are saved beside it.
+The **capstone** job in [Validate Mayank DevOps labs](https://github.com/mayank-0789/Devops-Assignment-1/actions/workflows/validate-labs.yml) executes the scope above. The screenshot shows actual recorded CI commands/output; it proves only those checks.
 
-![Mayank Gupta — lab validation](screenshots/validation.png)
+![Mayank Gupta — actual lab validation](screenshots/validation.png)
 
-[Raw command output](screenshots/validation.log) · [Run metadata](screenshots/validation.json)
+[All screenshot pages](screenshots/) · [Full raw command output](screenshots/validation.log) · [Commit and run metadata](screenshots/validation.json)
+
+### Running application
+
+![Mayank — running application](screenshots/application.png)

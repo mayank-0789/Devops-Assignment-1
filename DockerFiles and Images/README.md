@@ -1,113 +1,32 @@
-# Docker Multi-Stage Build - Homework
-
-> Adapted lab walkthrough for Mayank Gupta (24BCS10220). Commands and output blocks below are reference examples from the source material, not a claim that this machine ran them. Imported screenshots were omitted. See [source provenance](../SOURCE.md).
-
+# Go multistage Docker build
 
 **Name:** Mayank Gupta
 **Roll No:** 24BCS10220
-**Enrollment Number:** <24BCS10220>
+**Repository:** [mayank-0789/Devops-Assignment-1](https://github.com/mayank-0789/Devops-Assignment-1)
 
-## Task 1: Multi-Stage Dockerfile
+## What this lab contains
 
-A multi-stage build uses more than one `FROM` stage in a single Dockerfile. An early stage
-compiles the application, and the final stage copies only the finished binary into a small
-base image. This keeps the final image tiny because the build tools (here, the whole Go
-toolchain) are left behind.
+Multistage image build, live HTTP response and final image size.
 
-### The application (main.go)
-```go
-package main
+Top-level resources: `Dockerfile`, `main.go`.
 
-import (
-	"fmt"
-	"net/http"
-)
+[Detailed adapted walkthrough](REFERENCE.md) · [Source provenance](../SOURCE.md) · [Validation scope](../VALIDATION.md)
 
-func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "Hello World from Docker multi-stage build")
-	})
+The walkthrough retains source example commands and outputs for study. Its historical screenshots were omitted. Workflow names and completion claims in that reference describe the source design; the active workflow in this repository is `.github/workflows/validate-labs.yml`.
 
-	fmt.Println("Server listening on port 8080")
-	http.ListenAndServe(":8080", nil)
-}
-```
+## Run the lab
 
-### The multi-stage Dockerfile
-```dockerfile
-# ---- Stage 1: Build ----
-FROM golang:1.23-alpine AS build
-WORKDIR /app
-COPY main.go ./
-RUN CGO_ENABLED=0 go build -o server main.go
+Run these commands from this folder. Use a disposable lab environment. Linux commands need a Linux host; Docker commands need a running Docker engine; Kubernetes/Helm commands need a reachable cluster.
 
-# ---- Stage 2: Run ----
-FROM alpine:3.20
-WORKDIR /app
-COPY --from=build /app/server ./
-EXPOSE 8080
-CMD ["./server"]
-```
-
-### Build and run
 ```bash
-docker build -t multistage-app .
-docker run -d -p 8080:8080 --name multistage multistage-app
+docker build -t mayank-multistage .
+docker run --rm -p 8080:8080 mayank-multistage
 ```
 
-### Verify the application
-```bash
-$ curl http://localhost:8080
-Hello World from Docker multi-stage build
-```
+## Fresh execution evidence
 
-### Verify the running container (docker ps)
-```bash
-$ docker ps
-NAMES        IMAGE            STATUS         PORTS
-multistage   multistage-app   Up 2 seconds   0.0.0.0:8080->8080/tcp
-```
-The application is confirmed running on **port 8080**.
+The **basics** job in [Validate Mayank DevOps labs](https://github.com/mayank-0789/Devops-Assignment-1/actions/workflows/validate-labs.yml) executes the scope above. The screenshot shows actual recorded CI commands/output; it proves only those checks.
 
-### Result of multi-stage build
-The final image is only about **25 MB**, because the Go compiler and source code stay in
-the build stage and only the compiled binary is copied into the final Alpine image.
+![Mayank Gupta — actual lab validation](screenshots/validation.png)
 
-## Task 2: Screenshots
-
-Application running successfully in the browser:
-
-
-`docker ps` showing the running container on port 8080:
-
-
-## Task 3: Docker Application Deployment
-
-Three different types of applications were deployed using Docker (see the
-`Docker Fundamentals` folder for the full code and Dockerfiles):
-
-| Application | Language / Stack | Port | Output |
-|---|---|---|---|
-| Node.js | Node.js (http server) | 3000 | Hello World from Node.js! |
-| Python | Python (Flask) | 5000 | Hello World from Python (Flask)! |
-| Java | Java (HttpServer) | 8080 | Hello World from Java! |
-
-Build and run example (Node.js):
-```bash
-cd nodejs-app
-docker build -t nodejs-app .
-docker run -d -p 3000:3000 nodejs-app
-# open http://localhost:3000
-```
-
-Screenshots of all three running applications:
-
-
-
-## Fresh validation evidence
-
-The following screenshot displays actual CI command output for this adapted lab. It validates only the checks shown, not every reference example above. The raw log and run metadata are saved beside it.
-
-![Mayank Gupta — lab validation](screenshots/validation.png)
-
-[Raw command output](screenshots/validation.log) · [Run metadata](screenshots/validation.json)
+[All screenshot pages](screenshots/) · [Full raw command output](screenshots/validation.log) · [Commit and run metadata](screenshots/validation.json)

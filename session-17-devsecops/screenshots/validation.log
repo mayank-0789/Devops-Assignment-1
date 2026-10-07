@@ -1,0 +1,68 @@
+Mayank Gupta | 24BCS10220 | mayank-0789/Devops-Assignment-1
+Scope: session-17-devsecops
+Commit: cbf69afbfdddfd0a61fd3f672098c2bd5bd2421e
+UTC: 2026-10-07T18:08:38Z
+Run: https://github.com/mayank-0789/Devops-Assignment-1/actions/runs/37664487255
++ devsecops
++ cd /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/session-17-devsecops
++ python -m venv /tmp/mayank-security
++ /tmp/mayank-security/bin/pip -q install -r requirements-dev.txt
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: python -m pip install --upgrade pip
++ /tmp/mayank-security/bin/python -m pytest -v
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-8.4.2, pluggy-1.6.0
+rootdir: /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/session-17-devsecops
+configfile: pytest.ini
+testpaths: tests
+plugins: cov-7.0.0, platformdirs-4.12.3
+collected 8 items
+
+tests/test_app.py ........                                               [100%]
+
+============================== 8 passed in 0.13s ===============================
++ /tmp/mayank-security/bin/bandit -r app -ll
+[main]	INFO	profile include tests: None
+[main]	INFO	profile exclude tests: None
+[main]	INFO	cli include tests: None
+[main]	INFO	cli exclude tests: None
+[main]	INFO	running on Python 3.12.14
+Run started:2026-10-07 18:08:48.706630
+
+Test results:
+	No issues identified.
+
+Code scanned:
+	Total lines of code: 48
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 0
+		Medium: 0
+		High: 0
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 0
+		Medium: 0
+		High: 0
+Files skipped (0):
++ /tmp/mayank-security/bin/pip-audit -r requirements.txt
+No known vulnerabilities found
++ docker build -q -t mayank-devsecops .
+sha256:c14d03a0bcfee867fc99dee662746ad9ec4ac64d94d0f2ce9e53641694eab6d9
++ docker run -d --name mayank-devsecops -p 8182:5001 mayank-devsecops
+ade42f6ea72534d1a8958ccdee1e253017884743f44b7388aa42ffe4368532b0
++ sleep 3
++ curl --fail http://localhost:8182/api/status
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    87  100    87    0     0   9588      0 --:--:-- --:--:-- --:--:--  9666
+{"app":"mayank-devsecops-api","owner":"Mayank","uptime_seconds":2.6,"version":"1.0.0"}
++ docker rm -f mayank-devsecops
+mayank-devsecops
++ echo 'Scope: tests, Bandit SAST, dependency audit, image build and API smoke test. Registry publish and production deploy are separate.'
+Scope: tests, Bandit SAST, dependency audit, image build and API smoke test. Registry publish and production deploy are separate.

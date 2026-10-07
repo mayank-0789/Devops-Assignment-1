@@ -1,5 +1,8 @@
 # Git and GitHub – Homework
 
+> Evidence refreshed: previous screenshots showed a different terminal account and have been removed. Historical output blocks below remain reference examples. Fresh checks from this repository are linked at the end; they validate only their stated scope.
+
+
 **Name:** Mayank Gupta
 **Roll No:** 24BCS10220
 
@@ -173,3 +176,11 @@ Feature B
 - The cherry-picked commit has a **new hash** on `main` (`215bbf4`) even though the message and the change are the same as `5876a17`. It is a copy, not the same commit, because its parent is different.
 - The graph shows the two branches splitting after `main: change 2`.
 - If the picked commit touched lines that differ on `main`, Git would stop with a conflict. Then I would fix the file, run `git add`, and finish with `git cherry-pick --continue` (or cancel with `git cherry-pick --abort`).
+
+## Fresh evidence — Mayank Gupta (24BCS10220)
+
+Representative checks for this topic ran in this repository’s GitHub Actions workflow. See the [expanded lab README](../Git%20and%20Github/README.md) for the exact execution scope.
+
+![Mayank Gupta — actual CI check](../Git%20and%20Github/screenshots/validation.png)
+
+[Full command log](../Git%20and%20Github/screenshots/validation.log) · [Run metadata](../Git%20and%20Github/screenshots/validation.json)

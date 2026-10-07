@@ -1,5 +1,8 @@
 # Linux Fundamentals – Homework
 
+> Evidence refreshed: previous screenshots showed a different terminal account and have been removed. Historical output blocks below remain reference examples. Fresh checks from this repository are linked at the end; they validate only their stated scope.
+
+
 **Name:** Mayank Gupta
 **Roll No:** 24BCS10220
 
@@ -234,3 +237,11 @@ active
 | Help | `man`, `--help`, `which`, `history` | Documentation and command lookup |
 
 Permission numbers: `r=4`, `w=2`, `x=1`. So `chmod 755` means owner `rwx`, group `r-x`, others `r-x`.
+
+## Fresh evidence — Mayank Gupta (24BCS10220)
+
+Representative checks for this topic ran in this repository’s GitHub Actions workflow. See the [expanded lab README](../Linux%20Fundamentals/README.md) for the exact execution scope.
+
+![Mayank Gupta — actual CI check](../Linux%20Fundamentals/screenshots/validation.png)
+
+[Full command log](../Linux%20Fundamentals/screenshots/validation.log) · [Run metadata](../Linux%20Fundamentals/screenshots/validation.json)

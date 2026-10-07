@@ -1,5 +1,8 @@
 # Linux Homework – Learning Notes
 
+> Evidence refreshed: previous screenshots showed a different terminal account and have been removed. Historical output blocks below remain reference examples. Fresh checks from this repository are linked at the end; they validate only their stated scope.
+
+
 ## Task 1: Soft Link and Hard Link
 
 A **soft link (symbolic link)** points to the path of another file.

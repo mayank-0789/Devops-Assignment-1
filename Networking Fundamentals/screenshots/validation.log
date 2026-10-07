@@ -1,0 +1,58 @@
+Mayank Gupta | 24BCS10220 | mayank-0789/Devops-Assignment-1
+Scope: Networking Fundamentals
+Commit: cbf69afbfdddfd0a61fd3f672098c2bd5bd2421e
+UTC: 2026-10-07T18:08:28Z
+Run: https://github.com/mayank-0789/Devops-Assignment-1/actions/runs/37664487255
++ network_lab
++ ip -brief address
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+eth0             UP             10.1.0.140/20 metric 100 fe80::7eed:8dff:fe29:68c1/64 
+enP56326s1       UP             
+docker0          DOWN           172.17.0.1/16 
++ ip route
+default via 10.1.0.1 dev eth0 proto dhcp src 10.1.0.140 metric 100 
+10.1.0.0/20 dev eth0 proto kernel scope link src 10.1.0.140 metric 100 
+10.1.0.1 dev eth0 proto dhcp scope link src 10.1.0.140 metric 100 
+168.63.129.16 via 10.1.0.1 dev eth0 proto dhcp src 10.1.0.140 metric 100 
+169.254.169.254 via 10.1.0.1 dev eth0 proto dhcp src 10.1.0.140 metric 100 
+172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown 
++ hostname
+runnervmmprz5
++ getent hosts github.com
+140.82.112.4    github.com
++ curl --fail --head --max-time 30 https://github.com
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0HTTP/2 200 
+date: Wed, 07 Oct 2026 18:08:22 GMT
+content-type: text/html; charset=utf-8
+content-language: en-US
+vary: X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, X-Requested-With, X-GitHub-Client-Version, Accept-Language, Sec-Fetch-Site,Accept-Encoding, Accept, X-Requested-With
+etag: W/"9784dc456d474643504795436da85c01"
+cache-control: max-age=0, private, must-revalidate
+strict-transport-security: max-age=31536000; includeSubdomains; preload
+x-frame-options: deny
+x-content-type-options: nosniff
+x-xss-protection: 0
+referrer-policy: origin-when-cross-origin, strict-origin-when-cross-origin
+content-security-policy: default-src 'none'; base-uri 'self'; child-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com *.rel.tunnels.api.visualstudio.com wss://*.rel.tunnels.api.visualstudio.com github.githubassets.com objects-origin.githubusercontent.com copilot-proxy.githubusercontent.com proxy.individual.githubcopilot.com proxy.business.githubcopilot.com proxy.enterprise.githubcopilot.com *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net productionresultssa1.blob.core.windows.net productionresultssa2.blob.core.windows.net productionresultssa3.blob.core.windows.net productionresultssa4.blob.core.windows.net productionresultssa5.blob.core.windows.net productionresultssa6.blob.core.windows.net productionresultssa7.blob.core.windows.net productionresultssa8.blob.core.windows.net productionresultssa9.blob.core.windows.net productionresultssa10.blob.core.windows.net productionresultssa11.blob.core.windows.net productionresultssa12.blob.core.windows.net productionresultssa13.blob.core.windows.net productionresultssa14.blob.core.windows.net productionresultssa15.blob.core.windows.net productionresultssa16.blob.core.windows.net productionresultssa17.blob.core.windows.net productionresultssa18.blob.core.windows.net productionresultssa19.blob.core.windows.net github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com wss://alive-staging.github.com api.githubcopilot.com api.individual.githubcopilot.com api.business.githubcopilot.com api.enterprise.githubcopilot.com wss://production-copilot-host.webpubsub.azure.com api.github.com/cmc_internal/api/ edge.fullstory.com rs.fullstory.com; font-src github.githubassets.com; form-action 'self' github.com gist.github.com copilot-workspace.githubnext.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com www.youtube-nocookie.com; img-src 'self' data: blob: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com private-avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com release-assets.githubusercontent.com secured-user-images.githubusercontent.com user-images.githubusercontent.com private-user-images.githubusercontent.com opengraph.githubassets.com repository-images.githubusercontent.com marketplace-screenshots.githubusercontent.com copilotprodattachments.blob.core.windows.net/github-production-copilot-attachments/ github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com explore-feed.github.com *.googleusercontent.com objects-origin.githubusercontent.com *.githubusercontent.com images.ctfassets.net/8aevphvgewt8/; manifest-src 'self'; media-src github.com user-images.githubusercontent.com secured-user-images.githubusercontent.com private-user-images.githubusercontent.com github-production-user-asset-62  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+10df.s3.amazonaws.com gist.github.com github.githubassets.com assets.ctfassets.net/8aevphvgewt8/ videos.ctfassets.net/8aevphvgewt8/; script-src github.githubassets.com 'sha256-tSjmyPUky1KbRZ0fw9VUil3wFEbeM82rtbJDygGJAXw='; style-src 'unsafe-inline' github.githubassets.com; upgrade-insecure-requests; worker-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/
+server: github.com
+accept-ranges: bytes
+set-cookie: _gh_sess=B2IaF%2FV%2BFHvE6XBo7OGzxqxnlBKSpzDDD6l%2BxOXdBdIoGQJnlpAFnq7%2BMTZs3UTUEUMcWrD6NqKehQtC7YkuL3t%2Bb%2BPjojvN4z87jaQBcaI8a5mwWs5MoR6o%2Ffk%2B9P70L71l1hjtJi4gTKCDJ6te3Z%2FVyLOv2dWg5g%2FYyDdQjYfCacHC9Sdh9lUlRy%2B5OF4jd%2BrM1TdbgsAFw4NzGiQgVszBikLSk%2F%2BM6vgv2qWzlqJd1Qc9fcJ6lxnC2lC537UI3XTqxpSi9ceV4SsY9Nd2bg%3D%3D--CyJ0I%2B%2FfJhPzXmZK--iHNyjLy%2FY%2BFZbgWG6PbzKA%3D%3D; path=/; HttpOnly; secure; SameSite=Lax
+set-cookie: _octo=GH1.1.1226170935.1791396509; expires=Thu, 07 Oct 2027 18:08:29 GMT; domain=.github.com; path=/; secure; SameSite=Lax
+set-cookie: logged_in=no; expires=Thu, 07 Oct 2027 18:08:29 GMT; domain=.github.com; path=/; HttpOnly; secure; SameSite=Lax
+x-github-request-id: 6809:3641E:2D1EC5:3AF02D:6AC68A9D
+x-github-edge-region: iad
+
++ ss -tuln
+Netid State  Recv-Q Send-Q   Local Address:Port Peer Address:PortProcess
+udp   UNCONN 0      0           127.0.0.54:53        0.0.0.0:*          
+udp   UNCONN 0      0        127.0.0.53%lo:53        0.0.0.0:*          
+udp   UNCONN 0      0      10.1.0.140%eth0:68        0.0.0.0:*          
+udp   UNCONN 0      0            127.0.0.1:323       0.0.0.0:*          
+udp   UNCONN 0      0                [::1]:323          [::]:*          
+tcp   LISTEN 0      4096           0.0.0.0:22        0.0.0.0:*          
+tcp   LISTEN 0      4096        127.0.0.54:53        0.0.0.0:*          
+tcp   LISTEN 0      4096     127.0.0.53%lo:53        0.0.0.0:*          
+tcp   LISTEN 0      4096              [::]:22           [::]:*          

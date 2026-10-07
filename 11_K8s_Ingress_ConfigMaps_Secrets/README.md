@@ -1,5 +1,8 @@
 # Kubernetes Ingress, ConfigMaps & Secrets – Homework
 
+> Evidence refreshed: previous screenshots showed a different terminal account and have been removed. Historical output blocks below remain reference examples. Fresh checks from this repository are linked at the end; they validate only their stated scope.
+
+
 **Name:** Mayank Gupta
 **Roll No:** 24BCS10220
 
@@ -276,25 +279,26 @@ These screenshots were taken in a second run of the same labs, so Pod names, IPs
 
 **Ingress controller running, ConfigMap applied**
 
-![k11-01-ingress-controller-configmap](screenshots/k11-01-ingress-controller-configmap.png)
 
 **Secret: describe hides values, base64 decode, and the `echo -n` gotcha**
 
-![k11-02-secret](screenshots/k11-02-secret.png)
 
 **Apps deployed, ConfigMap and Secret values visible as environment variables**
 
-![k11-03-apps-env](screenshots/k11-03-apps-env.png)
 
 **Ingress routing: `/` → frontend, `/api/` → backend, unknown host → 404**
 
-![k11-04-ingress](screenshots/k11-04-ingress.png)
 
 **Browser: `http://yatri.local:8081/` (frontend through the Ingress)**
 
-![k11-05-browser-frontend](screenshots/k11-05-browser-frontend.png)
 
 **Browser: `http://yatri.local:8081/api/` (backend showing ConfigMap and Secret values)**
 
-![k11-06-browser-api](screenshots/k11-06-browser-api.png)
 
+## Fresh evidence — Mayank Gupta (24BCS10220)
+
+Representative checks for this topic ran in this repository’s GitHub Actions workflow. See the [expanded lab README](../session-12-ingress-configmaps-secrets/README.md) for the exact execution scope.
+
+![Mayank Gupta — actual CI check](../session-12-ingress-configmaps-secrets/screenshots/validation.png)
+
+[Full command log](../session-12-ingress-configmaps-secrets/screenshots/validation.log) · [Run metadata](../session-12-ingress-configmaps-secrets/screenshots/validation.json)

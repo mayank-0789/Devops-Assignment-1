@@ -1,5 +1,8 @@
 # Kubernetes Pods, ReplicaSets & Deployments – Homework
 
+> Evidence refreshed: previous screenshots showed a different terminal account and have been removed. Historical output blocks below remain reference examples. Fresh checks from this repository are linked at the end; they validate only their stated scope.
+
+
 **Name:** Mayank Gupta
 **Roll No:** 24BCS10220
 
@@ -295,25 +298,26 @@ These screenshots were taken in a second run of the same labs, so Pod names, IPs
 
 **Bare Pod: created, deleted, not re-created**
 
-![k9-01-pod](screenshots/k9-01-pod.png)
 
 **ReplicaSet: self-healing after a Pod delete, then scaling to 5**
 
-![k9-02-replicaset](screenshots/k9-02-replicaset.png)
 
 **Deployment v1: Deployment → ReplicaSet → Pods**
 
-![k9-03-deployment-v1](screenshots/k9-03-deployment-v1.png)
 
 **Rolling update to v2, history, and rollback**
 
-![k9-04-rolling-update-rollback](screenshots/k9-04-rolling-update-rollback.png)
 
 **Broken image: `ImagePullBackOff` while the old Pods keep running, then rollback**
 
-![k9-05-broken-image](screenshots/k9-05-broken-image.png)
 
 **DaemonSet and the control-plane taint**
 
-![k9-06-daemonset](screenshots/k9-06-daemonset.png)
 
+## Fresh evidence — Mayank Gupta (24BCS10220)
+
+Representative checks for this topic ran in this repository’s GitHub Actions workflow. See the [expanded lab README](../session10-k8s-core-objects/README.md) for the exact execution scope.
+
+![Mayank Gupta — actual CI check](../session10-k8s-core-objects/screenshots/validation.png)
+
+[Full command log](../session10-k8s-core-objects/screenshots/validation.log) · [Run metadata](../session10-k8s-core-objects/screenshots/validation.json)

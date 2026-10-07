@@ -1,0 +1,32 @@
+Mayank Gupta | 24BCS10220 | mayank-0789/Devops-Assignment-1
+Scope: session-11-kubernetes-services
+Commit: cbf69afbfdddfd0a61fd3f672098c2bd5bd2421e
+UTC: 2026-10-07T18:09:28Z
+Run: https://github.com/mayank-0789/Devops-Assignment-1/actions/runs/37664487255
++ services_lab
++ kubectl create namespace mayank-services
+namespace/mayank-services created
++ kubectl apply -n mayank-services -f session-11-kubernetes-services/01-clusterip
+deployment.apps/web-app-clusterip created
+pod/curl-client created
+service/web-service-clusterip created
++ kubectl rollout status -n mayank-services deployment/web-app-clusterip --timeout=150s
+Waiting for deployment "web-app-clusterip" rollout to finish: 0 of 3 updated replicas are available...
+Waiting for deployment "web-app-clusterip" rollout to finish: 1 of 3 updated replicas are available...
+Waiting for deployment "web-app-clusterip" rollout to finish: 2 of 3 updated replicas are available...
+deployment "web-app-clusterip" successfully rolled out
++ kubectl wait -n mayank-services --for=condition=Ready pod/curl-client --timeout=90s
+pod/curl-client condition met
++ kubectl get -n mayank-services svc,endpoints
+NAME                            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/web-service-clusterip   ClusterIP   10.96.206.149   <none>        8080/TCP   2s
+
+NAME                              ENDPOINTS                                      AGE
+endpoints/web-service-clusterip   10.244.0.16:80,10.244.0.17:80,10.244.0.18:80   2s
++ kubectl exec -n mayank-services curl-client -- curl -fsS http://web-service-clusterip:8080
++ head -5
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>

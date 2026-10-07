@@ -1,203 +1,36 @@
-# Session 17: CI/CD with DevSecOps gates
-
-> Adapted lab walkthrough for Mayank Gupta (24BCS10220). Commands and output blocks below are reference examples from the source material, not a claim that this machine ran them. Imported screenshots were omitted. See [source provenance](../SOURCE.md).
-
+# Flask application and DevSecOps checks
 
 **Name:** Mayank Gupta
 **Roll No:** 24BCS10220
-**Course:** SST DevOps & Cloud [SWE]
-**Session:** 17
+**Repository:** [mayank-0789/Devops-Assignment-1](https://github.com/mayank-0789/Devops-Assignment-1)
 
-A small Flask API with a pipeline that scans the source code, the dependencies, the repository files and the Docker image, and only publishes and deploys the image if every check is green.
+## What this lab contains
 
-## Where things live
+Existing API tests, Bandit SAST, dependency vulnerability audit, Docker build and live API response. CodeQL, image scanning, publishing and cluster deployment described in the reference guide are not enabled by validate-labs.yml.
 
-```
-Devops-Assignment-1/                               <- repository root
-├── .github/workflows/
-│   └── session-17-devsecops.yml           # the pipeline (nine jobs)
-└── session-17-devsecops/
-    ├── app/                               # Flask app: app.py, templates/, static/
-    ├── tests/test_app.py                  # 8 pytest tests
-    ├── k8s/deployment.yaml                # 2 replicas, probes, non-root, read-only filesystem, limits
-    ├── k8s/service.yaml                   # NodePort 30017
-    ├── Dockerfile                         # python:3.12-slim, gunicorn, user appuser (uid 10001)
-    ├── requirements.txt                   # Flask, gunicorn
-    ├── requirements-dev.txt               # plus pytest, pytest-cov, bandit, pip-audit
-    ├── pytest.ini
-    ├── screenshots/
-    └── README.md
-```
+Top-level resources: `Dockerfile`, `app`, `k8s`, `pytest.ini`, `requirements-dev.txt`, `requirements.txt`, `tests`.
 
-## The app
+[Detailed adapted walkthrough](REFERENCE.md) · [Source provenance](../SOURCE.md) · [Validation scope](../VALIDATION.md)
 
-| Endpoint | Does |
-| --- | --- |
-| `GET /` | A one-page description of the service |
-| `GET /health` | `{"status": "healthy"}`, used by the Kubernetes probes |
-| `GET /api/status` | App name, version, uptime, owner |
-| `POST /api/add` | Adds `number1` and `number2`, 400 on bad input |
-| `POST /api/multiply` | Multiplies them |
+The walkthrough retains source example commands and outputs for study. Its historical screenshots were omitted. Workflow names and completion claims in that reference describe the source design; the active workflow in this repository is `.github/workflows/validate-labs.yml`.
 
-It is deliberately tiny. The pipeline around it is the point.
+## Run the lab
 
-## What each check catches
-
-| Check | Looks at | Tool | Blocks when |
-| --- | --- | --- | --- |
-| Unit tests | Does my code do what I think | pytest with coverage | Any test fails |
-| SAST | My own source, without running it | Bandit, plus CodeQL for the Security tab | Bandit finds medium or high severity |
-| SCA | Third-party packages I depend on | pip-audit | A dependency has a known CVE |
-| Secret scan | Files that look like keys, tokens, passwords | Gitleaks | Anything matches |
-| Image scan | The built image: OS packages and Python packages | Trivy | A fixable HIGH or CRITICAL CVE |
-| Gate | All of the above | `needs:` in the workflow | Any required job is not green |
-
-```
-push
- │
- ├── test ──────┐
- ├── sast ──────┤
- ├── sca ───────┼──► docker-build ──► image-scan ──► security-gate ──► push (GHCR) ──► deploy (kind)
- └── secret ────┘        (built once, saved as artifact: the scanned image is the shipped image)
-```
-
-Design decisions: the image is built exactly once and passed between jobs as a tar artifact; every scanner exits non-zero on findings so it can really block; pushing and deploying only happen on `main`, never on pull requests; the deploy job creates a throw-away kind cluster inside the runner because a GitHub runner cannot reach my laptop's cluster.
-
-## Part 1: run the app and tests locally
+Run these commands from this folder. Use a disposable lab environment. Linux commands need a Linux host; Docker commands need a running Docker engine; Kubernetes/Helm commands need a reachable cluster.
 
 ```bash
-cd session-17-devsecops
-python3.11 -m venv ~/.venvs/session17
-source ~/.venvs/session17/bin/activate
+python3 -m venv .venv
+. .venv/bin/activate
 pip install -r requirements-dev.txt
-pytest --cov=app --cov-report=term-missing
-```
-
-8 tests pass with 93 percent coverage. (The venv lives outside the project on purpose so the secret scan does not crawl thousands of library files.)
-
-
-```bash
-python app/app.py
-curl http://localhost:5001/health
-curl http://localhost:5001/api/status
-curl -X POST http://localhost:5001/api/add -H "Content-Type: application/json" -d '{"number1": 10, "number2": 20}'
-```
-
-
-## Part 2: run every scanner locally first
-
-### SAST: Bandit
-
-```bash
+python -m pytest -v
 bandit -r app -ll
-```
-
-No issues. One thing I avoided on purpose: binding Flask's dev server to `0.0.0.0` in code, which Bandit flags as B104. The container binds through gunicorn instead.
-
-
-### SCA: pip-audit, and a real finding
-
-```bash
 pip-audit -r requirements.txt
 ```
 
-The first run was not clean: `Flask 3.1.2` has a published advisory, `PYSEC-2026-2151`, fixed in 3.1.3.
+## Fresh execution evidence
 
+The **apps** job in [Validate Mayank DevOps labs](https://github.com/mayank-0789/Devops-Assignment-1/actions/workflows/validate-labs.yml) executes the scope above. The screenshot shows actual recorded CI commands/output; it proves only those checks.
 
-The fix is a one-line pin change, after which pip-audit reports nothing. This is exactly what SCA is for: my own code had no bug, but the library underneath it did.
+![Mayank Gupta — actual lab validation](screenshots/validation.png)
 
-
-### Secret scan: Gitleaks
-
-```bash
-gitleaks detect --no-git --source . --redact --verbose
-```
-
-
-### Image scan: Trivy
-
-```bash
-docker build -t session17-python:local .
-docker run --rm session17-python:local id
-trivy image --severity HIGH,CRITICAL --ignore-unfixed session17-python:local
-```
-
-The container runs as `appuser` (uid 10001). Trivy scanned the Debian 13 base and every Python package and found no fixable HIGH or CRITICAL vulnerability.
-
-
-## Part 3: the Kubernetes manifests, on minikube
-
-The Deployment has an `__IMAGE__` placeholder that the pipeline fills in. Locally I pointed it at the image I just built.
-
-```bash
-minikube image load session17-python:local
-kubectl create namespace s17-demo
-sed "s|__IMAGE__|session17-python:local|" k8s/deployment.yaml | kubectl apply -n s17-demo -f -
-kubectl apply -n s17-demo -f k8s/service.yaml
-kubectl rollout status deployment/session17-python -n s17-demo
-kubectl get pods,svc -n s17-demo
-```
-
-Two pods Running, a NodePort Service, and the pod security context confirms `runAsNonRoot` with uid 10001. The container also has a read-only root filesystem and all capabilities dropped.
-
-
-```bash
-kubectl port-forward -n s17-demo svc/session17-python 5051:80
-curl http://localhost:5051/health
-kubectl delete namespace s17-demo
-```
-
-
-## Part 4: push and watch the pipeline
-
-```bash
-git add .github/workflows/session-17-devsecops.yml session-17-devsecops
-git commit -m "Add Session 17 DevSecOps pipeline"
-git push
-gh run watch
-```
-
-Expected: the four checks in parallel, then Docker Build, Image Scan, Security Gate, Push and Deploy, all green; the image at `ghcr.io/mayank-0789/devops-assignment-1/session17-python:<commit sha>`; CodeQL results under **Security > Code scanning**; and the deploy job's smoke test printing the `/health` and `/api/status` responses from inside the kind cluster.
-
-## Part 5: proving the gates block
-
-Each demo lives on its own branch and pull request, so `main` stays clean and nothing is published. After each one, close the PR and delete the branch.
-
-| Demo | Change | Expected result |
-| --- | --- | --- |
-| Secret leak | Add `app/leaked_config.py` with a random fake `API_KEY` generated on the spot | Secret Scan fails, every later job skipped |
-| Vulnerable dependency | Pin `Flask==2.2.4` | SCA fails; pip-audit names the CVEs and the fixed versions |
-| Unsafe code | Add a function that calls `eval()` | SAST fails on Bandit B307 |
-| Old base image | `FROM python:3.9-slim` | Image Scan fails on HIGH and CRITICAL findings in old Debian packages; the gate stays closed |
-
-```bash
-git switch -c demo/secret-leak
-printf 'API_KEY = "%s"\n' "$(openssl rand -base64 36 | tr -d '/+=\n' | cut -c1-32)" > session-17-devsecops/app/leaked_config.py
-git add session-17-devsecops/app/leaked_config.py && git commit -m "Demo: commit a fake API key"
-git push -u origin demo/secret-leak
-gh pr create --fill --base main && gh pr checks --watch
-gh pr close demo/secret-leak --delete-branch && git switch main
-```
-
-The other three follow the same pattern with the change named in the table.
-
-## What I learned
-
-- SAST, SCA, secret scanning and image scanning each find a different class of problem. pip-audit found a real one in this project while the code itself was clean.
-- A gate is nothing more than `needs:` plus tools that exit non-zero. A scanner that only prints is not a control.
-- Build once, scan that artifact, ship that artifact. Rebuilding between jobs means the scanned image is not the deployed image.
-- `--ignore-unfixed` keeps the gate about things I can act on today.
-- Non-root user, read-only filesystem, dropped capabilities, resource limits and probes make the Kubernetes side safer with a few lines of YAML.
-- A secret that was committed once is in history forever; rotate it, do not just delete the file.
-
-## Status
-
-Parts 1 to 3 were run on my laptop and are in `screenshots/`. Parts 4 and 5 run on GitHub after the first push of this folder to `main`.
-
-## Fresh validation evidence
-
-The following screenshot displays actual CI command output for this adapted lab. It validates only the checks shown, not every reference example above. The raw log and run metadata are saved beside it.
-
-![Mayank Gupta — lab validation](screenshots/validation.png)
-
-[Raw command output](screenshots/validation.log) · [Run metadata](screenshots/validation.json)
+[All screenshot pages](screenshots/) · [Full raw command output](screenshots/validation.log) · [Commit and run metadata](screenshots/validation.json)

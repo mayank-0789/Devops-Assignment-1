@@ -1,0 +1,54 @@
+Mayank Gupta | 24BCS10220 | mayank-0789/Devops-Assignment-1
+Scope: session-16-cicd
+Commit: cbf69afbfdddfd0a61fd3f672098c2bd5bd2421e
+UTC: 2026-10-07T18:08:22Z
+Run: https://github.com/mayank-0789/Devops-Assignment-1/actions/runs/37664487255
++ calculator
++ cd /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/session-16-cicd
++ python -m venv /tmp/mayank-calc
++ /tmp/mayank-calc/bin/pip -q install -r requirements.txt
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: python -m pip install --upgrade pip
++ /tmp/mayank-calc/bin/python -m pytest -v
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-8.4.2, pluggy-1.6.0 -- /tmp/mayank-calc/bin/python
+cachedir: .pytest_cache
+rootdir: /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/session-16-cicd
+configfile: pytest.ini
+testpaths: tests
+collecting ... collected 7 items
+
+tests/test_calculator.py::test_add PASSED                                [ 14%]
+tests/test_calculator.py::test_subtract PASSED                           [ 28%]
+tests/test_calculator.py::test_multiply PASSED                           [ 42%]
+tests/test_calculator.py::test_divide PASSED                             [ 57%]
+tests/test_calculator.py::test_divide_by_zero PASSED                     [ 71%]
+tests/test_calculator.py::test_power PASSED                              [ 85%]
+tests/test_calculator.py::test_calculate_expression PASSED               [100%]
+
+============================== 7 passed in 0.01s ===============================
++ bash build.sh
+Build complete:
+total 8
+-rw-r--r-- 1 runner runner  200 Oct  7 18:08 build-info.txt
+-rw-r--r-- 1 runner runner 1321 Oct  7 18:08 calculator.py
++ cat build/build-info.txt
+project:   mayank-session16-calculator
+built_at:  2026-10-07T18:08:27Z
+built_by:  mayank-0789
+commit:    cbf69afbfdddfd0a61fd3f672098c2bd5bd2421e
+python:    Python 3.12.14
+tests:     7 test functions
++ printf '10 + 5\nq\n'
++ /tmp/mayank-calc/bin/python app/calculator.py
+Mayank's calculator. Type an expression like '10 + 5', or q to quit.
+> 10 + 5 = 15
+> bye
++ docker build -q -t mayank-calculator .
+sha256:6283e76a8c8dd2de1e5f061c2c568171a627d17866b91bb74e6c867e853d8787
++ printf '7 * 8\nq\n'
++ docker run --rm -i mayank-calculator
+Mayank's calculator. Type an expression like '10 + 5', or q to quit.
+> 7 * 8 = 56
+> bye

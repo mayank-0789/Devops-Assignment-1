@@ -1,0 +1,37 @@
+Mayank Gupta | 24BCS10220 | mayank-0789/Devops-Assignment-1
+Scope: session-19-terraform-project
+Commit: cbf69afbfdddfd0a61fd3f672098c2bd5bd2421e
+UTC: 2026-10-07T18:08:35Z
+Run: https://github.com/mayank-0789/Devops-Assignment-1/actions/runs/37664487255
++ terraform_check session-19-terraform-project
++ local folder=session-19-terraform-project
++ cd /home/runner/work/Devops-Assignment-1/Devops-Assignment-1/session-19-terraform-project
++ terraform version
+Terraform v1.16.5
+on linux_amd64
++ provider registry.terraform.io/hashicorp/aws v6.67.0
++ terraform fmt -check -recursive
++ terraform init -backend=false -input=false -no-color
+Initializing provider plugins...
+- Reusing previous version of hashicorp/aws from the dependency lock file
+- Installing hashicorp/aws v6.67.0...
+- Installed hashicorp/aws v6.67.0 (signed by HashiCorp)
+
+Terraform has made some changes to the provider dependency selections recorded
+in the .terraform.lock.hcl file. Review those changes and commit them to your
+version control system if they represent changes you intended to make.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
++ terraform validate -no-color
+Success! The configuration is valid.
+
++ echo 'Scope: formatting, provider/module initialization, configuration validation. No AWS resources created; no apply/destroy performed.'
+Scope: formatting, provider/module initialization, configuration validation. No AWS resources created; no apply/destroy performed.

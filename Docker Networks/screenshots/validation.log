@@ -1,0 +1,51 @@
+Mayank Gupta | 24BCS10220 | mayank-0789/Devops-Assignment-1
+Scope: Docker Networks
+Commit: cbf69afbfdddfd0a61fd3f672098c2bd5bd2421e
+UTC: 2026-10-07T18:10:55Z
+Run: https://github.com/mayank-0789/Devops-Assignment-1/actions/runs/37664487255
++ docker_networks
++ docker network create mayank-front
+49adf60ad73db62afbf5ea3f025d430ad3cb532d515432d2993b21c63c84ceed
++ docker network create mayank-back
+2ffe1d7793fe01412cf6c01bc2d230eddf19ace0783ff4aad532131727fca1e0
++ docker run -d --name mayank-front --network mayank-front nginx:alpine
+Unable to find image 'nginx:alpine' locally
+alpine: Pulling from library/nginx
+e2de96513ba9: Already exists
+d9aae54b5831: Already exists
+6c53d0b2a666: Already exists
+745dfb2690dd: Already exists
+9a9a644fdd6a: Already exists
+64c8194480fe: Already exists
+e76228b47809: Already exists
+e72112c14215: Already exists
+Digest: sha256:df221db836e1754089190208cee7eeda94f233197056426eda74a43ab1abeac2
+Status: Downloaded newer image for nginx:alpine
+2879b482693889082525c7064eac752431c6ee824e95bf9d6413523744be31e3
++ docker run -d --name mayank-back --network mayank-back nginx:alpine
+4cfdce96d6bf439e90f059c5374821d151de3ea10623d3d43f713679e22f3436
++ docker network connect mayank-front mayank-back
++ docker exec mayank-front wget -qO- http://mayank-back
++ head -5
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
++ docker network inspect mayank-front --format '{{json .Containers}}'
+{"2879b482693889082525c7064eac752431c6ee824e95bf9d6413523744be31e3":{"Name":"mayank-front","EndpointID":"70ce02b32a6f46ac93ad9acf2e2a5fe968b8f4436b92da9e6053b220e2eca302","MacAddress":"0e:e3:e1:ea:c8:0d","IPv4Address":"172.18.0.2/16","IPv6Address":""},"4cfdce96d6bf439e90f059c5374821d151de3ea10623d3d43f713679e22f3436":{"Name":"mayank-back","EndpointID":"9921fcca58427150e2cd77b47127862daa7cf594a8fdd2e17c31206ff9b335c8","MacAddress":"b6:46:48:08:47:6d","IPv4Address":"172.18.0.3/16","IPv6Address":""}}
++ docker run -d --name mayank-bind -p 8181:80 -v '/home/runner/work/Devops-Assignment-1/Devops-Assignment-1/Docker Networks/site:/usr/share/nginx/html:ro' nginx:alpine
+7521d20e55ee0f3195c6cd1120773005776a440d8a06c0c04a315b9e2ada273a
++ sleep 2
++ curl --fail http://localhost:8181
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    24  100    24    0     0  27397      0 --:--:-- --:--:-- --:--:-- 24000
+<h1>Hello students</h1>
++ docker rm -f mayank-front mayank-back mayank-bind
+mayank-front
+mayank-back
+mayank-bind
++ docker network rm mayank-front mayank-back
+mayank-front
+mayank-back

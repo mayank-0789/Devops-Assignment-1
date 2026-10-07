@@ -1,0 +1,41 @@
+Mayank Gupta | 24BCS10220 | mayank-0789/Devops-Assignment-1
+Scope: session-13-storage-hpa-probes
+Commit: cbf69afbfdddfd0a61fd3f672098c2bd5bd2421e
+UTC: 2026-10-07T18:09:34Z
+Run: https://github.com/mayank-0789/Devops-Assignment-1/actions/runs/37664487255
++ storage_lab
++ kubectl apply -n mayank-labs -f session-13-storage-hpa-probes/01-kubernetes-volumes/pv.yaml
+persistentvolume/mayank-pv created
++ kubectl apply -n mayank-labs -f session-13-storage-hpa-probes/01-kubernetes-volumes/pvc.yaml
+persistentvolumeclaim/mayank-pvc created
++ kubectl apply -n mayank-labs -f session-13-storage-hpa-probes/01-kubernetes-volumes/pod.yaml
+pod/storage-demo created
++ kubectl wait -n mayank-labs --for=condition=Ready pod/storage-demo --timeout=150s
+pod/storage-demo condition met
++ kubectl exec -n mayank-labs storage-demo -- sh -c 'echo "Mayank Gupta 24BCS10220" > /data/student.txt'
++ kubectl delete -n mayank-labs pod storage-demo --wait
+pod "storage-demo" deleted
++ kubectl apply -n mayank-labs -f session-13-storage-hpa-probes/01-kubernetes-volumes/pod.yaml
+pod/storage-demo created
++ kubectl wait -n mayank-labs --for=condition=Ready pod/storage-demo --timeout=120s
+pod/storage-demo condition met
++ kubectl exec -n mayank-labs storage-demo -- cat /data/student.txt
+Mayank Gupta 24BCS10220
++ kubectl get -n mayank-labs pv,pvc
+NAME                         CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                    STORAGECLASS   VOLUMEATTRIBUTESCLASS   REASON   AGE
+persistentvolume/mayank-pv   1Gi        RWO            Retain           Bound    mayank-labs/mayank-pvc   manual         <unset>                          36s
+
+NAME                               STATUS   VOLUME      CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/mayank-pvc   Bound    mayank-pv   1Gi        RWO            manual         <unset>                 36s
++ kubectl apply -n mayank-labs -f session-13-storage-hpa-probes/02-hpa
+deployment.apps/hpa-demo created
+horizontalpodautoscaler.autoscaling/hpa-demo created
+service/hpa-demo-service created
++ kubectl rollout status -n mayank-labs deployment/hpa-demo --timeout=150s
+Waiting for deployment "hpa-demo" rollout to finish: 0 of 1 updated replicas are available...
+deployment "hpa-demo" successfully rolled out
++ kubectl get -n mayank-labs hpa
+NAME       REFERENCE             TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
+hpa-demo   Deployment/hpa-demo   cpu: <unknown>/50%   1         5         0          1s
++ echo 'Static volume persistence checked; HPA resource created. CPU-driven scaling requires metrics-server and load testing.'
+Static volume persistence checked; HPA resource created. CPU-driven scaling requires metrics-server and load testing.

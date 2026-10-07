@@ -1,5 +1,8 @@
 # Docker Fundamentals – Homework
 
+> Evidence refreshed: previous screenshots showed a different terminal account and have been removed. Historical output blocks below remain reference examples. Fresh checks from this repository are linked at the end; they validate only their stated scope.
+
+
 **Name:** Mayank Gupta
 **Roll No:** 24BCS10220
 
@@ -126,3 +129,11 @@ docker rm -f hw-nodejs hw-python hw-java hw-apache hw-react hw-nginx
 - The server inside the container must listen on `0.0.0.0`, not `127.0.0.1`, or the published port will not answer.
 - Image size depends heavily on the base image. `node:20` and `python:3.12` are over 1.5 GB, while the Nginx based images are about 100 MB. The `-alpine` or `-slim` variants are a simple way to shrink them.
 - The React app uses a **multi-stage build**. Stage 1 (`node:20-alpine`) runs `npm install` and `npm run build`. Stage 2 (`nginx:alpine`) copies only the `dist` folder. The final image has no Node.js and no `node_modules`.
+
+## Fresh evidence — Mayank Gupta (24BCS10220)
+
+Representative checks for this topic ran in this repository’s GitHub Actions workflow. See the [expanded lab README](../Docker%20Fundamentals/README.md) for the exact execution scope.
+
+![Mayank Gupta — actual CI check](../Docker%20Fundamentals/screenshots/validation.png)
+
+[Full command log](../Docker%20Fundamentals/screenshots/validation.log) · [Run metadata](../Docker%20Fundamentals/screenshots/validation.json)

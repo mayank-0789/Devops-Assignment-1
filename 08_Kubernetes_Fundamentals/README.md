@@ -1,5 +1,8 @@
 # Kubernetes Fundamentals – Homework
 
+> Evidence refreshed: previous screenshots showed a different terminal account and have been removed. Historical output blocks below remain reference examples. Fresh checks from this repository are linked at the end; they validate only their stated scope.
+
+
 **Name:** Mayank Gupta
 **Roll No:** 24BCS10220
 
@@ -240,17 +243,20 @@ These screenshots were taken in a second run of the same labs, so Pod names, IPs
 
 **Cluster info, nodes and namespaces**
 
-![k8-01-cluster](screenshots/k8-01-cluster.png)
 
 **Control-plane components running as Pods in `kube-system`**
 
-![k8-02-kube-system](screenshots/k8-02-kube-system.png)
 
 **First Pod: run, wait, inspect events, exec**
 
-![k8-03-first-pod](screenshots/k8-03-first-pod.png)
 
 **Namespaces**
 
-![k8-04-namespaces](screenshots/k8-04-namespaces.png)
 
+## Fresh evidence — Mayank Gupta (24BCS10220)
+
+Representative checks for this topic ran in this repository’s GitHub Actions workflow. See the [expanded lab README](../session9-k8s/README.md) for the exact execution scope.
+
+![Mayank Gupta — actual CI check](../session9-k8s/screenshots/validation.png)
+
+[Full command log](../session9-k8s/screenshots/validation.log) · [Run metadata](../session9-k8s/screenshots/validation.json)

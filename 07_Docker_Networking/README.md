@@ -1,5 +1,8 @@
 # Docker Networking & Volumes – Homework
 
+> Evidence refreshed: previous screenshots showed a different terminal account and have been removed. Historical output blocks below remain reference examples. Fresh checks from this repository are linked at the end; they validate only their stated scope.
+
+
 **Name:** Mayank Gupta
 **Roll No:** 24BCS10220
 
@@ -149,19 +152,15 @@ The screenshots were taken in a second run of the same commands, so container ID
 
 Networks created:
 
-![docker networks](screenshots/dn-01-networks.png)
 
 Containers, with `backend` on two networks:
 
-![containers](screenshots/dn-02-containers.png)
 
 Ping tests (frontend → database fails as expected):
 
-![ping connectivity](screenshots/dn-03-connectivity-ping.png)
 
 HTTP, MySQL port and isolation tests:
 
-![port connectivity](screenshots/dn-04-connectivity-ports.png)
 
 ### Result
 
@@ -238,7 +237,6 @@ From the macOS terminal the same URL is refused. On macOS (and Windows) Docker r
 
 ### Screenshot
 
-![host network](screenshots/dn-05-host-network.png)
 
 ### What I understood
 
@@ -283,19 +281,15 @@ bind-nginx   Up 4 seconds   0.0.0.0:9090->80/tcp, [::]:9090->80/tcp
 
 Container started with the bind mount:
 
-![bind mount run](screenshots/dn-06-bind-mount-run.png)
 
 Browser at `http://localhost:9090` before the edit:
 
-![browser before](screenshots/dn-07-browser-before.png)
 
 File edited on the laptop, container not restarted:
 
-![bind mount edit](screenshots/dn-08-bind-mount-edit.png)
 
 Browser after the edit:
 
-![browser after](screenshots/dn-09-browser-after.png)
 
 ### What I understood
 
@@ -346,3 +340,11 @@ docker network ls --filter driver=overlay
 | `host` | One host | None | Maximum network performance, monitoring agents |
 | `overlay` | Many hosts | Yes, per network | Swarm services across a cluster |
 | `none` | – | Total | Containers that need no network |
+
+## Fresh evidence — Mayank Gupta (24BCS10220)
+
+Representative checks for this topic ran in this repository’s GitHub Actions workflow. See the [expanded lab README](../Docker%20Networks/README.md) for the exact execution scope.
+
+![Mayank Gupta — actual CI check](../Docker%20Networks/screenshots/validation.png)
+
+[Full command log](../Docker%20Networks/screenshots/validation.log) · [Run metadata](../Docker%20Networks/screenshots/validation.json)

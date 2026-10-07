@@ -1,0 +1,31 @@
+Mayank Gupta | 24BCS10220 | mayank-0789/Devops-Assignment-1
+Scope: Mini Project
+Commit: cbf69afbfdddfd0a61fd3f672098c2bd5bd2421e
+UTC: 2026-10-07T18:10:11Z
+Run: https://github.com/mayank-0789/Devops-Assignment-1/actions/runs/37664487255
++ troubleshooting_lab
++ kubectl create namespace mayank-troubleshooting
+namespace/mayank-troubleshooting created
++ kubectl apply -n mayank-troubleshooting -f 'Mini Project/manifests/deployment.yaml'
+deployment.apps/troubleshooting-app created
++ kubectl rollout status -n mayank-troubleshooting deployment/troubleshooting-app --timeout=150s
+Waiting for deployment "troubleshooting-app" rollout to finish: 0 of 2 updated replicas are available...
+Waiting for deployment "troubleshooting-app" rollout to finish: 1 of 2 updated replicas are available...
+deployment "troubleshooting-app" successfully rolled out
++ kubectl apply -n mayank-troubleshooting -f 'Mini Project/manifests/service-broken.yaml'
+service/troubleshooting-service created
++ kubectl get -n mayank-troubleshooting endpoints troubleshooting-service
+NAME                      ENDPOINTS   AGE
+troubleshooting-service   <none>      0s
+++ kubectl get -n mayank-troubleshooting endpoints troubleshooting-service -o 'jsonpath={.subsets[*].addresses[*].ip}'
++ test -z ''
++ kubectl apply -n mayank-troubleshooting -f 'Mini Project/manifests/service.yaml'
+service/troubleshooting-service configured
++ sleep 3
++ kubectl get -n mayank-troubleshooting endpoints troubleshooting-service
+NAME                      ENDPOINTS                       AGE
+troubleshooting-service   10.244.0.26:80,10.244.0.27:80   3s
+++ kubectl get -n mayank-troubleshooting endpoints troubleshooting-service -o 'jsonpath={.subsets[*].addresses[*].ip}'
++ test -n '10.244.0.26 10.244.0.27'
++ echo 'PASS: broken selector has no endpoints; corrected selector restores endpoints'
+PASS: broken selector has no endpoints; corrected selector restores endpoints

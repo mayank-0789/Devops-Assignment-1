@@ -1,5 +1,8 @@
 # Kubernetes Networking & Services – Homework
 
+> Evidence refreshed: previous screenshots showed a different terminal account and have been removed. Historical output blocks below remain reference examples. Fresh checks from this repository are linked at the end; they validate only their stated scope.
+
+
 **Name:** Mayank Gupta
 **Roll No:** 24BCS10220
 
@@ -288,25 +291,26 @@ These screenshots were taken in a second run of the same labs, so Pod names, IPs
 
 **ClusterIP Service and its EndpointSlice**
 
-![k10-01-clusterip](screenshots/k10-01-clusterip.png)
 
 **Access by service name and FQDN, CoreDNS lookup, `resolv.conf`**
 
-![k10-02-clusterip-dns](screenshots/k10-02-clusterip-dns.png)
 
 **NodePort 30080 answering on the nodes**
 
-![k10-03-nodeport](screenshots/k10-03-nodeport.png)
 
 **LoadBalancer stays `<pending>` locally, ExternalName returns a CNAME**
 
-![k10-04-loadbalancer-externalname](screenshots/k10-04-loadbalancer-externalname.png)
 
 **Headless Service: DNS returns Pod IPs, per-Pod DNS for the StatefulSet**
 
-![k10-05-headless](screenshots/k10-05-headless.png)
 
 **Troubleshooting: selector mismatch gives empty endpoints**
 
-![k10-06-empty-endpoints](screenshots/k10-06-empty-endpoints.png)
 
+## Fresh evidence — Mayank Gupta (24BCS10220)
+
+Representative checks for this topic ran in this repository’s GitHub Actions workflow. See the [expanded lab README](../session-11-kubernetes-services/README.md) for the exact execution scope.
+
+![Mayank Gupta — actual CI check](../session-11-kubernetes-services/screenshots/validation.png)
+
+[Full command log](../session-11-kubernetes-services/screenshots/validation.log) · [Run metadata](../session-11-kubernetes-services/screenshots/validation.json)

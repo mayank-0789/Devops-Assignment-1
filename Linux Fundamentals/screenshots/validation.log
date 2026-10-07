@@ -1,0 +1,32 @@
+Mayank Gupta | 24BCS10220 | mayank-0789/Devops-Assignment-1
+Scope: Linux Fundamentals
+Commit: cbf69afbfdddfd0a61fd3f672098c2bd5bd2421e
+UTC: 2026-10-07T18:08:28Z
+Run: https://github.com/mayank-0789/Devops-Assignment-1/actions/runs/37664487255
++ linux_lab
++ local scratch
+++ mktemp -d
++ scratch=/tmp/tmp.PCFekuVl5C
++ cd /tmp/tmp.PCFekuVl5C
++ echo 'Mayank Gupta 24BCS10220'
++ ln original.txt hard.txt
++ ln -s original.txt soft.txt
++ ls -li original.txt hard.txt soft.txt
+8937340 -rw-r--r-- 2 runner runner 24 Oct  7 18:08 hard.txt
+8937340 -rw-r--r-- 2 runner runner 24 Oct  7 18:08 original.txt
+8937341 lrwxrwxrwx 1 runner runner 12 Oct  7 18:08 soft.txt -> original.txt
+++ stat -c %i original.txt
+++ stat -c %i hard.txt
++ test 8937340 = 8937340
++ rm original.txt
++ test -f hard.txt
++ test -L soft.txt
++ test '!' -e soft.txt
++ cat hard.txt
+Mayank Gupta 24BCS10220
++ whoami
+runner
++ uname -a
+Linux runnervmmprz5 6.17.0-1022-azure #22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
++ echo 'PASS: hard link survives; symbolic link becomes dangling'
+PASS: hard link survives; symbolic link becomes dangling

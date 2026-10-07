@@ -1,5 +1,8 @@
 # Shell Scripting – Homework
 
+> Evidence refreshed: previous screenshots showed a different terminal account and have been removed. Historical output blocks below remain reference examples. Fresh checks from this repository are linked at the end; they validate only their stated scope.
+
+
 **Name:** Mayank Gupta
 **Roll No:** 24BCS10220
 
@@ -134,3 +137,11 @@ The two `ps` snapshots differ by one PID (`143` vs `146`) because the `ps` insid
 - `>` overwrites the file with the command output, while `>>` appends to it.
 - `mkdir -p` does not fail if the directory already exists, so the script can be run many times.
 - Variables should be quoted (`"$log_file"`) so that paths with spaces do not break the script.
+
+## Fresh evidence — Mayank Gupta (24BCS10220)
+
+Representative checks for this topic ran in this repository’s GitHub Actions workflow. See the [expanded lab README](../Shell%20Scripting/README.md) for the exact execution scope.
+
+![Mayank Gupta — actual CI check](../Shell%20Scripting/screenshots/validation.png)
+
+[Full command log](../Shell%20Scripting/screenshots/validation.log) · [Run metadata](../Shell%20Scripting/screenshots/validation.json)

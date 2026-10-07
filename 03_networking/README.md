@@ -1,5 +1,8 @@
 # Networking Fundamentals – Homework
 
+> Evidence refreshed: previous screenshots showed a different terminal account and have been removed. Historical output blocks below remain reference examples. Fresh checks from this repository are linked at the end; they validate only their stated scope.
+
+
 **Name:** Mayank Gupta
 **Roll No:** 24BCS10220
 
@@ -197,3 +200,11 @@ Two addresses are subtracted because the first address is the network address an
 4. `nslookup <name>` – is DNS working?
 5. `nc -vz <host> <port>` – is the port open?
 6. `curl -I <url>` – is the application answering?
+
+## Fresh evidence — Mayank Gupta (24BCS10220)
+
+Representative checks for this topic ran in this repository’s GitHub Actions workflow. See the [expanded lab README](../Networking%20Fundamentals/README.md) for the exact execution scope.
+
+![Mayank Gupta — actual CI check](../Networking%20Fundamentals/screenshots/validation.png)
+
+[Full command log](../Networking%20Fundamentals/screenshots/validation.log) · [Run metadata](../Networking%20Fundamentals/screenshots/validation.json)

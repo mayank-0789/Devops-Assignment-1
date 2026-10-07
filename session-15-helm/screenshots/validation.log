@@ -1,0 +1,60 @@
+Mayank Gupta | 24BCS10220 | mayank-0789/Devops-Assignment-1
+Scope: session-15-helm
+Commit: cbf69afbfdddfd0a61fd3f672098c2bd5bd2421e
+UTC: 2026-10-07T18:10:15Z
+Run: https://github.com/mayank-0789/Devops-Assignment-1/actions/runs/37664487255
++ helm_lab
++ for chart in session-15-helm/01-helm-commands/my-chart session-15-helm/02-rollback/app-chart session-15-helm/03-mini-project/notes-chart final-devops-project/helm/tickethub
++ helm lint session-15-helm/01-helm-commands/my-chart
+==> Linting session-15-helm/01-helm-commands/my-chart
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
++ helm template mayank session-15-helm/01-helm-commands/my-chart
++ for chart in session-15-helm/01-helm-commands/my-chart session-15-helm/02-rollback/app-chart session-15-helm/03-mini-project/notes-chart final-devops-project/helm/tickethub
++ helm lint session-15-helm/02-rollback/app-chart
+==> Linting session-15-helm/02-rollback/app-chart
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
++ helm template mayank session-15-helm/02-rollback/app-chart
++ for chart in session-15-helm/01-helm-commands/my-chart session-15-helm/02-rollback/app-chart session-15-helm/03-mini-project/notes-chart final-devops-project/helm/tickethub
++ helm lint session-15-helm/03-mini-project/notes-chart
+==> Linting session-15-helm/03-mini-project/notes-chart
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
++ helm template mayank session-15-helm/03-mini-project/notes-chart
++ for chart in session-15-helm/01-helm-commands/my-chart session-15-helm/02-rollback/app-chart session-15-helm/03-mini-project/notes-chart final-devops-project/helm/tickethub
++ helm lint final-devops-project/helm/tickethub
+==> Linting final-devops-project/helm/tickethub
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
++ helm template mayank final-devops-project/helm/tickethub
++ helm upgrade --install mayank-notes session-15-helm/03-mini-project/notes-chart -n mayank-labs --wait --timeout 3m
+Release "mayank-notes" does not exist. Installing it now.
+NAME: mayank-notes
+LAST DEPLOYED: Wed Oct  7 18:10:15 2026
+NAMESPACE: mayank-labs
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
++ helm upgrade mayank-notes session-15-helm/03-mini-project/notes-chart -n mayank-labs --set replicaCount=2 --wait --timeout 3m
+Release "mayank-notes" has been upgraded. Happy Helming!
+NAME: mayank-notes
+LAST DEPLOYED: Wed Oct  7 18:10:20 2026
+NAMESPACE: mayank-labs
+STATUS: deployed
+REVISION: 2
+TEST SUITE: None
++ helm rollback mayank-notes 1 -n mayank-labs --wait --timeout 3m
+Rollback was a success! Happy Helming!
++ helm history mayank-notes -n mayank-labs
+REVISION	UPDATED                 	STATUS    	CHART            	APP VERSION	DESCRIPTION     
+1       	Wed Oct  7 18:10:15 2026	superseded	notes-chart-0.1.0	1.0        	Install complete
+2       	Wed Oct  7 18:10:20 2026	superseded	notes-chart-0.1.0	1.0        	Upgrade complete
+3       	Wed Oct  7 18:10:22 2026	deployed  	notes-chart-0.1.0	1.0        	Rollback to 1   
++ kubectl get -n mayank-labs deploy/mayank-notes-deploy
+NAME                  READY   UP-TO-DATE   AVAILABLE   AGE
+mayank-notes-deploy   1/1     1            1           8s

@@ -21,4 +21,4 @@ A successful run proves only these checks. Kubernetes Ingress controller routing
 3. Download the five `mayank-evidence-*` artifacts after completion. Every section includes `validation.log`, `validation.json`, `validation.png` and additional image pages for long logs.
 4. Copy each artifact section into the matching lab folder's `screenshots/` directory to refresh the committed evidence. Keep the raw log and metadata beside each image.
 
-The original Section A folders and their screenshots are preserved from the destination repository. Existing images were checked with OCR for the source student's name and roll number; only newly generated evidence is asserted to come from this validation run.
+The original Section A folders and code are preserved. OCR found another terminal account in their previous screenshots, so those 31 images were removed and the sections now link to fresh CI evidence. Historical output blocks are retained as clearly labeled reference examples.

@@ -1,0 +1,48 @@
+Mayank Gupta | 24BCS10220 | mayank-0789/Devops-Assignment-1
+Scope: session-12-ingress-configmaps-secrets
+Commit: cbf69afbfdddfd0a61fd3f672098c2bd5bd2421e
+UTC: 2026-10-07T18:09:30Z
+Run: https://github.com/mayank-0789/Devops-Assignment-1/actions/runs/37664487255
++ ingress_lab
++ kubectl create namespace mayank-ingress
+namespace/mayank-ingress created
++ kubectl apply -n mayank-ingress -f session-12-ingress-configmaps-secrets/04-full-demo
+deployment.apps/mayankapp-backend created
+service/mayankapp-backend created
+configmap/mayankapp-config created
+configmap/mayankapp-frontend-html created
+deployment.apps/mayankapp-frontend created
+service/mayankapp-frontend created
+ingress.networking.k8s.io/mayankapp-ingress created
+secret/mayankapp-db-secret created
++ kubectl rollout status -n mayank-ingress deployment/mayankapp-backend --timeout=150s
+Waiting for deployment "mayankapp-backend" rollout to finish: 0 of 2 updated replicas are available...
+Waiting for deployment "mayankapp-backend" rollout to finish: 1 of 2 updated replicas are available...
+deployment "mayankapp-backend" successfully rolled out
++ kubectl rollout status -n mayank-ingress deployment/mayankapp-frontend --timeout=150s
+deployment "mayankapp-frontend" successfully rolled out
++ kubectl get -n mayank-ingress configmap,secret,ingress,svc
+NAME                                DATA   AGE
+configmap/kube-root-ca.crt          1      4s
+configmap/mayankapp-config          5      4s
+configmap/mayankapp-frontend-html   1      4s
+
+NAME                         TYPE     DATA   AGE
+secret/mayankapp-db-secret   Opaque   2      4s
+
+NAME                                          CLASS   HOSTS             ADDRESS   PORTS   AGE
+ingress.networking.k8s.io/mayankapp-ingress   nginx   mayankapp.local             80      4s
+
+NAME                         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+service/mayankapp-backend    ClusterIP   10.96.51.234   <none>        8080/TCP   4s
+service/mayankapp-frontend   ClusterIP   10.96.71.21    <none>        80/TCP     4s
++ kubectl exec -n mayank-ingress deploy/mayankapp-frontend -- wget -qO- http://mayankapp-backend:8080/api
+Mayank App backend API
+APP_NAME: Mayank App
+ENVIRONMENT: production
+LOG_LEVEL: INFO
+DEFAULT_CURRENCY: INR
+POSTGRES_USER: mayank_admin
+served path: /api
++ echo 'Backend response verified; Ingress resource created. Controller/TLS routing not exercised in this check.'
+Backend response verified; Ingress resource created. Controller/TLS routing not exercised in this check.

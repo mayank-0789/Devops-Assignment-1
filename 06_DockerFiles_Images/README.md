@@ -1,5 +1,8 @@
 # Dockerfiles & Images – Multi-Stage Build Homework
 
+> Evidence refreshed: previous screenshots showed a different terminal account and have been removed. Historical output blocks below remain reference examples. Fresh checks from this repository are linked at the end; they validate only their stated scope.
+
+
 **Name:** Mayank Gupta
 **Enrollment / Roll No:** 24BCS10220
 
@@ -134,3 +137,11 @@ hw-nodejs   hw-nodejs:1.0   Up 13 seconds   0.0.0.0:9001->3000/tcp, [::]:9001->3
 - Benefits: smaller images, faster pulls and deployments, and a smaller attack surface because build tools are not shipped to production.
 - The gain is biggest for compiled languages (Go, Java, React builds), where the final stage can be a tiny runtime or just Nginx. My React app in `05_Docker_Fundamental/React-app` uses the same technique: built with Node, served by Nginx, final image about 100 MB.
 - `docker build --target builder .` builds only up to a named stage, which is useful for debugging.
+
+## Fresh evidence — Mayank Gupta (24BCS10220)
+
+Representative checks for this topic ran in this repository’s GitHub Actions workflow. See the [expanded lab README](../DockerFiles%20and%20Images/README.md) for the exact execution scope.
+
+![Mayank Gupta — actual CI check](../DockerFiles%20and%20Images/screenshots/validation.png)
+
+[Full command log](../DockerFiles%20and%20Images/screenshots/validation.log) · [Run metadata](../DockerFiles%20and%20Images/screenshots/validation.json)
