@@ -11,7 +11,7 @@ with sync_playwright() as p:
  text=page.inner_text('body')
  assert 'nishant' not in text.lower()
  if sys.argv[1] == 'capstone':
-  assert 'Mayank Gupta' in text and '24BCS10220' in text
+  assert 'Mayank Gupta' in text and 'Inventory overview' in text and 'Stockroom' in text
   assert 'Delivery pipeline' not in text
  else:
   assert 'Mayank Session 20 Application Monitoring' in text

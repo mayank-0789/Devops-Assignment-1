@@ -1,0 +1,8 @@
+# Local kind/minikube: images loaded into the cluster, ingress on stockroom.local
+backend:
+  image: {repository: stockroom-backend, tag: local, pullPolicy: Never}
+frontend:
+  image: {repository: stockroom-frontend, tag: local, pullPolicy: Never}
+ingress:
+  enabled: true
+  host: stockroom.local

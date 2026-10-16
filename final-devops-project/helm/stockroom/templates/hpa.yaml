@@ -3,7 +3,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ .Release.Name }}-backend
-  labels: {{- include "tickethub.labels" . | nindent 4 }}
+  labels: {{- include "stockroom.labels" . | nindent 4 }}
 spec:
   scaleTargetRef: {apiVersion: apps/v1, kind: Deployment, name: {{ .Release.Name }}-backend}
   minReplicas: {{ .Values.hpa.minReplicas }}

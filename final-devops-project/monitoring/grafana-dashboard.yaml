@@ -1,18 +1,18 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: tickethub-grafana-dashboard
+  name: stockroom-grafana-dashboard
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
     owner: mayank
 data:
-  tickethub.json: |
+  stockroom.json: |
     {
-      "uid": "tickethub",
-      "title": "TicketHub by Mayank",
+      "uid": "stockroom",
+      "title": "Stockroom by Mayank",
       "tags": [
-        "tickethub"
+        "stockroom"
       ],
       "refresh": "10s",
       "schemaVersion": 39,
@@ -38,7 +38,7 @@ data:
           "targets": [
             {
               "refId": "A",
-              "expr": "sum(up{namespace=\"tickethub\", job=~\".*backend.*\"})"
+              "expr": "sum(up{namespace=\"stockroom\", job=~\".*backend.*\"})"
             }
           ],
           "fieldConfig": {
@@ -74,7 +74,7 @@ data:
           "targets": [
             {
               "refId": "A",
-              "expr": "sum(rate(http_requests_total{namespace=\"tickethub\"}[2m]))"
+              "expr": "sum(rate(http_requests_total{namespace=\"stockroom\"}[2m]))"
             }
           ],
           "fieldConfig": {
@@ -110,7 +110,7 @@ data:
           "targets": [
             {
               "refId": "A",
-              "expr": "100 * (sum(rate(http_requests_total{namespace=\"tickethub\", status=~\"5..\"}[2m])) or vector(0)) / clamp_min(sum(rate(http_requests_total{namespace=\"tickethub\"}[2m])), 0.0001)"
+              "expr": "100 * (sum(rate(http_requests_total{namespace=\"stockroom\", status=~\"5..\"}[2m])) or vector(0)) / clamp_min(sum(rate(http_requests_total{namespace=\"stockroom\"}[2m])), 0.0001)"
             }
           ],
           "fieldConfig": {
@@ -146,7 +146,7 @@ data:
           "targets": [
             {
               "refId": "A",
-              "expr": "count(up{namespace=\"tickethub\", job=~\".*backend.*\"} == 1)"
+              "expr": "count(up{namespace=\"stockroom\", job=~\".*backend.*\"} == 1)"
             }
           ],
           "fieldConfig": {
@@ -182,7 +182,7 @@ data:
           "targets": [
             {
               "refId": "A",
-              "expr": "sum by (handler) (rate(http_requests_total{namespace=\"tickethub\"}[2m]))",
+              "expr": "sum by (handler) (rate(http_requests_total{namespace=\"stockroom\"}[2m]))",
               "legendFormat": "{{handler}}"
             }
           ],
@@ -210,17 +210,17 @@ data:
           "targets": [
             {
               "refId": "A",
-              "expr": "histogram_quantile(0.5, sum by (le) (rate(http_request_duration_seconds_bucket{namespace=\"tickethub\"}[2m])))",
+              "expr": "histogram_quantile(0.5, sum by (le) (rate(http_request_duration_seconds_bucket{namespace=\"stockroom\"}[2m])))",
               "legendFormat": "p50"
             },
             {
               "refId": "B",
-              "expr": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{namespace=\"tickethub\"}[2m])))",
+              "expr": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{namespace=\"stockroom\"}[2m])))",
               "legendFormat": "p95"
             },
             {
               "refId": "C",
-              "expr": "histogram_quantile(0.99, sum by (le) (rate(http_request_duration_seconds_bucket{namespace=\"tickethub\"}[2m])))",
+              "expr": "histogram_quantile(0.99, sum by (le) (rate(http_request_duration_seconds_bucket{namespace=\"stockroom\"}[2m])))",
               "legendFormat": "p99"
             }
           ],
@@ -248,7 +248,7 @@ data:
           "targets": [
             {
               "refId": "A",
-              "expr": "sum by (status) (rate(http_requests_total{namespace=\"tickethub\"}[2m]))",
+              "expr": "sum by (status) (rate(http_requests_total{namespace=\"stockroom\"}[2m]))",
               "legendFormat": "{{status}}"
             }
           ],
@@ -276,7 +276,7 @@ data:
           "targets": [
             {
               "refId": "A",
-              "expr": "sum by (pod) (rate(container_cpu_usage_seconds_total{namespace=\"tickethub\", container=\"api\"}[2m]))",
+              "expr": "sum by (pod) (rate(container_cpu_usage_seconds_total{namespace=\"stockroom\", container=\"api\"}[2m]))",
               "legendFormat": "{{pod}}"
             }
           ],

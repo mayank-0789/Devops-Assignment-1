@@ -1,0 +1,12 @@
+# Argo CD watches this file. The CI pipeline rewrites both tags with the commit SHA after a green run.
+backend:
+  image:
+    repository: ghcr.io/mayank-0789/devops-assignment-1/stockroom-backend
+    tag: "not-published"
+frontend:
+  image:
+    repository: ghcr.io/mayank-0789/devops-assignment-1/stockroom-frontend
+    tag: "not-published"
+ingress:
+  enabled: true
+  host: stockroom.local

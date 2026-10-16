@@ -1,10 +1,11 @@
-# Default values for tickethub. Override with values-local.yaml (kind/minikube) or values-gitops.yaml (Argo CD).
+# Default values for stockroom. Override with values-local.yaml (kind/minikube) or values-gitops.yaml (Argo CD).
 nameOverride: ""
+imagePullSecrets: []
 
 backend:
   image:
-    repository: ghcr.io/mayank-0789/devops-assignment-1/tickethub-backend
-    tag: "latest"
+    repository: ghcr.io/mayank-0789/devops-assignment-1/stockroom-backend
+    tag: "not-published"
     pullPolicy: IfNotPresent
   replicas: 2
   port: 8000
@@ -17,8 +18,8 @@ backend:
 
 frontend:
   image:
-    repository: ghcr.io/mayank-0789/devops-assignment-1/tickethub-frontend
-    tag: "latest"
+    repository: ghcr.io/mayank-0789/devops-assignment-1/stockroom-frontend
+    tag: "not-published"
     pullPolicy: IfNotPresent
   replicas: 2
   port: 8080
@@ -28,9 +29,10 @@ frontend:
 
 postgres:
   image: postgres:16-alpine
-  database: tickethub
-  user: tickethub
-  password: tickethub-change-me   # override in real environments: --set postgres.password=...
+  database: stockroom
+  user: stockroom
+  password: stockroom-change-me   # override in real environments: --set postgres.password=...
+  existingSecret: ""             # production/GitOps: Secret containing POSTGRES_PASSWORD
   storage: 1Gi
   storageClassName: ""            # empty = cluster default
   resources:
@@ -40,7 +42,7 @@ postgres:
 ingress:
   enabled: false
   className: nginx
-  host: tickethub.local
+  host: stockroom.local
   annotations: {}
 
 hpa:

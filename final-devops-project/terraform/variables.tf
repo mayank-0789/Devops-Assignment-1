@@ -6,7 +6,7 @@ variable "aws_region" {
 
 variable "project_name" {
   type    = string
-  default = "tickethub"
+  default = "stockroom"
 }
 
 variable "environment" {
@@ -22,7 +22,7 @@ variable "vpc_cidr" {
 
 variable "kubernetes_version" {
   type    = string
-  default = "1.31"
+  default = "1.35"
 }
 
 variable "node_instance_type" {

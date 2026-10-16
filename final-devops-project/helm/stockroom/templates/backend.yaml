@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}-backend
-  labels: {{- include "tickethub.labels" . | nindent 4 }}
+  labels: {{- include "stockroom.labels" . | nindent 4 }}
     app.kubernetes.io/component: backend
 spec:
   replicas: {{ .Values.backend.replicas }}
@@ -12,6 +12,9 @@ spec:
     metadata:
       labels: {app.kubernetes.io/instance: {{ .Release.Name }}, app.kubernetes.io/component: backend, owner: mayank}
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets: {{- toYaml . | nindent 8 }}
+      {{- end }}
       securityContext: {runAsNonRoot: true, runAsUser: 10001}
       initContainers:
         # Runs Alembic to head. Several replicas starting at once are serialised by an advisory lock.
@@ -21,8 +24,8 @@ spec:
           command: ["python", "-m", "app.migrate"]
           env:
             - name: POSTGRES_PASSWORD
-              valueFrom: {secretKeyRef: {name: {{ .Release.Name }}-db-secret, key: POSTGRES_PASSWORD}}
-            - {name: DATABASE_URL, value: {{ include "tickethub.databaseUrl" . | quote }}}
+              valueFrom: {secretKeyRef: {name: {{ include "stockroom.databaseSecret" . }}, key: POSTGRES_PASSWORD}}
+            - {name: DATABASE_URL, value: {{ include "stockroom.databaseUrl" . | quote }}}
       containers:
         - name: api
           image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
@@ -32,8 +35,8 @@ spec:
             - configMapRef: {name: {{ .Release.Name }}-config}
           env:
             - name: POSTGRES_PASSWORD
-              valueFrom: {secretKeyRef: {name: {{ .Release.Name }}-db-secret, key: POSTGRES_PASSWORD}}
-            - {name: DATABASE_URL, value: {{ include "tickethub.databaseUrl" . | quote }}}
+              valueFrom: {secretKeyRef: {name: {{ include "stockroom.databaseSecret" . }}, key: POSTGRES_PASSWORD}}
+            - {name: DATABASE_URL, value: {{ include "stockroom.databaseUrl" . | quote }}}
           readinessProbe:
             httpGet: {path: /ready, port: http}
             periodSeconds: 5
@@ -47,7 +50,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Release.Name }}-backend
-  labels: {{- include "tickethub.labels" . | nindent 4 }}
+  labels: {{- include "stockroom.labels" . | nindent 4 }}
     app.kubernetes.io/component: backend
 spec:
   type: ClusterIP

@@ -46,7 +46,7 @@ jobs:
       - name: Run actual lab checks
         if: matrix.suite != 'capstone'
         run: bash "scripts/check-${{ matrix.suite }}.sh"
-      - name: TicketHub tests, build and live stack
+      - name: Stockroom tests, build and live stack
         if: matrix.suite == 'capstone'
         timeout-minutes: 16
         run: bash scripts/check-capstone.sh ticket

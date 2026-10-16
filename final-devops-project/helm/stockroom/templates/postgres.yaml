@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: {{ .Release.Name }}-postgres-data
-  labels: {{- include "tickethub.labels" . | nindent 4 }}
+  labels: {{- include "stockroom.labels" . | nindent 4 }}
 spec:
   accessModes: ["ReadWriteOnce"]
   {{- if .Values.postgres.storageClassName }}
@@ -16,7 +16,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}-postgres
-  labels: {{- include "tickethub.labels" . | nindent 4 }}
+  labels: {{- include "stockroom.labels" . | nindent 4 }}
     app.kubernetes.io/component: database
 spec:
   replicas: 1
@@ -33,7 +33,7 @@ spec:
           ports: [{containerPort: 5432, name: pg}]
           envFrom:
             - configMapRef: {name: {{ .Release.Name }}-config}
-            - secretRef: {name: {{ .Release.Name }}-db-secret}
+            - secretRef: {name: {{ include "stockroom.databaseSecret" . }}}
           env:
             - {name: PGDATA, value: /var/lib/postgresql/data/pgdata}
           volumeMounts: [{name: data, mountPath: /var/lib/postgresql/data}]
@@ -52,7 +52,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Release.Name }}-postgres
-  labels: {{- include "tickethub.labels" . | nindent 4 }}
+  labels: {{- include "stockroom.labels" . | nindent 4 }}
 spec:
   selector: {app.kubernetes.io/instance: {{ .Release.Name }}, app.kubernetes.io/component: database}
   ports: [{port: 5432, targetPort: pg}]

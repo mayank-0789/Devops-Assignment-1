@@ -12,7 +12,7 @@ capstone_lab() {
  curl --fail --connect-timeout 5 --max-time 30 http://localhost:8000/health
  curl --fail --connect-timeout 5 --max-time 30 http://localhost:8000/ready
  CURL_OPTS="--fail --connect-timeout 5 --max-time 30" bash final-devops-project/scripts/seed.sh
- curl --fail --connect-timeout 5 --max-time 30 http://localhost:8000/api/tickets/stats
+ curl --fail --connect-timeout 5 --max-time 30 http://localhost:8000/api/products/stats
  curl --fail --connect-timeout 5 --max-time 30 http://localhost:3000 | head -15
  curl --fail --connect-timeout 5 --max-time 30 http://localhost:8000/metrics | head -20 || test "${PIPESTATUS[0]}" = 23
  docker compose -f final-devops-project/docker/docker-compose.yml ps
@@ -20,7 +20,7 @@ capstone_lab() {
  google-chrome --version
  python scripts/capture-app.py capstone http://localhost:3000
  docker compose -f final-devops-project/docker/docker-compose.yml down -v
- echo 'PASS: backend tests, frontend production build, Compose PostgreSQL/migrations/API/frontend stack and ticket seed. EKS/Argo CD/HPA deployment remains a separate exercise.'
+ echo 'PASS: backend tests, frontend production build, Compose PostgreSQL/migrations/API/frontend stack and inventory seed. EKS/Argo CD/HPA deployment remains a separate exercise.'
 }
 monitoring_lab() {
  cd "$ROOT"

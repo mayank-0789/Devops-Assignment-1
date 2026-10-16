@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tickethub
+  name: stockroom
   namespace: argocd
   finalizers: ["resources-finalizer.argocd.argoproj.io"]
 spec:
@@ -9,12 +9,18 @@ spec:
   source:
     repoURL: https://github.com/mayank-0789/Devops-Assignment-1.git
     targetRevision: main
-    path: final-devops-project/helm/tickethub
+    path: final-devops-project/helm/stockroom
     helm:
-      valueFiles: [values-gitops.yaml]
+      valueFiles: [values-eks.yaml, values-gitops.yaml]
   destination:
     server: https://kubernetes.default.svc
-    namespace: tickethub
+    namespace: stockroom
   syncPolicy:
     automated: {prune: true, selfHeal: true}
-    syncOptions: [CreateNamespace=true]
+    syncOptions: [CreateNamespace=true, RespectIgnoreDifferences=true]
+  ignoreDifferences:
+    # HPA owns backend replicas after the initial deployment.
+    - group: apps
+      kind: Deployment
+      name: stockroom-backend
+      jsonPointers: [/spec/replicas]

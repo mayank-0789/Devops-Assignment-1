@@ -3,17 +3,16 @@
 prometheus:
   prometheusSpec:
     retention: 2d
-    # scrape every ServiceMonitor that carries release=monitoring (the TicketHub chart sets that label)
+    # scrape every ServiceMonitor that carries release=monitoring (the Stockroom chart sets that label)
     serviceMonitorSelectorNilUsesHelmValues: true
     ruleSelectorNilUsesHelmValues: true
     resources:
       requests: {cpu: 100m, memory: 400Mi}
       limits: {memory: 800Mi}
 grafana:
-  adminPassword: admin
   grafana.ini:
     auth.anonymous:
-      enabled: true          # classroom only: lets the dashboard open without a login
+      enabled: false         # retrieve the generated admin password from the Secret
       org_role: Viewer
   sidecar:
     dashboards:

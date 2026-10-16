@@ -1,0 +1,12 @@
+# Apply after EBS CSI, Metrics Server, ingress controller and Prometheus are ready.
+postgres:
+  existingSecret: stockroom-db-secret
+  storageClassName: stockroom-gp3
+  storage: 5Gi
+ingress:
+  enabled: true
+  className: traefik
+  host: stockroom.local
+monitoring:
+  serviceMonitor:
+    enabled: true

@@ -63,7 +63,7 @@ troubleshooting_lab() {
  echo 'PASS: broken selector has no endpoints; corrected selector restores endpoints'
 }
 helm_lab() {
- for chart in session-15-helm/01-helm-commands/my-chart session-15-helm/02-rollback/app-chart session-15-helm/03-mini-project/notes-chart final-devops-project/helm/tickethub; do
+ for chart in session-15-helm/01-helm-commands/my-chart session-15-helm/02-rollback/app-chart session-15-helm/03-mini-project/notes-chart final-devops-project/helm/stockroom; do
   helm lint "$chart"; helm template mayank "$chart" >/tmp/mayank-chart.yaml
  done
  helm upgrade --install mayank-notes session-15-helm/03-mini-project/notes-chart -n mayank-labs --wait --timeout 3m

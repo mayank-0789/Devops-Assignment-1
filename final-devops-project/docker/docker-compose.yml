@@ -1,16 +1,16 @@
-# TicketHub local stack: docker compose -f docker/docker-compose.yml up --build
-name: tickethub
+# Stockroom local stack: docker compose -f docker/docker-compose.yml up --build
+name: stockroom
 services:
   postgres:
     image: postgres:16-alpine
     environment:
-      POSTGRES_USER: tickethub
-      POSTGRES_PASSWORD: tickethub
-      POSTGRES_DB: tickethub
+      POSTGRES_USER: stockroom
+      POSTGRES_PASSWORD: stockroom
+      POSTGRES_DB: stockroom
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U tickethub -d tickethub"]
+      test: ["CMD-SHELL", "pg_isready -U stockroom -d stockroom"]
       interval: 5s
       timeout: 3s
       retries: 10
@@ -19,7 +19,7 @@ services:
     build: ../application/backend
     command: ["python", "-m", "app.migrate"]
     environment:
-      DATABASE_URL: postgresql+psycopg://tickethub:tickethub@postgres:5432/tickethub
+      DATABASE_URL: postgresql+psycopg://stockroom:stockroom@postgres:5432/stockroom
     depends_on:
       postgres:
         condition: service_healthy
@@ -28,7 +28,7 @@ services:
     build: ../application/backend
     environment:
       APP_ENV: compose
-      DATABASE_URL: postgresql+psycopg://tickethub:tickethub@postgres:5432/tickethub
+      DATABASE_URL: postgresql+psycopg://stockroom:stockroom@postgres:5432/stockroom
     ports:
       - "8000:8000"
     depends_on:

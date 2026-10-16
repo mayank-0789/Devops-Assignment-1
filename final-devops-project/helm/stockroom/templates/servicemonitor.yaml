@@ -3,7 +3,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: {{ .Release.Name }}-backend
-  labels: {{- include "tickethub.labels" . | nindent 4 }}
+  labels: {{- include "stockroom.labels" . | nindent 4 }}
     {{- toYaml .Values.monitoring.serviceMonitor.labels | nindent 4 }}
 spec:
   selector:

@@ -2,19 +2,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tickethub-broken-image
-  namespace: tickethub
+  name: stockroom-broken-image
+  namespace: stockroom
   labels: {owner: mayank, lab: troubleshooting}
 spec:
   replicas: 1
   selector:
-    matchLabels: {app: tickethub-broken-image}
+    matchLabels: {app: stockroom-broken-image}
   template:
     metadata:
-      labels: {app: tickethub-broken-image}
+      labels: {app: stockroom-broken-image}
     spec:
       containers:
         - name: api
-          image: tickethub-backend:does-not-exist
+          image: stockroom-backend:does-not-exist
           imagePullPolicy: IfNotPresent
           ports: [{containerPort: 8000}]

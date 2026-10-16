@@ -3,7 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .Release.Name }}-ingress
-  labels: {{- include "tickethub.labels" . | nindent 4 }}
+  labels: {{- include "stockroom.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations: {{- toYaml . | nindent 4 }}
   {{- end }}
@@ -13,6 +13,11 @@ spec:
     - host: {{ .Values.ingress.host }}
       http:
         paths:
+          {{- range list "/health" "/ready" "/metrics" }}
+          - path: {{ . }}
+            pathType: Exact
+            backend: {service: {name: {{ $.Release.Name }}-backend, port: {number: {{ $.Values.backend.port }}}}}
+          {{- end }}
           - path: /api
             pathType: Prefix
             backend: {service: {name: {{ .Release.Name }}-backend, port: {number: {{ .Values.backend.port }}}}}

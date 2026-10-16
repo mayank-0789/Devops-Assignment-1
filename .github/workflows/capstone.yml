@@ -1,0 +1,180 @@
+name: Stockroom capstone
+on:
+  push:
+    branches: [main]
+    paths: ['final-devops-project/**', '.github/workflows/capstone.yml']
+  pull_request:
+    paths: ['final-devops-project/**', '.github/workflows/capstone.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: stockroom-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: stockroom
+          POSTGRES_PASSWORD: stockroom
+          POSTGRES_DB: stockroom
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U stockroom -d stockroom"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Isolated API tests
+        working-directory: final-devops-project/application/backend
+        run: |
+          pip install -r requirements-dev.txt
+          pytest -v --junitxml=pytest-results.xml
+      - name: PostgreSQL migrations and concurrent stock transactions
+        env:
+          DATABASE_URL: postgresql+psycopg://stockroom:stockroom@localhost:5432/stockroom
+        working-directory: final-devops-project/application/backend
+        run: |
+          python -m app.migrate
+          uvicorn app.main:app --host 127.0.0.1 --port 8000 > /tmp/stockroom-api.log 2>&1 &
+          api_pid=$!
+          trap 'kill "$api_pid"; cat /tmp/stockroom-api.log' EXIT
+          for attempt in {1..30}; do
+            if curl -fsS http://127.0.0.1:8000/ready; then break; fi
+            sleep 1
+          done
+          python ../../scripts/smoke.py
+      - name: Frontend production build
+        working-directory: final-devops-project/application/frontend
+        run: npm ci && npm run build
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stockroom-tests
+          path: final-devops-project/application/backend/pytest-results.xml
+  security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: SAST and Python dependency audit
+        run: |
+          pip install bandit pip-audit
+          bandit -r final-devops-project/application/backend/app final-devops-project/application/backend/alembic
+          pip-audit -r final-devops-project/application/backend/requirements.txt
+      - name: Frontend dependency audit
+        working-directory: final-devops-project/application/frontend
+        run: npm ci && npm audit --audit-level=high
+      - name: Secret scanning including Git history
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_COMMENTS: 'false'
+  infrastructure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-helm@v4.3.0
+        with: {version: v3.17.3}
+      - uses: hashicorp/setup-terraform@v3
+        with: {terraform_version: '1.9.8'}
+      - name: Render local and AWS charts
+        run: |
+          helm lint final-devops-project/helm/stockroom
+          helm template stockroom final-devops-project/helm/stockroom -f final-devops-project/helm/stockroom/values-local.yaml > /tmp/local.yaml
+          helm template stockroom final-devops-project/helm/stockroom -f final-devops-project/helm/stockroom/values-eks.yaml -f final-devops-project/helm/stockroom/values-gitops.yaml > /tmp/eks.yaml
+      - name: Terraform configuration validation (no AWS resources)
+        working-directory: final-devops-project/terraform
+        run: |
+          terraform fmt -check -recursive
+          terraform init -backend=false -input=false
+          terraform validate
+  images:
+    needs: [test, security, infrastructure]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions: {contents: read, packages: write}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set lowercase registry name
+        run: echo "IMAGE_BASE=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
+      - name: Build both images after all gates pass
+        run: |
+          mkdir -p scan-results
+          docker build -t "$IMAGE_BASE/stockroom-backend:$GITHUB_SHA" final-devops-project/application/backend
+          docker build -t "$IMAGE_BASE/stockroom-frontend:$GITHUB_SHA" final-devops-project/application/frontend
+          test "$(docker image inspect --format '{{.Config.User}}' "$IMAGE_BASE/stockroom-backend:$GITHUB_SHA")" = 10001
+          test "$(docker image inspect --format '{{.Config.User}}' "$IMAGE_BASE/stockroom-frontend:$GITHUB_SHA")" = 101
+      - name: Scan backend image
+        uses: aquasecurity/trivy-action@0.30.0
+        with:
+          image-ref: ${{ env.IMAGE_BASE }}/stockroom-backend:${{ github.sha }}
+          severity: HIGH,CRITICAL
+          exit-code: '1'
+          format: table
+          output: scan-results/backend.txt
+      - name: Scan frontend image
+        if: success() || failure()
+        uses: aquasecurity/trivy-action@0.30.0
+        with:
+          image-ref: ${{ env.IMAGE_BASE }}/stockroom-frontend:${{ github.sha }}
+          severity: HIGH,CRITICAL
+          exit-code: '1'
+          format: table
+          output: scan-results/frontend.txt
+      - name: Publish scan output to job log
+        if: always()
+        run: find scan-results -name '*.txt' -exec cat {} +
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: stockroom-image-scans, path: scan-results/}
+      - name: Log in to GHCR (main only)
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish both scanned images (main only)
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        run: |
+          docker push "$IMAGE_BASE/stockroom-backend:$GITHUB_SHA"
+          docker push "$IMAGE_BASE/stockroom-frontend:$GITHUB_SHA"
+  promote:
+    needs: images
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions: {contents: write}
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main, fetch-depth: 0}
+      - name: Promote tested SHA for Argo CD
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          if [ "$(git rev-parse HEAD)" != "$SOURCE_SHA" ]; then
+            echo 'main advanced during this run. A newer run will promote its own images.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          python3 final-devops-project/scripts/promote.py "$SOURCE_SHA"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add final-devops-project/helm/stockroom/values-gitops.yaml
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "deploy(stockroom): promote $SOURCE_SHA"
+          git push origin HEAD:main
+          echo "Desired image SHA: $SOURCE_SHA. Argo CD must sync this commit; this job alone does not prove cluster health." >> "$GITHUB_STEP_SUMMARY"
