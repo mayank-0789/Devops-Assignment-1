@@ -119,7 +119,7 @@ jobs:
           test "$(docker image inspect --format '{{.Config.User}}' "$IMAGE_BASE/stockroom-backend:$GITHUB_SHA")" = 10001
           test "$(docker image inspect --format '{{.Config.User}}' "$IMAGE_BASE/stockroom-frontend:$GITHUB_SHA")" = 101
       - name: Scan backend image
-        uses: aquasecurity/trivy-action@0.30.0
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
           image-ref: ${{ env.IMAGE_BASE }}/stockroom-backend:${{ github.sha }}
           severity: HIGH,CRITICAL
@@ -128,7 +128,7 @@ jobs:
           output: scan-results/backend.txt
       - name: Scan frontend image
         if: success() || failure()
-        uses: aquasecurity/trivy-action@0.30.0
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
           image-ref: ${{ env.IMAGE_BASE }}/stockroom-frontend:${{ github.sha }}
           severity: HIGH,CRITICAL
