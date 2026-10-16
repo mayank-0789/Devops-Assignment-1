@@ -12,7 +12,7 @@ from sqlalchemy import create_engine, text
 
 from app.config import settings
 
-LOCK_ID = 7_2026_1  # arbitrary, shared by every TicketHub instance
+LOCK_ID = 7_2026_1  # arbitrary, shared by every Stockroom instance
 
 
 def wait_for_db(engine, attempts=30):

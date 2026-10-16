@@ -1,115 +1,123 @@
-"""TicketHub API: a small helpdesk ticketing backend built by Mayank for the DevOps capstone."""
-from typing import Optional
-
+"""Original inventory API: stock changes and their audit entries commit together."""
 from fastapi import Depends, FastAPI, HTTPException, Query, Response
 from fastapi.middleware.cors import CORSMiddleware
 from prometheus_fastapi_instrumentator import Instrumentator
-from sqlalchemy import func, select, text
+from sqlalchemy import case, func, select, text, update
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
-
-from app import models, schemas
 from app.config import settings
 from app.db import get_db
+from app.models import Movement, Product
+from app.schemas import MovementCreate, MovementOut, ProductCreate, ProductOut, ProductUpdate, Stats
 
-app = FastAPI(
-    title="TicketHub API",
-    version="1.0.0",
-    description="Helpdesk tickets: create, list, update, resolve. Built by Mayank.",
-)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[o.strip() for o in settings.cors_origins.split(",")],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app = FastAPI(title="Stockroom API", version="1.0.0", description="Products, stock movements and low-stock visibility.")
+app.add_middleware(CORSMiddleware, allow_origins=settings.cors_origins.split(","), allow_methods=["GET", "POST", "PUT", "DELETE"], allow_headers=["Content-Type"])
 Instrumentator(excluded_handlers=["/metrics", "/health", "/ready"]).instrument(app).expose(app, include_in_schema=False)
 
 
-@app.get("/", tags=["meta"])
+@app.get("/")
 def root():
-    return {"app": settings.app_name, "env": settings.app_env, "owner": "Mayank", "docs": "/docs"}
+    return {"app": settings.app_name, "env": settings.app_env, "docs": "/docs"}
 
 
-@app.get("/health", tags=["meta"])
+@app.get("/health")
 def health():
-    """Liveness: the process is up and can answer HTTP."""
     return {"status": "healthy"}
 
 
-@app.get("/ready", tags=["meta"])
+@app.get("/ready")
 def ready(response: Response, db: Session = Depends(get_db)):
-    """Readiness: the process can also reach its database."""
     try:
-        db.execute(text("SELECT 1"))
-    except Exception as exc:  # noqa: BLE001 - any DB failure means not ready
+        db.execute(text("SELECT 1 FROM products LIMIT 1"))
+    except SQLAlchemyError:
         response.status_code = 503
-        return {"status": "not ready", "database": str(exc.__class__.__name__)}
+        return {"status": "not ready"}
     return {"status": "ready", "database": "ok"}
 
 
-@app.get("/api/tickets", response_model=list[schemas.TicketOut], tags=["tickets"])
-def list_tickets(
-    status: Optional[schemas.Status] = Query(default=None),
-    priority: Optional[schemas.Priority] = Query(default=None),
-    db: Session = Depends(get_db),
-):
-    stmt = select(models.Ticket)
-    if status:
-        stmt = stmt.where(models.Ticket.status == status)
-    if priority:
-        stmt = stmt.where(models.Ticket.priority == priority)
-    return db.scalars(stmt.order_by(models.Ticket.created_at.desc(), models.Ticket.id.desc())).all()
+@app.get("/api/products", response_model=list[ProductOut])
+def list_products(q: str = Query(default="", max_length=160), low_stock: bool = False, db: Session = Depends(get_db)):
+    stmt = select(Product).where(Product.archived.is_(False))
+    if q:
+        stmt = stmt.where(Product.name.icontains(q, autoescape=True) | Product.sku.icontains(q, autoescape=True))
+    if low_stock:
+        stmt = stmt.where(Product.quantity <= Product.reorder_level)
+    return db.scalars(stmt.order_by(Product.id.desc())).all()
 
 
-@app.get("/api/tickets/stats", response_model=schemas.Stats, tags=["tickets"])
-def ticket_stats(db: Session = Depends(get_db)):
-    by_status = {s: 0 for s in models.STATUSES}
-    for status, n in db.execute(select(models.Ticket.status, func.count()).group_by(models.Ticket.status)):
-        by_status[status] = n
-    by_priority = {p: 0 for p in models.PRIORITIES}
-    for priority, n in db.execute(select(models.Ticket.priority, func.count()).group_by(models.Ticket.priority)):
-        by_priority[priority] = n
-    open_urgent = db.scalar(
-        select(func.count()).select_from(models.Ticket).where(models.Ticket.priority == "urgent", models.Ticket.status.in_(("open", "in_progress")))
-    )
-    unassigned = db.scalar(select(func.count()).select_from(models.Ticket).where(models.Ticket.assignee == "", models.Ticket.status != "closed"))
-    return schemas.Stats(total=sum(by_status.values()), by_status=by_status, by_priority=by_priority, open_urgent=open_urgent, unassigned=unassigned)
+@app.get("/api/products/stats", response_model=Stats)
+def stats(db: Session = Depends(get_db)):
+    row = db.execute(select(
+        func.count(Product.id), func.coalesce(func.sum(Product.quantity), 0),
+        func.coalesce(func.sum(case((Product.quantity <= Product.reorder_level, 1), else_=0)), 0),
+        func.coalesce(func.sum(case((Product.quantity == 0, 1), else_=0)), 0),
+        func.coalesce(func.sum(Product.quantity * Product.unit_price_cents), 0),
+    ).where(Product.archived.is_(False))).one()
+    return Stats(products=row[0], units=row[1], low_stock=row[2], out_of_stock=row[3], inventory_value_cents=row[4])
 
 
-@app.get("/api/tickets/{ticket_id}", response_model=schemas.TicketOut, tags=["tickets"])
-def get_ticket(ticket_id: int, db: Session = Depends(get_db)):
-    ticket = db.get(models.Ticket, ticket_id)
-    if not ticket:
-        raise HTTPException(status_code=404, detail="ticket not found")
-    return ticket
+def active_product(db, product_id):
+    product = db.scalar(select(Product).where(Product.id == product_id, Product.archived.is_(False)))
+    if product is None:
+        raise HTTPException(404, "Product not found")
+    return product
 
 
-@app.post("/api/tickets", response_model=schemas.TicketOut, status_code=201, tags=["tickets"])
-def create_ticket(payload: schemas.TicketCreate, db: Session = Depends(get_db)):
-    ticket = models.Ticket(**payload.model_dump())
-    db.add(ticket)
-    db.commit()
-    db.refresh(ticket)
-    return ticket
+@app.get("/api/products/{product_id}", response_model=ProductOut)
+def get_product(product_id: int, db: Session = Depends(get_db)):
+    return active_product(db, product_id)
 
 
-@app.put("/api/tickets/{ticket_id}", response_model=schemas.TicketOut, tags=["tickets"])
-def update_ticket(ticket_id: int, payload: schemas.TicketUpdate, db: Session = Depends(get_db)):
-    ticket = db.get(models.Ticket, ticket_id)
-    if not ticket:
-        raise HTTPException(status_code=404, detail="ticket not found")
+@app.post("/api/products", response_model=ProductOut, status_code=201)
+def create_product(payload: ProductCreate, db: Session = Depends(get_db)):
+    product = Product(**payload.model_dump())
+    db.add(product)
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(409, "SKU already exists, including archived products") from None
+    db.refresh(product)
+    return product
+
+
+@app.put("/api/products/{product_id}", response_model=ProductOut)
+def update_product(product_id: int, payload: ProductUpdate, db: Session = Depends(get_db)):
+    product = active_product(db, product_id)
     for field, value in payload.model_dump(exclude_unset=True).items():
-        setattr(ticket, field, value)
+        setattr(product, field, value)
     db.commit()
-    db.refresh(ticket)
-    return ticket
+    db.refresh(product)
+    return product
 
 
-@app.delete("/api/tickets/{ticket_id}", status_code=204, tags=["tickets"])
-def delete_ticket(ticket_id: int, db: Session = Depends(get_db)):
-    ticket = db.get(models.Ticket, ticket_id)
-    if not ticket:
-        raise HTTPException(status_code=404, detail="ticket not found")
-    db.delete(ticket)
+@app.delete("/api/products/{product_id}", status_code=204)
+def archive_product(product_id: int, db: Session = Depends(get_db)):
+    active_product(db, product_id)
+    # Conditional UPDATE also serializes with stock movements; a read/check/write would race.
+    result = db.execute(update(Product).where(Product.id == product_id, Product.archived.is_(False), Product.quantity == 0).values(archived=True))
+    if result.rowcount != 1:
+        raise HTTPException(409, "Only products with zero stock can be archived")
     db.commit()
     return Response(status_code=204)
+
+
+@app.get("/api/movements", response_model=list[MovementOut])
+def list_movements(limit: int = Query(default=50, ge=1, le=200), db: Session = Depends(get_db)):
+    return db.scalars(select(Movement).order_by(Movement.id.desc()).limit(limit)).all()
+
+
+@app.post("/api/movements", response_model=MovementOut, status_code=201)
+def record_movement(payload: MovementCreate, db: Session = Depends(get_db)):
+    active_product(db, payload.product_id)
+    row = db.execute(update(Product).where(
+        Product.id == payload.product_id, Product.archived.is_(False),
+        Product.quantity + payload.delta >= 0, Product.quantity + payload.delta <= 1000000,
+    ).values(quantity=Product.quantity + payload.delta).returning(Product.quantity, Product.sku, Product.name)).first()
+    if row is None:
+        raise HTTPException(409, "Insufficient stock, stock limit exceeded, or product archived")
+    movement = Movement(**payload.model_dump(), quantity_after=row[0], sku=row[1], product_name=row[2])
+    db.add(movement)
+    db.commit()
+    db.refresh(movement)
+    return movement

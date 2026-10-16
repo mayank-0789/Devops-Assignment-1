@@ -1,14 +1,12 @@
-"""Runtime settings. Every value can be overridden with an environment variable."""
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
-
-    app_name: str = "TicketHub"
+    app_name: str = "Stockroom"
     app_env: str = "development"
-    database_url: str = "postgresql+psycopg://tickethub:tickethub@localhost:5432/tickethub"
-    cors_origins: str = "*"
+    database_url: str = "postgresql+psycopg://stockroom:stockroom@localhost:5432/stockroom"
+    cors_origins: str = "http://localhost:3000,http://localhost:5173"
 
 
 settings = Settings()

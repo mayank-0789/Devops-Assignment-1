@@ -11,7 +11,7 @@ COPY alembic ./alembic
 COPY app ./app
 
 RUN useradd --uid 10001 --no-create-home api
-USER api
+USER 10001
 
 EXPOSE 8000
 # migrations run separately: python -m app.migrate (compose service / Helm initContainer)
