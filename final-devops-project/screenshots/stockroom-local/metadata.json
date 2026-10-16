@@ -1,0 +1,29 @@
+{
+  "application": "Stockroom",
+  "source_commit": "b79383eedf8cbdc79cd29faadd995662df6d2c49",
+  "recorded_at_utc": "2026-10-16T08:30:02.310397+00:00",
+  "environment": "Local Python 3.12 + Vite, SQLite preview database, headless installed Google Chrome",
+  "data": "Explicitly seeded sample inventory and browser/HTTP verification records",
+  "passed": [
+    "26 backend tests including migration chain",
+    "frontend production build",
+    "Bandit SAST",
+    "pip-audit runtime dependency audit",
+    "npm audit",
+    "actionlint workflow validation",
+    "Helm lint and AWS template rendering",
+    "Terraform init/validate and graph without AWS provisioning",
+    "live HTTP concurrent dispatch smoke (SQLite)",
+    "desktop/mobile browser create, receipt, overselling error, dispatch and archive; no page errors"
+  ],
+  "not_verified": [
+    "Docker image builds or Trivy image scans locally (no running Docker daemon)",
+    "PostgreSQL integration in this local run",
+    "GHCR publication",
+    "EKS provisioning/destroy",
+    "live Helm/Argo CD/Ingress",
+    "Prometheus/Grafana cluster targets",
+    "HPA scaling"
+  ],
+  "historical_evidence": "Other parent-directory images predate Stockroom and belong to the old TicketHub lab."
+}
