@@ -1,179 +1,689 @@
-import { useCallback, useEffect, useState } from "react";
-import { api } from "./api.js";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { api } from "./api";
 
-const STATUSES = ["open", "in_progress", "resolved", "closed"];
-const PRIORITIES = ["low", "medium", "high", "urgent"];
-const NEXT = { open: "in_progress", in_progress: "resolved", resolved: "closed" };
-const label = (s) => s.replace("_", " ");
-const ago = (iso) => {
-  const m = Math.round((Date.now() - new Date(iso)) / 60000);
-  if (m < 1) return "just now";
-  if (m < 60) return `${m} min ago`;
-  const h = Math.round(m / 60);
-  return h < 24 ? `${h} h ago` : `${Math.round(h / 24)} d ago`;
+const money = (cents) =>
+  new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 2,
+  }).format(cents / 100);
+const blank = {
+  sku: "",
+  name: "",
+  category: "General",
+  reorder_level: 5,
+  unit_price_cents: 0,
 };
+const stateOf = (p) =>
+  p.quantity === 0
+    ? "Out of stock"
+    : p.quantity <= p.reorder_level
+      ? "Low stock"
+      : "In stock";
 
-const EMPTY = { title: "", description: "", priority: "medium", requester: "", assignee: "" };
+function Dialog({ title, onClose, children }) {
+  const dialog = useRef(null);
+  useEffect(() => {
+    dialog.current.showModal();
+  }, []);
+  return (
+    <dialog ref={dialog} onCancel={onClose}>
+      <div className="dialog-head">
+        <h2>{title}</h2>
+        <button
+          className="icon-button"
+          aria-label="Close dialog"
+          onClick={onClose}
+        >
+          ×
+        </button>
+      </div>
+      {children}
+    </dialog>
+  );
+}
 
 export default function App() {
-  const [tickets, setTickets] = useState([]);
+  const [products, setProducts] = useState([]);
   const [stats, setStats] = useState(null);
-  const [filters, setFilters] = useState({ status: "", priority: "" });
+  const [movements, setMovements] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [form, setForm] = useState(EMPTY);
+  const [notice, setNotice] = useState("");
+  const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState("All products");
+  const [view, setView] = useState("Inventory");
+  const [modal, setModal] = useState(null);
+  const [form, setForm] = useState(blank);
+  const [delta, setDelta] = useState(1);
+  const [reason, setReason] = useState("");
   const [saving, setSaving] = useState(false);
+  const [formError, setFormError] = useState("");
 
   const load = useCallback(async () => {
     try {
-      setError("");
-      const [t, s] = await Promise.all([api.listTickets(filters), api.stats()]);
-      setTickets(t);
+      const [p, s, m] = await Promise.all([
+        api.products(),
+        api.stats(),
+        api.movements(),
+      ]);
+      setProducts(p);
       setStats(s);
+      setMovements(m);
+      setError("");
     } catch (e) {
-      setError(`Backend unavailable: ${e.message}`);
+      setError(e.message);
     } finally {
       setLoading(false);
     }
-  }, [filters]);
-
-  useEffect(() => { load(); }, [load]);
-
-  const submit = async (e) => {
-    e.preventDefault();
+  }, []);
+  useEffect(() => {
+    load();
+  }, [load]);
+  const close = () => {
+    if (!saving) setModal(null);
+  };
+  const open = (kind, product = null) => {
+    setFormError("");
+    setReason("");
+    setDelta(1);
+    setForm(
+      product
+        ? {
+            sku: product.sku,
+            name: product.name,
+            category: product.category,
+            reorder_level: product.reorder_level,
+            unit_price_cents: product.unit_price_cents,
+          }
+        : { ...blank },
+    );
+    setModal({ kind, product });
+  };
+  const submit = async (event) => {
+    event.preventDefault();
     setSaving(true);
+    setFormError("");
     try {
-      await api.createTicket(form);
-      setForm(EMPTY);
-      setShowModal(false);
+      if (modal.kind === "movement") {
+        await api.move({
+          product_id: modal.product.id,
+          delta: Number(delta),
+          reason,
+        });
+        setNotice(`Stock movement recorded for ${modal.product.sku}.`);
+      } else if (modal.kind === "archive") {
+        await api.archive(modal.product.id);
+        setNotice("Product archived. Movement history is preserved.");
+      } else {
+        const data = {
+          ...form,
+          reorder_level: Number(form.reorder_level),
+          unit_price_cents: Number(form.unit_price_cents),
+        };
+        if (modal.product) delete data.sku;
+        await api.save(modal.product?.id, data);
+        setNotice(
+          modal.product
+            ? "Product updated."
+            : "Product added. Receive stock to set its opening balance.",
+        );
+      }
+      setModal(null);
       await load();
-    } catch (err) {
-      setError(err.message);
+    } catch (e) {
+      setFormError(e.message);
     } finally {
       setSaving(false);
     }
   };
-
-  const advance = async (t) => { if (NEXT[t.status]) { await api.updateTicket(t.id, { status: NEXT[t.status] }); load(); } };
-  const assignMe = async (t) => { await api.updateTicket(t.id, { assignee: "mayank" }); load(); };
-  const remove = async (t) => { if (confirm(`Delete ticket #${t.id}?`)) { await api.deleteTicket(t.id); load(); } };
-
-  const recent = [...tickets].sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)).slice(0, 6);
+  const visible = products.filter(
+    (p) =>
+      `${p.name} ${p.sku} ${p.category}`
+        .toLowerCase()
+        .includes(query.toLowerCase()) &&
+      (filter === "All products" || stateOf(p) === filter),
+  );
+  const change = (event) =>
+    setForm({ ...form, [event.target.name]: event.target.value });
 
   return (
-    <div className="layout">
+    <div className="shell">
       <aside className="sidebar">
-        <div className="brand"><span className="logo">TH</span><div><strong>TicketHub</strong><small>Mayank Gupta's helpdesk</small></div></div>
-        <nav>
-          <a className="active" href="#">Dashboard</a>
-          <a href="#tickets">Tickets</a>
-          <a href="/docs" target="_blank" rel="noreferrer">API docs</a>
-          <a href="/metrics" target="_blank" rel="noreferrer">Metrics</a>
-        </nav>
-        <div className="student">
-          <small>Student workspace</small>
-          <strong>Mayank Gupta</strong>
-          <span>24BCS10220</span>
+        <a className="brand" href="#">
+          <span className="brand-icon">▦</span>stockroom
+          <span className="brand-period">.</span>
+        </a>
+        <div className="workspace">
+          <span className="workspace-avatar">MG</span>
+          <div>
+            <strong>Mayank's workspace</strong>
+            <small>Inventory operations</small>
+          </div>
         </div>
-        <footer>DevOps capstone, SST</footer>
+        <p className="nav-label">WORKSPACE</p>
+        <nav aria-label="Main navigation">
+          {["Inventory", "Movement history"].map((item, i) => (
+            <button
+              key={item}
+              className={view === item ? "nav-active" : ""}
+              onClick={() => setView(item)}
+            >
+              <span>{i ? "↔" : "▦"}</span>
+              {item}
+              {!i && stats && <b>{stats.products}</b>}
+            </button>
+          ))}
+        </nav>
+        <div className="sidebar-bottom">
+          <span className="live-dot" /> Stock you can account for
+          <p>Every movement leaves a trail.</p>
+          <a href="/docs" target="_blank" rel="noreferrer">
+            Explore the API ↗
+          </a>
+        </div>
       </aside>
-
       <main>
-        <header className="topbar">
-          <div><h1>Support dashboard</h1><p>Every ticket in one place: create, triage, assign, resolve.</p></div>
-          <button className="primary" onClick={() => setShowModal(true)}>+ New ticket</button>
+        <div className="breadcrumb">
+          Workspace <span>/</span> {view}
+          <span className="owner">
+            MG <span>Mayank Gupta</span>
+          </span>
+        </div>
+        <header>
+          <div>
+            <p className="eyebrow">A CLEAR VIEW OF YOUR STOCK</p>
+            <h1>
+              {view === "Inventory" ? "Inventory overview" : "Movement history"}
+            </h1>
+            <p className="subtitle">
+              {view === "Inventory"
+                ? "Know what you have. See what needs attention."
+                : "A permanent record of every receipt and dispatch."}
+            </p>
+          </div>
+          <button className="primary" onClick={() => open("product")}>
+            ＋ Add product
+          </button>
         </header>
-
-        {error && <div className="banner error">{error} <button onClick={load}>retry</button></div>}
-
-        <section className="kpis">
-          <Kpi label="Total tickets" value={stats?.total} />
-          <Kpi label="Open" value={stats?.by_status.open} tone="blue" />
-          <Kpi label="In progress" value={stats?.by_status.in_progress} tone="amber" />
-          <Kpi label="Urgent, unresolved" value={stats?.open_urgent} tone="red" />
-          <Kpi label="Unassigned" value={stats?.unassigned} tone="grey" />
-        </section>
-
-        <section className="content">
-          <div className="card table-card" id="tickets">
-            <div className="card-head">
-              <h2>Tickets</h2>
-              <div className="filters">
-                <select value={filters.status} onChange={(e) => setFilters({ ...filters, status: e.target.value })}>
-                  <option value="">All statuses</option>
-                  {STATUSES.map((s) => <option key={s} value={s}>{label(s)}</option>)}
-                </select>
-                <select value={filters.priority} onChange={(e) => setFilters({ ...filters, priority: e.target.value })}>
-                  <option value="">All priorities</option>
-                  {PRIORITIES.map((p) => <option key={p} value={p}>{p}</option>)}
-                </select>
+        {error && (
+          <div role="alert" className="banner error">
+            Could not load inventory: {error}
+            <button onClick={load}>Retry</button>
+          </div>
+        )}
+        {notice && (
+          <div role="status" className="banner success">
+            {notice}
+            <button
+              aria-label="Dismiss notification"
+              onClick={() => setNotice("")}
+            >
+              ×
+            </button>
+          </div>
+        )}
+        <section className="metrics" aria-label="Inventory summary">
+          {[
+            [
+              "Active products",
+              stats?.products,
+              "Unique SKUs in your catalog",
+              "▦",
+            ],
+            [
+              "Units on hand",
+              stats?.units,
+              "Available across all products",
+              "◫",
+            ],
+            [
+              "Needs attention",
+              stats?.low_stock,
+              "At or below reorder level",
+              "↘",
+            ],
+            [
+              "Inventory value",
+              stats ? money(stats.inventory_value_cents) : null,
+              "Based on current unit prices",
+              "₹",
+            ],
+          ].map(([label, value, sub, icon], i) => (
+            <article className={`metric metric-${i}`} key={label}>
+              <div>
+                <span>{label}</span>
+                <i>{icon}</i>
               </div>
-            </div>
-            {loading ? <p className="muted">Loading tickets...</p> : tickets.length === 0 ? (
-              <p className="muted">No tickets match. Create the first one.</p>
-            ) : (
-              <div className="table-wrap">
-                <table>
-                  <thead><tr><th>#</th><th>Title</th><th>Priority</th><th>Status</th><th>Requester</th><th>Assignee</th><th>Updated</th><th></th></tr></thead>
-                  <tbody>
-                    {tickets.map((t) => (
-                      <tr key={t.id}>
-                        <td className="muted">{t.id}</td>
-                        <td><strong>{t.title}</strong>{t.description && <div className="desc">{t.description}</div>}</td>
-                        <td><span className={`badge p-${t.priority}`}>{t.priority}</span></td>
-                        <td><span className={`badge s-${t.status}`}>{label(t.status)}</span></td>
-                        <td>{t.requester}</td>
-                        <td>{t.assignee || <em className="muted">unassigned</em>}</td>
-                        <td className="muted">{ago(t.updated_at)}</td>
-                        <td className="actions">
-                          {!t.assignee && <button onClick={() => assignMe(t)}>assign me</button>}
-                          {NEXT[t.status] && <button onClick={() => advance(t)}>{label(NEXT[t.status])}</button>}
-                          <button className="danger" onClick={() => remove(t)}>delete</button>
-                        </td>
+              <strong>{value ?? "—"}</strong>
+              <small>{sub}</small>
+            </article>
+          ))}
+        </section>
+        {view === "Inventory" ? (
+          <>
+            <section className="inventory-panel">
+              <div className="panel-title">
+                <div>
+                  <h2>
+                    Your products <span>{products.length}</span>
+                  </h2>
+                  <p>A single place to manage your catalog and stock levels.</p>
+                </div>
+                <button className="text-button" onClick={load}>
+                  ↻ Refresh
+                </button>
+              </div>
+              <div className="toolbar">
+                <div className="tabs">
+                  {["All products", "Low stock", "Out of stock"].map((item) => (
+                    <button
+                      key={item}
+                      className={filter === item ? "selected" : ""}
+                      onClick={() => setFilter(item)}
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+                <label className="search">
+                  <span>⌕</span>
+                  <input
+                    aria-label="Search products"
+                    placeholder="Search name, SKU or category…"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                  />
+                </label>
+              </div>
+              {loading ? (
+                <div className="empty">Loading your inventory…</div>
+              ) : (
+                <div className="table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Stock level</th>
+                        <th>Unit price</th>
+                        <th>Status</th>
+                        <th>
+                          <span className="sr-only">Actions</span>
+                        </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-
-          <div className="card feed">
-            <h2>Recent activity</h2>
-            {recent.length === 0 ? <p className="muted">Nothing yet.</p> : (
-              <ul>
-                {recent.map((t) => (
-                  <li key={t.id}><span className={`dot s-${t.status}`} /><div><strong>#{t.id} {t.title}</strong><small>{label(t.status)} by {t.assignee || t.requester}, {ago(t.updated_at)}</small></div></li>
+                    </thead>
+                    <tbody>
+                      {visible.map((p) => (
+                        <tr key={p.id}>
+                          <td>
+                            <div className="product-name">
+                              <div className="product-icon">
+                                {p.name.slice(0, 2).toUpperCase()}
+                              </div>
+                              <div>
+                                <button
+                                  className="name-button"
+                                  onClick={() => open("product", p)}
+                                >
+                                  {p.name}
+                                </button>
+                                <small>{p.sku}</small>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <span className="category">{p.category}</span>
+                          </td>
+                          <td>
+                            <strong className="quantity">{p.quantity}</strong>
+                            <span className="units"> units</span>
+                            <div className="stock-track">
+                              <div
+                                style={{
+                                  width: `${Math.min(100, (p.quantity / Math.max(1, p.reorder_level * 3)) * 100)}%`,
+                                }}
+                                className={
+                                  p.quantity <= p.reorder_level ? "low" : ""
+                                }
+                              />
+                            </div>
+                            <small className="reorder">
+                              Reorder at {p.reorder_level}
+                            </small>
+                          </td>
+                          <td className="price">{money(p.unit_price_cents)}</td>
+                          <td>
+                            <span
+                              className={`status status-${p.quantity === 0 ? "empty" : p.quantity <= p.reorder_level ? "low" : "ok"}`}
+                            >
+                              ● {stateOf(p)}
+                            </span>
+                          </td>
+                          <td>
+                            <div className="row-actions">
+                              <button
+                                className="secondary"
+                                onClick={() => open("movement", p)}
+                              >
+                                Adjust stock
+                              </button>
+                              <button
+                                className="icon-button archive"
+                                title="Archive product"
+                                aria-label={`Archive ${p.name}`}
+                                onClick={() => open("archive", p)}
+                              >
+                                ×
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {!visible.length && (
+                    <div className="empty">
+                      <span>▦</span>
+                      <h3>
+                        {products.length
+                          ? "No matching products"
+                          : "Your inventory starts here"}
+                      </h3>
+                      <p>
+                        {products.length
+                          ? "Try another search or stock filter."
+                          : "Add your first product, then record a stock receipt."}
+                      </p>
+                      {!products.length && (
+                        <button
+                          className="primary"
+                          onClick={() => open("product")}
+                        >
+                          Add your first product
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+              <footer className="table-footer">
+                Showing {visible.length} of {products.length} products
+                <span>Quantities update after each movement</span>
+              </footer>
+            </section>
+            <section className="bottom-grid">
+              <div className="recent">
+                <div className="section-header">
+                  <h2>Recent movements</h2>
+                  <button
+                    className="text-button"
+                    onClick={() => setView("Movement history")}
+                  >
+                    View all →
+                  </button>
+                </div>
+                {movements.slice(0, 4).map((m) => (
+                  <div className="movement" key={m.id}>
+                    <span
+                      className={`movement-icon ${m.delta < 0 ? "out" : ""}`}
+                    >
+                      {m.delta > 0 ? "↙" : "↗"}
+                    </span>
+                    <div>
+                      <strong>{m.product_name}</strong>
+                      <small>{m.reason}</small>
+                    </div>
+                    <b className={m.delta < 0 ? "negative" : "positive"}>
+                      {m.delta > 0 ? "+" : ""}
+                      {m.delta}
+                    </b>
+                  </div>
                 ))}
-              </ul>
-            )}
-          </div>
-        </section>
-      </main>
-
-      {showModal && (
-        <div className="modal-backdrop" onClick={() => setShowModal(false)}>
-          <form className="modal" onClick={(e) => e.stopPropagation()} onSubmit={submit}>
-            <h2>New ticket</h2>
-            <label>Title<input required minLength={3} value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} /></label>
-            <label>Description<textarea rows={3} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></label>
-            <div className="row">
-              <label>Priority<select value={form.priority} onChange={(e) => setForm({ ...form, priority: e.target.value })}>{PRIORITIES.map((p) => <option key={p}>{p}</option>)}</select></label>
-              <label>Requester<input required value={form.requester} onChange={(e) => setForm({ ...form, requester: e.target.value })} placeholder="name or email" /></label>
+                {!movements.length && (
+                  <p className="muted">
+                    Receipts and dispatches will appear here.
+                  </p>
+                )}
+              </div>
+              <aside className="insight">
+                <span className="eyebrow">INVENTORY NOTE</span>
+                <h2>
+                  {stats?.low_stock
+                    ? `${stats.low_stock} products need a closer look.`
+                    : "Stay one step ahead."}
+                </h2>
+                <p>
+                  Set a reorder level for each product. Stockroom flags it as
+                  soon as the balance reaches that threshold.
+                </p>
+                <button
+                  onClick={() => {
+                    setFilter("Low stock");
+                    window.scrollTo({ top: 240, behavior: "smooth" });
+                  }}
+                >
+                  Review low stock →
+                </button>
+              </aside>
+            </section>
+          </>
+        ) : (
+          <section className="inventory-panel">
+            <div className="panel-title">
+              <div>
+                <h2>Stock movement ledger</h2>
+                <p>Latest 50 entries. Archived products keep their history.</p>
+              </div>
+              <button className="text-button" onClick={load}>
+                ↻ Refresh
+              </button>
             </div>
-            <label>Assignee (optional)<input value={form.assignee} onChange={(e) => setForm({ ...form, assignee: e.target.value })} /></label>
-            <div className="modal-actions">
-              <button type="button" onClick={() => setShowModal(false)}>Cancel</button>
-              <button type="submit" className="primary" disabled={saving}>{saving ? "Saving..." : "Create ticket"}</button>
+            <div className="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Product / SKU</th>
+                    <th>Change</th>
+                    <th>Balance after</th>
+                    <th>Reason</th>
+                    <th>Recorded</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {movements.map((m) => (
+                    <tr key={m.id}>
+                      <td>
+                        <strong>{m.product_name}</strong>
+                        <small className="block">{m.sku}</small>
+                      </td>
+                      <td className={m.delta > 0 ? "positive" : "negative"}>
+                        {m.delta > 0 ? "+" : ""}
+                        {m.delta}
+                      </td>
+                      <td>{m.quantity_after}</td>
+                      <td>{m.reason}</td>
+                      <td>{new Date(m.created_at).toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {!movements.length && (
+                <div className="empty">No stock movements yet.</div>
+              )}
+            </div>
+          </section>
+        )}
+        <footer className="page-footer">
+          Stockroom · Built by Mayank Gupta
+          <span>Inventory, with a little more clarity.</span>
+        </footer>
+      </main>
+      {modal && (
+        <Dialog
+          title={
+            modal.kind === "movement"
+              ? "Record a stock movement"
+              : modal.kind === "archive"
+                ? "Archive product"
+                : modal.product
+                  ? "Edit product"
+                  : "Add a product"
+          }
+          onClose={close}
+        >
+          <form onSubmit={submit}>
+            {formError && (
+              <p className="form-error" role="alert">
+                {formError}
+              </p>
+            )}
+            {modal.kind === "archive" ? (
+              <p>
+                Archive <strong>{modal.product.name}</strong>? Its movement
+                history will remain. Products must have zero stock before
+                archiving.
+              </p>
+            ) : modal.kind === "movement" ? (
+              <>
+                <p className="dialog-description">
+                  {modal.product.name} · {modal.product.quantity} units on hand
+                </p>
+                <label>
+                  Quantity change
+                  <input
+                    required
+                    type="number"
+                    step="1"
+                    min="-1000000"
+                    max="1000000"
+                    value={delta}
+                    onChange={(e) => setDelta(e.target.value)}
+                  />
+                  <small>
+                    Positive to receive stock; negative to dispatch.
+                  </small>
+                </label>
+                <label>
+                  Reason
+                  <input
+                    autoFocus
+                    required
+                    minLength="3"
+                    maxLength="240"
+                    placeholder="e.g. Received from supplier"
+                    value={reason}
+                    onChange={(e) => setReason(e.target.value)}
+                  />
+                </label>
+              </>
+            ) : (
+              <>
+                <label>
+                  Product name
+                  <input
+                    autoFocus
+                    required
+                    minLength="2"
+                    maxLength="160"
+                    name="name"
+                    value={form.name}
+                    onChange={change}
+                    placeholder="e.g. Mechanical keyboard"
+                  />
+                </label>
+                <div className="form-grid">
+                  <label>
+                    SKU
+                    <input
+                      required
+                      disabled={Boolean(modal.product)}
+                      minLength="2"
+                      maxLength="40"
+                      pattern="[A-Z0-9][A-Z0-9_-]+"
+                      name="sku"
+                      value={form.sku}
+                      onChange={(e) =>
+                        setForm({ ...form, sku: e.target.value.toUpperCase() })
+                      }
+                      placeholder="KB-101"
+                    />
+                  </label>
+                  <label>
+                    Category
+                    <input
+                      required
+                      maxLength="60"
+                      name="category"
+                      value={form.category}
+                      onChange={change}
+                    />
+                  </label>
+                </div>
+                <div className="form-grid">
+                  <label>
+                    Unit price (₹)
+                    <input
+                      type="number"
+                      required
+                      min="0"
+                      max="1000000"
+                      step="0.01"
+                      value={form.unit_price_cents / 100}
+                      onChange={(e) =>
+                        setForm({
+                          ...form,
+                          unit_price_cents: Math.round(
+                            Number(e.target.value) * 100,
+                          ),
+                        })
+                      }
+                    />
+                  </label>
+                  <label>
+                    Reorder level
+                    <input
+                      type="number"
+                      required
+                      min="0"
+                      max="1000000"
+                      step="1"
+                      name="reorder_level"
+                      value={form.reorder_level}
+                      onChange={change}
+                    />
+                  </label>
+                </div>
+                {!modal.product && (
+                  <p className="dialog-description">
+                    New products start at zero. Record a receipt to add opening
+                    stock.
+                  </p>
+                )}
+              </>
+            )}
+            <div className="dialog-actions">
+              <button
+                type="button"
+                className="secondary"
+                disabled={saving}
+                onClick={close}
+              >
+                Cancel
+              </button>
+              <button className="primary" disabled={saving}>
+                {saving
+                  ? "Saving…"
+                  : modal.kind === "movement"
+                    ? "Record movement"
+                    : modal.kind === "archive"
+                      ? "Archive product"
+                      : "Save product"}
+              </button>
             </div>
           </form>
-        </div>
+        </Dialog>
       )}
     </div>
   );
-}
-
-function Kpi({ label, value, tone = "" }) {
-  return <div className={`kpi ${tone}`}><small>{label}</small><strong>{value ?? "–"}</strong></div>;
 }

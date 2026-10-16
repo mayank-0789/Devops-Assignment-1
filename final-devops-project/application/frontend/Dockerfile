@@ -13,4 +13,5 @@ FROM nginxinc/nginx-unprivileged:1.30-alpine
 ENV BACKEND_URL=http://backend:8000
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf.template /etc/nginx/templates/default.conf.template
+USER 101
 EXPOSE 8080
